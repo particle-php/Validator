@@ -169,4 +169,25 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
     }
+
+    public function testCanOverwriteSpecificMessages()
+    {
+        $this->validator = new Validator();
+        $this->validator->required('foo');
+        $this->validator->setMessages([
+            'foo' => [
+                Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "{{ key }}".'
+            ]
+        ]);
+
+        $this->assertFalse($this->validator->validate([]));
+        $this->assertEquals(
+            [
+                'foo' => [
+                    Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "foo".'
+                ]
+            ],
+            $this->validator->getMessages()
+        );
+    }
 }

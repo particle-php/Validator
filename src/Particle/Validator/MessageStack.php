@@ -6,9 +6,15 @@ class MessageStack
 {
     protected $messages = [];
 
-    public function append($key, $reason, $message)
+    protected $overwrites = [];
+
+    public function append($key, $reason, $message, array $parameters)
     {
-        $this->messages[$key][$reason] = $message;
+        if (isset($this->overwrites[$key][$reason])) {
+            $message = $this->overwrites[$key][$reason];
+        }
+
+        $this->messages[$key][$reason] = $this->format($message, $parameters);
     }
 
     public function getMessages()
@@ -21,7 +27,7 @@ class MessageStack
      * @param array $parameters
      * @return mixed
      */
-    public function format($message, array $parameters)
+    protected function format($message, array $parameters)
     {
         $replace = function($matches) use ($parameters) {
             if (array_key_exists($matches[1], $parameters)) {
@@ -31,5 +37,13 @@ class MessageStack
         };
 
         return preg_replace_callback('~{{\s*([^}\s]+)\s*}}~', $replace, $message);
+    }
+
+    /**
+     * @param array $messages
+     */
+    public function setMessages(array $messages)
+    {
+        $this->overwrites = $messages;
     }
 }

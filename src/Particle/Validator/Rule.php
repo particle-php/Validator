@@ -95,7 +95,8 @@ abstract class Rule
         $this->messageStack->append(
             $this->key,
             $reason,
-            $this->getMessage($reason)
+            $this->getMessage($reason),
+            $this->getMessageParameters()
         );
 
         return false;
@@ -125,6 +126,6 @@ abstract class Rule
             $messageTemplate = $this->messageTemplates[$reason];
         }
 
-        return $this->messageStack->format($messageTemplate, $this->getMessageParameters());
+        return $messageTemplate;
     }
 }

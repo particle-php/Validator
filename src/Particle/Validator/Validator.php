@@ -6,12 +6,19 @@ class Validator
     /**
      * @var Chain[]
      */
-    protected $chains;
+    protected $chains = [];
 
     /**
      * @var MessageStack
      */
     protected $messageStack;
+
+    /**
+     * Message overwrites.
+     *
+     * @var array
+     */
+    protected $overwrites = [];
 
     public function required($key, $name = null, $allowEmpty = false)
     {
@@ -27,6 +34,7 @@ class Validator
     {
         $valid = true;
         $this->messageStack = new MessageStack();
+        $this->messageStack->setMessages($this->overwrites);
 
         foreach ($this->chains as $chain) {
             $valid = $chain->validate($this->messageStack, $values) && $valid;
@@ -37,5 +45,17 @@ class Validator
     public function getMessages()
     {
         return $this->messageStack->getMessages();
+    }
+
+    /**
+     * Overwrite the default messages.
+     *
+     * @param array $messages
+     * @return $this
+     */
+    public function setMessages(array $messages)
+    {
+        $this->overwrites = $messages;
+        return $this;
     }
 }
