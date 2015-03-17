@@ -1,5 +1,6 @@
 <?php
 use Particle\Validator\MessageStack;
+use Particle\Validator\Rule;
 use Particle\Validator\Validator;
 
 use Particle\Validator\Rule\Required;
@@ -167,7 +168,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     public function testCanOverwriteSpecificMessages()
     {
         $this->validator->required('foo');
-        $this->validator->setMessages([
+        $this->validator->overwriteMessages([
             'foo' => [
                 Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "{{ key }}".'
             ]
@@ -192,5 +193,47 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $stack = new MessageStack();
         $this->assertEquals($first, $second);
         $this->assertFalse($second->validate($stack, [])); // because it's required.
+    }
+
+    public function testDefaultMessageOverwrites()
+    {
+        $this->validator->overwriteDefaultMessages([
+            Rule\Length::TOO_SHORT => 'De waarde is te kort. Dit moet minimaal {{ length }} karakters bevatten'
+        ]);
+
+        $this->validator->required('first_name', 'Voornaam')->length(5);
+        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+
+        $expected = [
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'De waarde is te kort. Dit moet minimaal 5 karakters bevatten'
+            ]
+        ];
+
+        $this->assertEquals($expected, $this->validator->getMessages());
+    }
+
+    public function testSpecificMessageWillHavePrecedenceOverDefaultMessage()
+    {
+        $this->validator->overwriteDefaultMessages([
+            Rule\Length::TOO_SHORT => 'This is overwritten globally.'
+        ]);
+
+        $this->validator->overwriteMessages([
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'This is overwritten for first_name only.'
+            ]
+        ]);
+
+        $this->validator->required('first_name')->length(5);
+        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+
+        $expected = [
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'This is overwritten for first_name only.'
+            ]
+        ];
+
+        $this->assertEquals($expected, $this->validator->getMessages());
     }
 }

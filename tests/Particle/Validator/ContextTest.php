@@ -35,14 +35,14 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $this->validator->context('insert', function (Validator $context) {
             $context->required('first_name')->length(5);
 
-            $context->setMessages([
+            $context->overwriteMessages([
                 'first_name' => [
                     Rule\Length::TOO_SHORT => 'This is from inside the context.'
                 ]
             ]);
         });
 
-        $this->validator->setMessages([
+        $this->validator->overwriteMessages([
             'first_name' => [
                 Rule\Length::TOO_SHORT => 'This is outside of the context',
             ]
