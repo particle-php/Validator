@@ -26,7 +26,34 @@ class LengthTest extends PHPUnit_Framework_TestCase
 
     public function testTooShortWillLogTooShortError()
     {
-        $this->rule->isValid('first_name', ['first_name' => 'Rick']);
+        $this->assertFalse($this->rule->isValid('first_name', ['first_name' => 'Rick']));
+        $expected = [
+            'first_name' => [
+                Length::TOO_SHORT => 'The value of "first name" is too short, should be 5 characters long'
+            ]
+        ];
+        $this->assertEquals($expected, $this->messageStack->getMessages());
+    }
 
+    public function testTooLongWillLogTooLongError()
+    {
+        $this->assertFalse($this->rule->isValid('first_name', ['first_name' => 'Hendrick']));
+        $expected = [
+            'first_name' => [
+                Length::TOO_LONG => 'The value of "first name" is too long, should be 5 characters long'
+            ]
+        ];
+        $this->assertEquals($expected, $this->messageStack->getMessages());
+    }
+
+    public function testCorrectLengthWillLogNoErrors()
+    {
+        $this->assertTrue($this->rule->isValid('first_name', ['first_name' => 'Berry']));
+        $this->assertEquals([], $this->messageStack->getMessages());
+    }
+
+    public function testShouldNotBreakChainOnFailure()
+    {
+        $this->assertFalse($this->rule->shouldBreakChain());
     }
 }

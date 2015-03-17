@@ -9,7 +9,8 @@ class Length extends Rule
     const TOO_LONG = 'Length::TOO_LONG';
 
     protected $messageTemplates = [
-        self::TOO_SHORT => 'The value for name is too short, should be {{ length }} characters long'
+        self::TOO_SHORT => 'The value of "{{ name }}" is too short, should be {{ length }} characters long',
+        self::TOO_LONG => 'The value of "{{ name }}" is too long, should be {{ length }} characters long'
     ];
 
     public function __construct($length)
