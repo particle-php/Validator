@@ -51,7 +51,7 @@ class MessageChainTest extends PHPUnit_Framework_TestCase
     public function testCanOverwriteSpecificMessagesWithParameters()
     {
         $ms = new MessageStack();
-        $ms->setMessages([
+        $ms->overwriteMessages([
             'key' => [
                 'reason' => 'This is my specific message. The key was "{{key}}"'
             ]

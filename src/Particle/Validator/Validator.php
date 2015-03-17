@@ -30,6 +30,13 @@ class Validator
     protected $messageOverwrites = [];
 
     /**
+     * An array containing all the default messages.
+     *
+     * @var array
+     */
+    protected $defaultMessages = [];
+
+    /**
      * Construct the validator.
      */
     public function __construct()
@@ -106,14 +113,26 @@ class Validator
     }
 
     /**
-     * Overwrite the default messages with specific messages per key.
+     * Overwrite the messages for specific keys.
      *
      * @param array $messages
      * @return $this
      */
-    public function setMessages(array $messages)
+    public function overwriteMessages(array $messages)
     {
         $this->messageOverwrites[$this->context] = $messages;
+        return $this;
+    }
+
+    /**
+     * Overwrite the default messages with custom messages.
+     *
+     * @param array $messages
+     * @return $this
+     */
+    public function overwriteDefaultMessages(array $messages)
+    {
+        $this->defaultMessages = $messages;
         return $this;
     }
 
@@ -143,9 +162,10 @@ class Validator
     protected function buildMessageStack($context)
     {
         $this->messageStack = new MessageStack();
+        $this->messageStack->overwriteDefaultMessages($this->defaultMessages);
 
         if (isset($this->messageOverwrites[$context])) {
-            $this->messageStack->setMessages($this->messageOverwrites[$context]);
+            $this->messageStack->overwriteMessages($this->messageOverwrites[$context]);
         }
 
         return $this->messageStack;
