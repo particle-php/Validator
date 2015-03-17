@@ -1,4 +1,5 @@
 <?php
+use Particle\Validator\MessageStack;
 use Particle\Validator\Validator;
 
 use Particle\Validator\Rule\Required;
@@ -10,9 +11,13 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
      */
     protected $validator;
 
-    public function testReturnsFalseOnNonExistentRequiredKey()
+    public function setUp()
     {
         $this->validator = new Validator();
+    }
+
+    public function testReturnsFalseOnNonExistentRequiredKey()
+    {
         $this->validator->required('first_name');
         $result = $this->validator->validate([]);
 
@@ -30,7 +35,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testBreaksOnNonExistentRequiredKey()
     {
-        $this->validator = new Validator();
         $this->validator->required('first_name')->length(50);
         $result = $this->validator->validate([]);
 
@@ -48,7 +52,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsFalseOnExistingRequiredKeyDisallowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->required('first_name', 'first name');
         $result = $this->validator->validate(['first_name' => '']);
 
@@ -66,7 +69,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsTrueOnExistingRequiredKeyAllowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->required('first_name', 'first name', true);
         $result = $this->validator->validate(['first_name' => '']);
 
@@ -76,7 +78,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsTrueOnNonExistingOptionalKeyAllowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->optional('first_name');
         $result = $this->validator->validate([]);
 
@@ -86,7 +87,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsTrueOnExistingKeyAllowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->optional('first_name');
         $result = $this->validator->validate(['first_name' => 'Berry']);
 
@@ -96,7 +96,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsTrueOnNonExistingOptionalKeyDisallowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->optional('first_name', 'first name', false)->length(5);
         $result = $this->validator->validate([]);
 
@@ -105,7 +104,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testReturnFalseOnExistingOptionalKeyWithEmptyValueDisallowingEmpty()
     {
-        $this->validator = new Validator();
         $this->validator->optional('first_name', 'first name', false)->length(5);
         $result = $this->validator->validate(['first_name' => '']);
 
@@ -122,8 +120,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testRequiredCanBeConditional()
     {
-        $this->validator = new Validator();
-
         $this->validator->optional('first_name')->required(function(array $values) {
             return $values['foo'] === 'bar';
         });
@@ -147,8 +143,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testAllowEmptyCanBeConditional()
     {
-        $this->validator = new Validator();
-
         $this->validator->required('first_name', 'first name', true)->allowEmpty(function($values) {
             return $values['foo'] !== 'bar';
         });
@@ -172,7 +166,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testCanOverwriteSpecificMessages()
     {
-        $this->validator = new Validator();
         $this->validator->required('foo');
         $this->validator->setMessages([
             'foo' => [
@@ -189,5 +182,15 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
             ],
             $this->validator->getMessages()
         );
+    }
+
+    public function testOverwritingKeyWillReuseExistingChainButTheFirstRequirednessWillBeUsed()
+    {
+        $first = $this->validator->required('foo');
+        $second = $this->validator->optional('foo');
+
+        $stack = new MessageStack();
+        $this->assertEquals($first, $second);
+        $this->assertFalse($second->validate($stack, [])); // because it's required.
     }
 }
