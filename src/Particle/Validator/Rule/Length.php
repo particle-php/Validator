@@ -23,8 +23,7 @@ class Length extends Rule
 
         if ($actualLength > $this->length) {
             return $this->error(self::TOO_LONG);
-        }
-        elseif ($actualLength < $this->length) {
+        } elseif ($actualLength < $this->length) {
             return $this->error(self::TOO_SHORT);
         }
         return true;

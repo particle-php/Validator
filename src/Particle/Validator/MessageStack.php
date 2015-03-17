@@ -29,7 +29,7 @@ class MessageStack
      */
     protected function format($message, array $parameters)
     {
-        $replace = function($matches) use ($parameters) {
+        $replace = function ($matches) use ($parameters) {
             if (array_key_exists($matches[1], $parameters)) {
                 return $parameters[$matches[1]];
             }

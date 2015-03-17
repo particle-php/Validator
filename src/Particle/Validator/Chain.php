@@ -30,10 +30,10 @@ class Chain
     }
 
     /**
-     * @param Callable $callback
+     * @param callable $callback
      * @return $this
      */
-    public function required(Callable $callback)
+    public function required(callable $callback)
     {
         $this->rules[0]->setRequired($callback);
 
@@ -41,10 +41,10 @@ class Chain
     }
 
     /**
-     * @param Callable $callback
+     * @param callable $callback
      * @return $this
      */
-    public function allowEmpty(Callable $callback)
+    public function allowEmpty(callable $callback)
     {
         $this->rules[0]->setAllowEmpty($callback);
         return $this;
@@ -72,5 +72,4 @@ class Chain
 
         return $this;
     }
-
 }

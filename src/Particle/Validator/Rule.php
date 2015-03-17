@@ -36,16 +36,6 @@ abstract class Rule
     abstract public function validate($value);
 
     /**
-     * @param array $values
-     * @return $this
-     */
-    public function setValues(array $values)
-    {
-        $this->values = $values;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function shouldBreakChain()

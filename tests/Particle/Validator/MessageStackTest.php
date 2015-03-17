@@ -53,7 +53,7 @@ class MessageChainTest extends PHPUnit_Framework_TestCase
         $ms = new MessageStack();
         $ms->setMessages([
             'key' => [
-                'reason' => 'This is my specific message'
+                'reason' => 'This is my specific message. The key was "{{key}}"'
             ]
         ]);
 
@@ -62,7 +62,7 @@ class MessageChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'key' => [
-                    'reason' => 'This is my specific message',
+                    'reason' => 'This is my specific message. The key was "foo"',
                 ]
             ],
             $ms->getMessages()

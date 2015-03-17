@@ -76,10 +76,10 @@ class Required extends Rule
     }
 
     /**
-     * @param Callable $required
+     * @param callable $required
      * @return $this
      */
-    public function setRequired(Callable $required)
+    public function setRequired(callable $required)
     {
         $this->requiredCallback = $required;
         return $this;
@@ -89,7 +89,7 @@ class Required extends Rule
      * @param callable $allowEmpty
      * @return $this
      */
-    public function setAllowEmpty(Callable $allowEmpty)
+    public function setAllowEmpty(callable $allowEmpty)
     {
         $this->allowEmptyCallback = $allowEmpty;
         return $this;
