@@ -1,41 +1,66 @@
 <?php
-
+/**
+ * Particle.
+ *
+ * @link      http://github.com/particle-php for the canonical source repository
+ * @copyright Copyright (c) 2005-2015 Particle (http://particle-php.com)
+ * @license   https://github.com/particle-php/validator/blob/master/LICENSE New BSD License
+ */
 namespace Particle\Validator;
 
+/**
+ * The Rule class is the abstract parent of all rules of Particle and defines their common behaviour.
+ *
+ * @package Particle\Validator
+ */
 abstract class Rule
 {
     /**
+     * Contains an array of all values to be validated.
+     *
      * @var array
      */
     protected $values;
 
     /**
+     * Contains an array of messages to be returned on validation errors.
+     *
      * @var array
      */
     protected $messageTemplates = [];
 
     /**
+     * Contains a reference to the MessageStack to append errors to.
+     *
      * @var MessageStack
      */
     protected $messageStack;
 
     /**
+     * The key we have to validate the value of.
+     *
      * @var string
      */
     protected $key;
 
     /**
+     * The name may be used in validation error messages.
+     *
      * @var string
      */
     protected $name;
 
     /**
+     * This method should validate, possibly log errors, and return the result as a boolean.
+     *
      * @param mixed $value
      * @return bool
      */
     abstract public function validate($value);
 
     /**
+     * This indicates whether or not the rule can and should break the chain it's in.
+     *
      * @return bool
      */
     public function shouldBreakChain()
@@ -44,6 +69,8 @@ abstract class Rule
     }
 
     /**
+     * Registers the message stack to append errors to.
+     *
      * @param MessageStack $messageStack
      * @return $this
      */
@@ -54,6 +81,8 @@ abstract class Rule
     }
 
     /**
+     * Sets the default parameters for each validation rule (key and name).
+     *
      * @param string $key
      * @param string $name
      * @return $this
@@ -66,6 +95,8 @@ abstract class Rule
     }
 
     /**
+     * Determines whether or not the value of $key is valid in the array $values and returns the result as a bool.
+     *
      * @param string $key
      * @param array $values
      * @return bool
@@ -77,6 +108,8 @@ abstract class Rule
     }
 
     /**
+     * Appends the error for reason $reason to the MessageStack.
+     *
      * @param string $reason
      * @return bool
      */
@@ -93,6 +126,8 @@ abstract class Rule
     }
 
     /**
+     * Return an array of all parameters that might be replaced in the validation error messages.
+     *
      * @return array
      */
     protected function getMessageParameters()
@@ -106,6 +141,8 @@ abstract class Rule
     }
 
     /**
+     * Returns an error message for the reason $reason, or an empty string if it doesn't exist.
+     *
      * @param mixed $reason
      * @return string
      */
