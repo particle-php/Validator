@@ -11,7 +11,7 @@ namespace Particle\Validator\Rule;
 use Particle\Validator\Rule;
 
 /**
- * This rule is for validating the exact lenght of a string.
+ * This rule is for validating the exact length of a string.
  *
  * @package Particle\Validator\Rule
  */
@@ -59,7 +59,8 @@ class Length extends Rule
 
         if ($actualLength > $this->length) {
             return $this->error(self::TOO_LONG);
-        } elseif ($actualLength < $this->length) {
+        }
+        if ($actualLength < $this->length) {
             return $this->error(self::TOO_SHORT);
         }
         return true;

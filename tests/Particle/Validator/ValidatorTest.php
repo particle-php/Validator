@@ -198,7 +198,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
     public function testDefaultMessageOverwrites()
     {
         $this->validator->overwriteDefaultMessages([
-            Rule\Length::TOO_SHORT => 'De waarde is te kort. Dit moet minimaal {{ length }} karakters bevatten'
+            Rule\Length::TOO_SHORT => 'this is my overwritten message. {{ length }} is the length.'
         ]);
 
         $this->validator->required('first_name', 'Voornaam')->length(5);
@@ -206,7 +206,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
         $expected = [
             'first_name' => [
-                Rule\Length::TOO_SHORT => 'De waarde is te kort. Dit moet minimaal 5 karakters bevatten'
+                Rule\Length::TOO_SHORT => 'this is my overwritten message. 5 is the length.'
             ]
         ];
 

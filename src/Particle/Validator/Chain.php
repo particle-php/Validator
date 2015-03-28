@@ -60,6 +60,52 @@ class Chain
     }
 
     /**
+     * Validate the value to consist only out of alphanumeric characters.
+     *
+     * @param bool $allowWhitespace
+     * @return Chain
+     */
+    public function alnum($allowWhitespace = false)
+    {
+        return $this->addRule(new Rule\Alnum($allowWhitespace));
+    }
+
+    /**
+     * Validate that the value only consists our of alphabetic characters.
+     *
+     * @param bool $allowWhitespace
+     * @return Chain
+     */
+    public function alpha($allowWhitespace = false)
+    {
+        return $this->addRule(new Rule\Alpha($allowWhitespace));
+    }
+
+    /**
+     * Validate that the value is between $min and $max (inclusive by default).
+     *
+     * @param int $min
+     * @param int $max
+     * @param bool $inclusive
+     * @return Chain
+     */
+    public function between($min, $max, $inclusive = true)
+    {
+        return $this->addRule(new Rule\Between($min, $max, $inclusive));
+    }
+
+    /**
+     * Validate by executing a callback function, and returning its result.
+     *
+     * @param callable $callable
+     * @return Chain
+     */
+    public function callback(callable $callable)
+    {
+        return $this->addRule(new Rule\Callback($callable));
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
