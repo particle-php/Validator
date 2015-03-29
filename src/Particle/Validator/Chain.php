@@ -60,6 +60,106 @@ class Chain
     }
 
     /**
+     * Validate the value to consist only out of alphanumeric characters.
+     *
+     * @param bool $allowWhitespace
+     * @return Chain
+     */
+    public function alnum($allowWhitespace = false)
+    {
+        return $this->addRule(new Rule\Alnum($allowWhitespace));
+    }
+
+    /**
+     * Validate that the value only consists our of alphabetic characters.
+     *
+     * @param bool $allowWhitespace
+     * @return Chain
+     */
+    public function alpha($allowWhitespace = false)
+    {
+        return $this->addRule(new Rule\Alpha($allowWhitespace));
+    }
+
+    /**
+     * Validate that the value is between $min and $max (inclusive by default).
+     *
+     * @param int $min
+     * @param int $max
+     * @param bool $inclusive
+     * @return Chain
+     */
+    public function between($min, $max, $inclusive = true)
+    {
+        return $this->addRule(new Rule\Between($min, $max, $inclusive));
+    }
+
+    /**
+     * Validate by executing a callback function, and returning its result.
+     *
+     * @param callable $callable
+     * @return Chain
+     */
+    public function callback(callable $callable)
+    {
+        return $this->addRule(new Rule\Callback($callable));
+    }
+
+    /**
+     * Validates that the value is a date. If format is passed, it *must* be in that format.
+     *
+     * @param string|null $format
+     * @return Chain
+     */
+    public function datetime($format = null)
+    {
+        return $this->addRule(new Rule\Datetime($format));
+    }
+
+    /**
+     * Validates that all characters of the value are decimal digits.
+     *
+     * @return Chain
+     */
+    public function digits()
+    {
+        return $this->addRule(new Rule\Digits());
+    }
+
+    /**
+     * Validates that the value is a valid email address (format only).
+     * @return Chain
+     */
+    public function email()
+    {
+        return $this->addRule(new Rule\Email());
+    }
+
+    /**
+     * Validates that the value is equal to $value.
+     *
+     * @param string $value
+     * @return Chain
+     */
+    public function equals($value)
+    {
+        return $this->addRule(new Rule\Equal($value));
+    }
+
+    /**
+     * Validates that the value is in the array with optional "loose" checking.
+     *
+     * @param array $array
+     * @param bool $strict
+     *
+     * @return Chain
+     */
+    public function inArray(array $array, $strict = true)
+    {
+        return $this->addRule(new Rule\InArray($array, $strict));
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
@@ -68,6 +168,40 @@ class Chain
     public function length($length)
     {
         return $this->addRule(new Rule\Length($length));
+    }
+
+    /**
+     * Validates that the length of the value is between $min and $max. Inclusive is the default.
+     *
+     * @param int $min
+     * @param int $max
+     * @param bool $inclusive
+     * @return Chain
+     */
+    public function lengthBetween($min, $max, $inclusive = true)
+    {
+        return $this->addRule(new Rule\LengthBetween($min, $max, $inclusive));
+    }
+
+    /**
+     * Validates that the value matches the regular expression $regex.
+     *
+     * @param string $regex
+     * @return Chain
+     */
+    public function regex($regex)
+    {
+        return $this->addRule(new Rule\Regex($regex));
+    }
+
+    /**
+     * Validates that the value is a valid URL.
+     *
+     * @return Chain
+     */
+    public function url()
+    {
+        return $this->addRule(new Rule\Url());
     }
 
     /**
@@ -80,8 +214,7 @@ class Chain
      */
     public function required(callable $callback)
     {
-        $this->rules[0]->setRequired($callback);
-
+        $this->getRequiredRule()->setRequired($callback);
         return $this;
     }
 
@@ -95,7 +228,7 @@ class Chain
      */
     public function allowEmpty(callable $callback)
     {
-        $this->rules[0]->setAllowEmpty($callback);
+        $this->getRequiredRule()->setAllowEmpty($callback);
         return $this;
     }
 
@@ -133,5 +266,15 @@ class Chain
         $this->rules[] = $rule;
 
         return $this;
+    }
+
+    /**
+     * Returns the first rule, which is always the required rule.
+     *
+     * @return Rule\Required
+     */
+    protected function getRequiredRule()
+    {
+        return $this->rules[0];
     }
 }
