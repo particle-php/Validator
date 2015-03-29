@@ -184,6 +184,27 @@ class Chain
     }
 
     /**
+     * Validates that the value matches the regular expression $regex.
+     *
+     * @param string $regex
+     * @return Chain
+     */
+    public function regex($regex)
+    {
+        return $this->addRule(new Rule\Regex($regex));
+    }
+
+    /**
+     * Validates that the value is a valid URL.
+     *
+     * @return Chain
+     */
+    public function url()
+    {
+        return $this->addRule(new Rule\Url());
+    }
+
+    /**
      * Set a callable which may be used to alter the required requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
@@ -193,8 +214,7 @@ class Chain
      */
     public function required(callable $callback)
     {
-        $this->rules[0]->setRequired($callback);
-
+        $this->getRequiredRule()->setRequired($callback);
         return $this;
     }
 
@@ -208,7 +228,7 @@ class Chain
      */
     public function allowEmpty(callable $callback)
     {
-        $this->rules[0]->setAllowEmpty($callback);
+        $this->getRequiredRule()->setAllowEmpty($callback);
         return $this;
     }
 
@@ -246,5 +266,15 @@ class Chain
         $this->rules[] = $rule;
 
         return $this;
+    }
+
+    /**
+     * Returns the first rule, which is always the required rule.
+     *
+     * @return Rule\Required
+     */
+    protected function getRequiredRule()
+    {
+        return $this->rules[0];
     }
 }

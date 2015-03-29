@@ -11,16 +11,16 @@ namespace Particle\Validator\Rule;
 use Particle\Validator\Rule;
 
 /**
- * This rule is for validating if a value is a valid e-mail address.
+ * This rule is for validating if a the value is a valid URL.
  *
  * @package Particle\Validator\Rule
  */
-class Email extends Rule
+class Url extends Rule
 {
     /**
-     * A constant that will be used when the value is not a valid e-mail address.
+     * A constant that will be used if the value is not a valid URL.
      */
-    const INVALID_FORMAT = 'Email::INVALID_VALUE';
+    const INVALID_URL = 'Url::INVALID_URL';
 
     /**
      * The message templates which can be returned by this validator.
@@ -28,20 +28,22 @@ class Email extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_FORMAT => 'The value of "{{ name }}" must be a valid email address',
+        self::INVALID_URL => 'The value of "{{ name }}" must be a valid URL.'
     ];
 
     /**
-     * Validates if the value is a valid email address.
+     * Validates if the value is a valid URL.
      *
      * @param mixed $value
      * @return bool
      */
     public function validate($value)
     {
-        if (filter_var($value, FILTER_VALIDATE_EMAIL) !== false) {
+        $url = filter_var($value, FILTER_VALIDATE_URL);
+
+        if ($url !== false) {
             return true;
         }
-        return $this->error(self::INVALID_FORMAT);
+        return $this->error(self::INVALID_URL);
     }
 }
