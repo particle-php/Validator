@@ -117,6 +117,16 @@ class Chain
     }
 
     /**
+     * Validates that all characters of the value are decimal digits.
+     *
+     * @return Chain
+     */
+    public function digits()
+    {
+        return $this->addRule(new Rule\Digits());
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
