@@ -171,6 +171,19 @@ class Chain
     }
 
     /**
+     * Validates that the length of the value is between $min and $max. Inclusive is the default.
+     *
+     * @param int $min
+     * @param int $max
+     * @param bool $inclusive
+     * @return Chain
+     */
+    public function lengthBetween($min, $max, $inclusive = true)
+    {
+        return $this->addRule(new Rule\LengthBetween($min, $max, $inclusive));
+    }
+
+    /**
      * Set a callable which may be used to alter the required requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
