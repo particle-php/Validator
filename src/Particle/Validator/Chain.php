@@ -127,6 +127,15 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid email address (format only).
+     * @return Chain
+     */
+    public function email()
+    {
+        return $this->addRule(new Rule\Email());
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
