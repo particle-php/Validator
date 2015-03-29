@@ -106,6 +106,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is a date. If format is passed, it *must* be in that format.
+     *
+     * @param string|null $format
+     * @return Chain
+     */
+    public function datetime($format = null)
+    {
+        return $this->addRule(new Rule\Datetime($format));
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
