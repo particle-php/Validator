@@ -71,6 +71,13 @@ class Callback extends Rule
         }
     }
 
+    /**
+     * Validates the value according to this rule, and returns the result as a bool.
+     *
+     * @param string $key
+     * @param array $values
+     * @return bool
+     */
     public function isValid($key, array $values)
     {
         $this->values = $values;

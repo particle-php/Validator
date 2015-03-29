@@ -136,6 +136,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is equal to $value.
+     *
+     * @param string $value
+     * @return Chain
+     */
+    public function equals($value)
+    {
+        return $this->addRule(new Rule\Equal($value));
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
