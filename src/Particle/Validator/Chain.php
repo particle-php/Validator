@@ -147,6 +147,19 @@ class Chain
     }
 
     /**
+     * Validates that the value is in the array with optional "loose" checking.
+     *
+     * @param array $array
+     * @param bool $strict
+     *
+     * @return Chain
+     */
+    public function inArray(array $array, $strict = true)
+    {
+        return $this->addRule(new Rule\InArray($array, $strict));
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
