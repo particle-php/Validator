@@ -62,8 +62,7 @@ class Callback extends Rule
                 return true;
             }
             return $this->error(self::INVALID_VALUE);
-        }
-        catch (InvalidValueException $exception) {
+        } catch (InvalidValueException $exception) {
             $reason = $exception->getIdentifier();
             $this->messageTemplates[$reason] = $exception->getMessage();
 
