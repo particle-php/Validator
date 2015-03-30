@@ -8,4 +8,5 @@ before_script:
   - phpenv rehash
 
 script:
+  - php vendor/bin/phpunit
   - php vendor/bin/phpcs -n --standard=PSR2 ./src
