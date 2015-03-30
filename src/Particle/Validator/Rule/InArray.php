@@ -71,7 +71,7 @@ class InArray extends Rule
      */
     protected function getMessageParameters()
     {
-        $quote = function($value) {
+        $quote = function ($value) {
             return '"' . $value . '"';
         };
 

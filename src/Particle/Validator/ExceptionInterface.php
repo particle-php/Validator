@@ -13,5 +13,6 @@ namespace Particle\Validator;
  *
  * @package Particle\Validator
  */
-interface ExceptionInterface {
+interface ExceptionInterface
+{
 }
