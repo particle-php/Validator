@@ -9,4 +9,4 @@ before_script:
 
 script:
   - php vendor/bin/codecept run unit
-  - phpcs -n --standard=PSR2 ./src
+  - php vendor/bin/phpcs -n --standard=PSR2 ./src
