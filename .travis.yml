@@ -1,0 +1,12 @@
+language: php
+
+php:
+  - 5.5
+
+before_script:
+  - composer install
+  - phpenv rehash
+
+script:
+  - php vendor/bin/codecept run unit
+  - phpcs -n --standard=PSR2 ./src
