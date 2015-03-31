@@ -4,6 +4,7 @@ use Particle\Validator\Rule;
 use Particle\Validator\Validator;
 
 use Particle\Validator\Rule\Required;
+use Particle\Validator\Value\Container;
 
 class ValidatorTest extends PHPUnit_Framework_TestCase
 {
@@ -192,7 +193,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
         $stack = new MessageStack();
         $this->assertEquals($first, $second);
-        $this->assertFalse($second->validate($stack, [])); // because it's required.
+        $this->assertFalse($second->validate($stack, new Container([]), new Container([]))); // because it's required.
     }
 
     public function testDefaultMessageOverwrites()
@@ -235,5 +236,24 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $this->validator->getMessages());
+    }
+
+    public function testReturnsValidatedValues()
+    {
+        $this->validator->required('first_name')->lengthBetween(2, 20);
+        $this->validator->required('last_name')->lengthBetween(2, 60);
+
+        $this->validator->validate([
+            'first_name' => 'Berry',
+            'last_name' => 'Langerak',
+            'is_admin' => true
+        ]);
+
+        $expected = [
+            'first_name' => 'Berry',
+            'last_name' => 'Langerak',
+        ];
+
+        $this->assertEquals($expected, $this->validator->getValues());
     }
 }

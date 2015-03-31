@@ -9,6 +9,7 @@
 namespace Particle\Validator\Rule;
 
 use Particle\Validator\Rule;
+use Particle\Validator\Value\Container;
 
 /**
  * This class is responsible for checking if a required value is set, and if
@@ -60,6 +61,13 @@ class Required extends Rule
     protected $allowEmptyCallback;
 
     /**
+     * Contains the input container.
+     *
+     * @var Container
+     */
+    protected $input;
+
+    /**
      * Construct the Required validator.
      *
      * @param bool $required
@@ -80,51 +88,51 @@ class Required extends Rule
     }
 
     /**
-     * Determines whether or not the key is set when required, and if there is a value if allow empty is false.
+     * Does nothing, because validity is determined in isValid.
      *
      * @param mixed $value
      * @return bool
      */
     public function validate($value)
     {
+        return true;
+    }
+
+    /**
+     * Determines whether or not the key is set when required, and if there is a value if allow empty is false.
+     *
+     * @param string $key
+     * @param Container $input
+     * @return bool
+     */
+    public function isValid($key, Container $input)
+    {
+        $array = $input->getArrayCopy();
+
         if (isset($this->requiredCallback)) {
-            $this->required = call_user_func_array($this->requiredCallback, [$this->values]);
+            $this->required = call_user_func_array($this->requiredCallback, [$array]);
         }
 
         if (isset($this->allowEmptyCallback)) {
-            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$this->values]);
+            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$array]);
         }
 
-        if ($this->required && !array_key_exists($value, $this->values)) {
+        if ($this->required && !$input->has($key)) {
             $this->shouldBreak = true;
             return $this->error(self::NON_EXISTENT_KEY);
         }
 
-        if (!$this->required && !array_key_exists($value, $this->values)) {
+        if (!$this->required && !$input->has($key)) {
             $this->shouldBreak = true;
             return true;
         }
 
-        if (!$this->allowEmpty && strlen($this->values[$value]) === 0) {
+        if (!$this->allowEmpty && strlen($input->get($key)) === 0) {
             $this->shouldBreak = true;
             return $this->error(self::EMPTY_VALUE);
         }
 
         return true;
-    }
-
-    /**
-     * Overwrite of the normal isValid, because the Required validator has to check on key, not just value.
-     *
-     * @param string $key
-     * @param array $values
-     * @return bool
-     */
-    public function isValid($key, array $values)
-    {
-        $this->values = $values;
-
-        return $this->validate($key);
     }
 
     /**

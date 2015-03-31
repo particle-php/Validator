@@ -8,6 +8,8 @@
  */
 namespace Particle\Validator;
 
+use Particle\Validator\Value\Container;
+
 /**
  * Represents a collection of Rules which may break the chain of validation (but usually don't).
  *
@@ -236,17 +238,20 @@ class Chain
      * Validates the values in the $values array and appends messages to $messageStack. Returns the result as a bool.
      *
      * @param MessageStack $messageStack
-     * @param array $values
+     * @param Container $input
+     * @param Container $output
      * @return bool
      */
-    public function validate(MessageStack $messageStack, array $values)
+    public function validate(MessageStack $messageStack, Container $input, Container $output)
     {
         $valid = true;
+        $output->set($this->key, $input->get($this->key));
+
         foreach ($this->rules as $rule) {
             $rule->setMessageStack($messageStack);
             $rule->setParameters($this->key, $this->name);
 
-            $valid = $rule->isValid($this->key, $values) && $valid;
+            $valid = $rule->isValid($this->key, $input) && $valid;
 
             if ($rule->shouldBreakChain()) {
                 return $valid;
