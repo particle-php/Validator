@@ -7,6 +7,7 @@
  * @license   https://github.com/particle-php/validator/blob/master/LICENSE New BSD License
  */
 namespace Particle\Validator;
+
 use Particle\Validator\Value\Container;
 
 /**
