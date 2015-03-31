@@ -7,6 +7,7 @@
  * @license   https://github.com/particle-php/validator/blob/master/LICENSE New BSD License
  */
 namespace Particle\Validator;
+use Particle\Validator\Value\Container;
 
 /**
  * The Rule class is the abstract parent of all rules of Particle and defines their common behaviour.
@@ -98,13 +99,12 @@ abstract class Rule
      * Determines whether or not the value of $key is valid in the array $values and returns the result as a bool.
      *
      * @param string $key
-     * @param array $values
+     * @param Container $input
      * @return bool
      */
-    public function isValid($key, array $values)
+    public function isValid($key, Container $input)
     {
-        $value = array_key_exists($key, $values) ? $values[$key] : null;
-        return $this->validate($value, $values);
+        return $this->validate($input->get($key), $input->getArrayCopy());
     }
 
     /**

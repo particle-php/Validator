@@ -250,7 +250,7 @@ class Chain
             $rule->setMessageStack($messageStack);
             $rule->setParameters($this->key, $this->name);
 
-            $valid = $rule->isValid($this->key, $input->getArrayCopy()) && $valid;
+            $valid = $rule->isValid($this->key, $input) && $valid;
 
             if ($rule->shouldBreakChain()) {
                 return $valid;

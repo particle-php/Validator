@@ -10,6 +10,7 @@ namespace Particle\Validator\Rule;
 
 use Particle\Validator\Exception\InvalidValueException;
 use Particle\Validator\Rule;
+use Particle\Validator\Value\Container;
 
 /**
  * This rule is for validating a value with a custom callback.
@@ -36,6 +37,11 @@ class Callback extends Rule
      * @var callable
      */
     protected $callback;
+
+    /**
+     * @var Container
+     */
+    protected $input;
 
     /**
      * Construct the Callback validator.
@@ -74,12 +80,13 @@ class Callback extends Rule
      * Validates the value according to this rule, and returns the result as a bool.
      *
      * @param string $key
-     * @param array $values
+     * @param Container $input
      * @return bool
      */
-    public function isValid($key, array $values)
+    public function isValid($key, Container $input)
     {
-        $this->values = $values;
-        return parent::isValid($key, $values);
+        $this->values = $input->getArrayCopy();
+
+        return parent::isValid($key, $input);
     }
 }
