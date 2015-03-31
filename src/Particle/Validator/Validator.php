@@ -8,6 +8,8 @@
  */
 namespace Particle\Validator;
 
+use Particle\Validator\Value\Container;
+
 class Validator
 {
     /**
@@ -42,6 +44,13 @@ class Validator
      * @var array
      */
     protected $defaultMessages = [];
+
+    /**
+     * Contains a Value\Container to keep track of all values we *have* validated.
+     *
+     * @var Container
+     */
+    protected $output;
 
     /**
      * Construct the validator.
@@ -88,12 +97,25 @@ class Validator
     {
         $valid = true;
         $messageStack = $this->buildMessageStack($context);
+        $this->output = new Container();
+        $input = new Container($values);
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
-            $valid = $chain->validate($messageStack, $values) && $valid;
+            $valid = $chain->validate($messageStack, $input, $this->output) && $valid;
         }
         return $valid;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        if (!$this->output instanceof Container) {
+            return [];
+        }
+        return $this->output->getArrayCopy();
     }
 
     /**
