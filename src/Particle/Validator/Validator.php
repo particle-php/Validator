@@ -70,7 +70,7 @@ class Validator
      */
     public function required($key, $name = null, $allowEmpty = false)
     {
-        return $this->buildChain($key, $name, true, $allowEmpty);
+        return $this->getChain($key, $name, true, $allowEmpty);
     }
 
     /**
@@ -83,7 +83,7 @@ class Validator
      */
     public function optional($key, $name = null, $allowEmpty = true)
     {
-        return $this->buildChain($key, $name, false, $allowEmpty);
+        return $this->getChain($key, $name, false, $allowEmpty);
     }
 
     /**
@@ -166,7 +166,24 @@ class Validator
     }
 
     /**
-     * Builds, stores and returns a new Chain object.
+     * Retrieves a Chain object, or builds one if it doesn't exist yet.
+     *
+     * @param string $key
+     * @param string $name
+     * @param bool $required
+     * @param bool $allowEmpty
+     * @return Chain
+     */
+    protected function getChain($key, $name, $required, $allowEmpty)
+    {
+        if (isset($this->chains[$this->context][$key])) {
+            return $this->chains[$this->context][$key];
+        }
+        return $this->chains[$this->context][$key] = $this->buildChain($key, $name, $required, $allowEmpty);
+    }
+
+    /**
+     * Build a new Chain object and return it.
      *
      * @param string $key
      * @param string $name
@@ -176,10 +193,7 @@ class Validator
      */
     protected function buildChain($key, $name, $required, $allowEmpty)
     {
-        if (isset($this->chains[$this->context][$key])) {
-            return $this->chains[$this->context][$key];
-        }
-        return $this->chains[$this->context][$key] = new Chain($key, $name, $required, $allowEmpty);
+        return new Chain($key, $name, $required, $allowEmpty);
     }
 
     /**
