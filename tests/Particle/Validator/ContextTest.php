@@ -56,4 +56,27 @@ class ContextTest extends PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expected, $this->validator->getMessages());
     }
+
+    public function testMessagesWillBeInheritedFromDefaultContext()
+    {
+        $this->validator->context('insert', function (Validator $context) {
+            $context->required('first_name')->length(5);
+        });
+
+        $this->validator->overwriteMessages([
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'This is outside of the context',
+            ]
+        ]);
+
+        $this->validator->validate(['first_name' => 'Rick'], 'insert');
+
+        $expected = [
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'This is outside of the context'
+            ]
+        ];
+
+        $this->assertEquals($expected, $this->validator->getMessages());
+    }
 }

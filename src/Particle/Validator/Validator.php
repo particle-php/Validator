@@ -193,8 +193,10 @@ class Validator
         $this->messageStack = new MessageStack();
         $this->messageStack->overwriteDefaultMessages($this->defaultMessages);
 
-        if (isset($this->messageOverwrites[$context])) {
-            $this->messageStack->overwriteMessages($this->messageOverwrites[$context]);
+        foreach ([self::DEFAULT_CONTEXT, $context] as $currentContext) {
+            if (isset($this->messageOverwrites[$currentContext])) {
+                $this->messageStack->overwriteMessages($this->messageOverwrites[$currentContext]);
+            }
         }
 
         return $this->messageStack;
