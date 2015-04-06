@@ -129,6 +129,35 @@ class Validator
     }
 
     /**
+     * Copy the rules and messages of the context $otherContext to the current context.
+     *
+     * @param string $otherContext
+     * @param callable|null $callback
+     * @return $this
+     */
+    public function copyContext($otherContext, callable $callback = null)
+    {
+        if (isset($this->messageOverwrites[$otherContext])) {
+            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
+        }
+
+        if (isset($this->chains[$otherContext])) {
+            $clonedChains = [];
+            foreach ($this->chains[$otherContext] as $key => $chain) {
+                $clonedChains[$key] = clone $chain;
+            }
+
+            if ($callback !== null) {
+                $callback($clonedChains);
+            }
+
+            $this->chains[$this->context] = $clonedChains;
+        }
+
+        return $this;
+    }
+
+    /**
      * Create a new validation context with the closure $closure.
      *
      * @param string $name

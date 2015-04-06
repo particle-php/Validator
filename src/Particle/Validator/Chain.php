@@ -62,6 +62,18 @@ class Chain
     }
 
     /**
+     * Overwrite the default __clone behaviour to make sure the rules are cloned too.
+     */
+    public function __clone()
+    {
+        $rules = [];
+        foreach ($this->rules as $rule) {
+            $rules[] = clone $rule;
+        }
+        $this->rules = $rules;
+    }
+
+    /**
      * Validate the value to consist only out of alphanumeric characters.
      *
      * @param bool $allowWhitespace
