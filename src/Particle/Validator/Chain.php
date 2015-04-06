@@ -173,10 +173,12 @@ class Chain
     }
 
     /**
-     * Validates that the length of the value is between $min and $max. Inclusive is the default.
+     * Validates that the length of the value is between $min and $max.
+     *
+     * If $max is null, it has no upper limit. The default is inclusive.
      *
      * @param int $min
-     * @param int $max
+     * @param int|null $max
      * @param bool $inclusive
      * @return Chain
      */

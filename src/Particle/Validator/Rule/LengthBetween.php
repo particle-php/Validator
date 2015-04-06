@@ -60,7 +60,7 @@ class LengthBetween extends Rule
 
     /**
      * @param int $min
-     * @param int $max
+     * @param int|null $max
      * @param bool $inclusive
      */
     public function __construct($min, $max, $inclusive = true)
@@ -80,8 +80,10 @@ class LengthBetween extends Rule
     {
         $length = strlen($value);
 
-        if (($this->inclusive && $length > $this->max) || (!$this->inclusive && $length >= $this->max)) {
-            return $this->error(self::TOO_LONG);
+        if ($this->max !== null) {
+            if (($this->inclusive && $length > $this->max) || (!$this->inclusive && $length >= $this->max)) {
+                return $this->error(self::TOO_LONG);
+            }
         }
 
         if (($this->inclusive && $length < $this->min) || (!$this->inclusive && $length <= $this->min)) {
