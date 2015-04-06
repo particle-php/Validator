@@ -179,7 +179,7 @@ class Validator
         if (isset($this->chains[$this->context][$key])) {
             return $this->chains[$this->context][$key];
         }
-        return $this->chains[$this->context][$key] = $this->buildChain($key, $name, $required ,$allowEmpty);
+        return $this->chains[$this->context][$key] = $this->buildChain($key, $name, $required, $allowEmpty);
     }
 
     /**
