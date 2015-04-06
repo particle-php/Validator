@@ -22,6 +22,13 @@ class LengthBetweenTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->validator->getMessages());
     }
 
+    public function testReturnsTrueIfMaxIsNull()
+    {
+        $this->validator->required('password')->lengthBetween(2, null);
+        $this->assertTrue($this->validator->validate(['password' => str_repeat('foo', 100)]));
+        $this->assertEquals([], $this->validator->getMessages());
+    }
+
     /**
      * @dataProvider getValues
      * @param $value
