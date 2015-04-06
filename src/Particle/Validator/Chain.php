@@ -65,7 +65,7 @@ class Chain
      * Validate the value to consist only out of alphanumeric characters.
      *
      * @param bool $allowWhitespace
-     * @return Chain
+     * @return $this
      */
     public function alnum($allowWhitespace = false)
     {
@@ -76,7 +76,7 @@ class Chain
      * Validate that the value only consists our of alphabetic characters.
      *
      * @param bool $allowWhitespace
-     * @return Chain
+     * @return $this
      */
     public function alpha($allowWhitespace = false)
     {
@@ -89,7 +89,7 @@ class Chain
      * @param int $min
      * @param int $max
      * @param bool $inclusive
-     * @return Chain
+     * @return $this
      */
     public function between($min, $max, $inclusive = true)
     {
@@ -100,7 +100,7 @@ class Chain
      * Validate by executing a callback function, and returning its result.
      *
      * @param callable $callable
-     * @return Chain
+     * @return $this
      */
     public function callback(callable $callable)
     {
@@ -111,7 +111,7 @@ class Chain
      * Validates that the value is a date. If format is passed, it *must* be in that format.
      *
      * @param string|null $format
-     * @return Chain
+     * @return $this
      */
     public function datetime($format = null)
     {
@@ -121,7 +121,7 @@ class Chain
     /**
      * Validates that all characters of the value are decimal digits.
      *
-     * @return Chain
+     * @return $this
      */
     public function digits()
     {
@@ -130,7 +130,7 @@ class Chain
 
     /**
      * Validates that the value is a valid email address (format only).
-     * @return Chain
+     * @return $this
      */
     public function email()
     {
@@ -141,7 +141,7 @@ class Chain
      * Validates that the value is equal to $value.
      *
      * @param string $value
-     * @return Chain
+     * @return $this
      */
     public function equals($value)
     {
@@ -153,8 +153,7 @@ class Chain
      *
      * @param array $array
      * @param bool $strict
-     *
-     * @return Chain
+     * @return $this
      */
     public function inArray(array $array, $strict = true)
     {
@@ -165,7 +164,7 @@ class Chain
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
-     * @return Chain
+     * @return $this
      */
     public function length($length)
     {
@@ -180,7 +179,7 @@ class Chain
      * @param int $min
      * @param int|null $max
      * @param bool $inclusive
-     * @return Chain
+     * @return $this
      */
     public function lengthBetween($min, $max, $inclusive = true)
     {
@@ -191,7 +190,7 @@ class Chain
      * Validates that the value matches the regular expression $regex.
      *
      * @param string $regex
-     * @return Chain
+     * @return $this
      */
     public function regex($regex)
     {
@@ -201,7 +200,7 @@ class Chain
     /**
      * Validates that the value is a valid URL.
      *
-     * @return Chain
+     * @return $this
      */
     public function url()
     {
