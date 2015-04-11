@@ -28,7 +28,7 @@ class Url extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_URL => 'The value of "{{ name }}" must be a valid URL.'
+        self::INVALID_URL => 'The value of "{{ name }}" must be a valid URL'
     ];
 
     /**
