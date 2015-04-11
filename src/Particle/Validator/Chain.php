@@ -220,6 +220,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid UUIDv4
+     *
+     * @return Chain
+     * @see \Particle\Validator\Rule\UuidV4
+     */
+    public function uuidv4()
+    {
+        return $this->addRule(new Rule\UuidV4());
+    }
+
+    /**
      * Set a callable which may be used to alter the required requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
