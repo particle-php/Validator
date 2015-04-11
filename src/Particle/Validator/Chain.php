@@ -141,6 +141,17 @@ class Chain
     }
 
     /**
+     * Validates the value represents a valid integer
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\Integer
+     */
+    public function integer()
+    {
+        return $this->addRule(new Rule\Integer());
+    }
+
+    /**
      * Validates that the value is a valid email address (format only).
      * @return $this
      */
