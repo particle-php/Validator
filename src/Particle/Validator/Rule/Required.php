@@ -109,6 +109,11 @@ class Required extends Rule
      */
     public function validate($value)
     {
+        if (!$this->allowEmpty && strlen($value) === 0) {
+            $this->shouldBreak = true;
+            return $this->error(self::EMPTY_VALUE);
+        }
+
         return true;
     }
 
@@ -125,16 +130,10 @@ class Required extends Rule
         $this->allowEmpty = $this->hasAllowEmpty($input);
 
         if (!$input->has($key)) {
-            $this->shouldBreak = true;
-            return $this->required ? $this->error(self::NON_EXISTENT_KEY) : true;
+            return $this->checkRequired($this->required);
         }
 
-        if (!$this->allowEmpty && strlen($input->get($key)) === 0) {
-            $this->shouldBreak = true;
-            return $this->error(self::EMPTY_VALUE);
-        }
-
-        return $this->validate(true);
+        return $this->validate($input->get($key));
     }
 
     /**
@@ -191,5 +190,17 @@ class Required extends Rule
             $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$input->getArrayCopy()]);
         }
         return $this->allowEmpty;
+    }
+
+    /**
+     * Returns an error on a required value, and true on an optional value.
+     *
+     * @return bool
+     */
+    protected function checkRequired()
+    {
+        $this->shouldBreak = true;
+
+        return $this->required ? $this->error(self::NON_EXISTENT_KEY) : true;
     }
 }
