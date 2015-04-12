@@ -11,16 +11,16 @@ namespace Particle\Validator\Rule;
 use Particle\Validator\Rule;
 
 /**
- * This rule is for validating if a the value is a valid URL.
+ * This rule is for validating if a value represents an integer.
  *
  * @package Particle\Validator\Rule
  */
-class Url extends Rule
+class Integer extends Rule
 {
     /**
-     * A constant that will be used if the value is not a valid URL.
+     * A constant that will be used when the value does not represent an integer value.
      */
-    const INVALID_URL = 'Url::INVALID_URL';
+    const NOT_AN_INTEGER = 'Integer::NOT_AN_INTEGER';
 
     /**
      * The message templates which can be returned by this validator.
@@ -28,22 +28,20 @@ class Url extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_URL => 'The value of "{{ name }}" must be a valid URL'
+        self::NOT_AN_INTEGER => 'The value of "{{ name }}" must represent an integer',
     ];
 
     /**
-     * Validates if the value is a valid URL.
+     * Validates if $value represents an integer.
      *
      * @param mixed $value
      * @return bool
      */
     public function validate($value)
     {
-        $url = filter_var($value, FILTER_VALIDATE_URL);
-
-        if ($url !== false) {
+        if (false !== filter_var($value, FILTER_VALIDATE_INT)) {
             return true;
         }
-        return $this->error(self::INVALID_URL);
+        return $this->error(self::NOT_AN_INTEGER);
     }
 }

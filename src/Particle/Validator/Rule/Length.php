@@ -38,6 +38,13 @@ class Length extends Rule
     ];
 
     /**
+     * The length the value should have.
+     *
+     * @var int
+     */
+    protected $length;
+
+    /**
      * Construct the Length validator.
      *
      * @param int $length

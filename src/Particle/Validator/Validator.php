@@ -53,6 +53,13 @@ class Validator
     protected $output;
 
     /**
+     * Contains the name of the current context.
+     *
+     * @var string
+     */
+    protected $context;
+
+    /**
      * Construct the validator.
      */
     public function __construct()

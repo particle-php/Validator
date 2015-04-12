@@ -105,7 +105,7 @@ abstract class Rule
      */
     public function isValid($key, Container $input)
     {
-        return $this->validate($input->get($key), $input->getArrayCopy());
+        return $this->validate($input->get($key));
     }
 
     /**
