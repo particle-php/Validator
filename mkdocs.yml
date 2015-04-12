@@ -1,0 +1,9 @@
+site_name: Particle Validator
+theme: readthedocs
+pages:
+- [index.md, Home]
+- [installation.md, Installing]
+- [rules.md, Default rules]
+- [messages.md, Overwriting messages]
+- [extending.md, Extending the Validator]
+
