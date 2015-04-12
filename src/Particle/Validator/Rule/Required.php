@@ -130,7 +130,7 @@ class Required extends Rule
         $this->allowEmpty = $this->hasAllowEmpty($input);
 
         if (!$input->has($key)) {
-            return $this->checkRequired($this->required);
+            return $this->checkRequired();
         }
 
         return $this->validate($input->get($key));
