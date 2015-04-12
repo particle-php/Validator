@@ -256,4 +256,10 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->validator->getValues());
     }
+
+    public function testReturnsEmptyArrayInsteadOfValidatedValues()
+    {
+        $this->validator->required('first_name')->lengthBetween(2, 20);
+        $this->assertEquals([], $this->validator->getValues());
+    }
 }
