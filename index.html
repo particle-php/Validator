@@ -47,12 +47,6 @@
             <!-- Main navigation -->
             <ul class="nav navbar-nav">
             
-            
-                <li >
-                    <a href="installation/">Installation</a>
-                </li>
-            
-            
             </ul>
 
             <!-- Search, Navigation and Repo links -->
@@ -63,8 +57,8 @@
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="installation/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -80,12 +74,32 @@
     
         <li class="main active"><a href="#particle-validator">Particle Validator</a></li>
         
+            <li><a href="#installing">Installing</a></li>
+        
+            <li><a href="#first-usage">First usage</a></li>
+        
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
 <h1 id="particle-validator">Particle Validator</h1>
+<p>Particle\Validator is a small and elegant validation library, with an extremely clean API 
+which makes validation <strong>fun</strong>!</p>
+<h2 id="installing">Installing</h2>
+<p>Installing Particle\Validator is very easy, if you're using <a href="http://getcomposer.com">composer</a>. 
+If you haven't done so, install composer, and use <code>composer require</code> to install Particle\Validator.</p>
+<pre><code class="bash">curl -sS https://getcomposer.org/installer | php
+php composer.phar require particle/validator
+</code></pre>
+
+<h2 id="first-usage">First usage</h2>
+<p>To make sure all Particle\Validator classes can be autoloaded, you have to include "vendor/autoload.php":</p>
+<pre><code class="php">require_once __DIR__ . '/../vendor/autoload.php';
+
+$v = new Particle\Validator;
+</code></pre>
+
 </div>
         </div>
 
