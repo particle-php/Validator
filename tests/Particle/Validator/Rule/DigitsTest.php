@@ -41,7 +41,8 @@ class DigitsTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['133.7'],
-            ['a1211']
+            ['a1211'],
+            ['-12'],
         ];
     }
 
