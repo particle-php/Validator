@@ -34,4 +34,10 @@ class UuidV4Test extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $this->validator->getMessages());
     }
+
+    public function testThrowsExceptionOnUnknownVersion()
+    {
+        $this->setExpectedException('\InvalidArgumentException', 'Unknown UUID version "2"');
+        $this->validator->required('guid')->uuid(2);
+    }
 }
