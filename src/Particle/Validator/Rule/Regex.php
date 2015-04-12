@@ -56,12 +56,24 @@ class Regex extends Rule
      */
     public function validate($value)
     {
-        $result = preg_match($this->regex, $value);
+        return $this->match($this->regex, $value, self::NO_MATCH);
+    }
+
+    /**
+     * A method to match against a regex. If it doesn't match, it will log the message $reason.
+     *
+     * @param string $regex
+     * @param mixed $value
+     * @param string $reason
+     * @return bool
+     */
+    protected function match($regex, $value, $reason)
+    {
+        $result = preg_match($regex, $value);
 
         if ($result === 0) {
-            return $this->error(self::NO_MATCH);
+            return $this->error($reason);
         }
-
         return true;
     }
 }

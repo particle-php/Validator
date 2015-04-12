@@ -15,12 +15,22 @@ use Particle\Validator\Rule;
  *
  * @package Particle\Validator\Rule
  */
-class Alpha extends Rule
+class Alpha extends Regex
 {
     /**
      * A constant that will be used for the error message when the value contains non-alphabetic characters.
      */
     const NOT_ALPHA = 'Alpha::NOT_ALPHA';
+
+    /**
+     * A constant indicated spaces are allowed.
+     */
+    const ALLOW_SPACES = true;
+
+    /**
+     * A constant indicating spaces are *not* allowed.
+     */
+    const DISALLOW_SPACES = false;
 
     /**
      * The message templates which can be returned by this validator.
@@ -32,18 +42,13 @@ class Alpha extends Rule
     ];
 
     /**
-     * @var bool
-     */
-    protected $allowWhitespace;
-
-    /**
      * Construct the Alpha rule.
      *
      * @param bool $allowWhitespace
      */
     public function __construct($allowWhitespace)
     {
-        $this->allowWhitespace = (bool) $allowWhitespace;
+        $this->regex = $allowWhitespace ? '~^[\p{L}\s]*$~iu' : '~^[\p{L}]*$~ui';
     }
 
     /**
@@ -54,11 +59,6 @@ class Alpha extends Rule
      */
     public function validate($value)
     {
-        $regex = $this->allowWhitespace ? '~^[\p{L}\s]*$~iu' : '~^[\p{L}]*$~ui';
-
-        if (preg_match($regex, $value) === 0) {
-            return $this->error(self::NOT_ALPHA);
-        }
-        return true;
+        return $this->match($this->regex, $value, self::NOT_ALPHA);
     }
 }

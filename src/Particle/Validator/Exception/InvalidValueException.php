@@ -29,7 +29,7 @@ class InvalidValueException extends \Exception implements ExceptionInterface
 
     /**
      * @param string $message
-     * @param int $identifier
+     * @param string $identifier
      * @param \Exception $previous
      */
     public function __construct($message, $identifier, \Exception $previous = null)
