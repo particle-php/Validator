@@ -231,14 +231,14 @@ class Chain
     }
 
     /**
-     * Validates that the value is a valid UUIDv4
+     * Validates that the value is a valid UUID
      *
+     * @param int $version
      * @return Chain
-     * @see \Particle\Validator\Rule\UuidV4
      */
-    public function uuidv4()
+    public function uuid($version = Rule\Uuid::UUID_V4)
     {
-        return $this->addRule(new Rule\UuidV4());
+        return $this->addRule(new Rule\Uuid($version));
     }
 
     /**
