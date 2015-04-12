@@ -47,11 +47,25 @@ class Required extends Rule
     protected $shouldBreak;
 
     /**
+     * Indicates if the value is required.
+     *
+     * @var bool
+     */
+    protected $required;
+
+    /**
      * Optionally contains a callable to overwrite the required requirement on time of validation.
      *
      * @var callable
      */
     protected $requiredCallback;
+
+    /**
+     * Indicates if the value can be empty.
+     *
+     * @var bool
+     */
+    protected $allowEmpty;
 
     /**
      * Optionally contains a callable to overwrite the allow empty requirement on time of validation.

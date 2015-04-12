@@ -15,12 +15,22 @@ use Particle\Validator\Rule;
  *
  * @package Particle\Validator\Rule
  */
-class Alnum extends Rule
+class Alnum extends Regex
 {
     /**
      * A constant that will be used for the error message when the value is not alphanumeric.
      */
     const NOT_ALNUM = 'Alnum::NOT_ALNUM';
+
+    /**
+     * A constant indicating spaces are allowed.
+     */
+    const ALLOW_SPACES = true;
+
+    /**
+     * A constant indicated spaces are *not* allowed.
+     */
+    const DISALLOW_SPACES = false;
 
     /**
      * The message templates which can be returned by this validator.
@@ -32,20 +42,13 @@ class Alnum extends Rule
     ];
 
     /**
-     * Indicates whether or not this rule should accept spaces.
-     *
-     * @var bool
-     */
-    protected $allowSpaces;
-
-    /**
      * Construct the validation rule.
      *
      * @param bool $allowSpaces
      */
     public function __construct($allowSpaces)
     {
-        $this->allowSpaces = (bool) $allowSpaces;
+        $this->regex = $allowSpaces ? '~^[\p{L}0-9\s]*~iu' : '~^[\p{L}0-9]*$~iu';
     }
 
     /**
@@ -56,11 +59,6 @@ class Alnum extends Rule
      */
     public function validate($value)
     {
-        $pattern = $this->allowSpaces ? '~^[\p{L}0-9\s]*~iu' : '~^[\p{L}0-9]*$~iu';
-
-        if (preg_match($pattern, $value) === 0) {
-            return $this->error(self::NOT_ALNUM);
-        }
-        return true;
+        return $this->match($this->regex, $value, self::NOT_ALNUM);
     }
 }
