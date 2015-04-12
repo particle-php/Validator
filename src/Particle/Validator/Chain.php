@@ -231,6 +231,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid UUID
+     *
+     * @param int $version
+     * @return Chain
+     */
+    public function uuid($version = Rule\Uuid::UUID_V4)
+    {
+        return $this->addRule(new Rule\Uuid($version));
+    }
+
+    /**
      * Set a callable which may be used to alter the required requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
