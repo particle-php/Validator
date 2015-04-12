@@ -121,24 +121,12 @@ class Required extends Rule
      */
     public function isValid($key, Container $input)
     {
-        $array = $input->getArrayCopy();
+        $this->required = $this->isRequired($input);
+        $this->allowEmpty = $this->hasAllowEmpty($input);
 
-        if (isset($this->requiredCallback)) {
-            $this->required = call_user_func_array($this->requiredCallback, [$array]);
-        }
-
-        if (isset($this->allowEmptyCallback)) {
-            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$array]);
-        }
-
-        if ($this->required && !$input->has($key)) {
+        if (!$input->has($key)) {
             $this->shouldBreak = true;
-            return $this->error(self::NON_EXISTENT_KEY);
-        }
-
-        if (!$this->required && !$input->has($key)) {
-            $this->shouldBreak = true;
-            return true;
+            return $this->required ? $this->error(self::NON_EXISTENT_KEY) : true;
         }
 
         if (!$this->allowEmpty && strlen($input->get($key)) === 0) {
@@ -146,7 +134,7 @@ class Required extends Rule
             return $this->error(self::EMPTY_VALUE);
         }
 
-        return true;
+        return $this->validate(true);
     }
 
     /**
@@ -175,5 +163,33 @@ class Required extends Rule
     {
         $this->allowEmptyCallback = $allowEmpty;
         return $this;
+    }
+
+    /**
+     * Determines if the value is required.
+     *
+     * @param Container $input
+     * @return bool
+     */
+    protected function isRequired(Container $input)
+    {
+        if (isset($this->requiredCallback)) {
+            $this->required = call_user_func_array($this->requiredCallback, [$input->getArrayCopy()]);
+        }
+        return $this->required;
+    }
+
+    /**
+     * Determines if the value may be empty.
+     *
+     * @param Container $input
+     * @return bool
+     */
+    public function hasAllowEmpty(Container $input)
+    {
+        if (isset($this->allowEmptyCallback)) {
+            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$input->getArrayCopy()]);
+        }
+        return $this->allowEmpty;
     }
 }
