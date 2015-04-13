@@ -27,8 +27,8 @@ $v->getMessages(); // array with error messages.
 * Override the error messages
 * Get the validated data array
 * Validate different contexts (insert, update, ect)
-* IDEA auto-completion for easy development
+* IDE auto-completion for easy development
 
 ===
 
-Find more information and advanced useage examples at [validator.particle-php.com](http://validator.particle-php.com)
+Find more information and advanced usage examples at [validator.particle-php.com](http://validator.particle-php.com)
