@@ -3,7 +3,9 @@ theme: readthedocs
 pages:
 - [index.md, Home]
 - [installation.md, Installing]
+- [required-optional.md, Required and optional]
 - [rules.md, Default rules]
 - [messages.md, Overwriting messages]
+- [contexts.md, Using contexts]
 - [extending.md, Extending the Validator]
 

@@ -2,12 +2,6 @@
 
 There is a large number of default rules in Particle\Validator.
 
-## Required and allowEmpty
-
-Required and optional are special cases within Particle\Validator. They are only about whether or not the *key* is 
-required, not the value. In case of a non-required value, you may use allowEmpty, which is the third parameter to
-`required` and `optional`.
-
 ## List of rules
 
 ### alnum($allowWhitespace = false)
