@@ -1,4 +1,5 @@
-# Particle\Validator
+![image](https://cloud.githubusercontent.com/assets/6495166/7207286/8b48105e-e538-11e4-9dfa-97c7fb2398aa.png)
+===
 
 [![Travis-CI](https://img.shields.io/travis/particle-php/Validator/master.svg)](https://travis-ci.org/particle-php/Validator)
 [![Packagist](https://img.shields.io/packagist/v/particle/validator.svg)](https://packagist.org/packages/particle/validator)
