@@ -48,7 +48,7 @@ class Alnum extends Regex
      */
     public function __construct($allowSpaces)
     {
-        $this->regex = $allowSpaces ? '~^[\p{L}0-9\s]*~iu' : '~^[\p{L}0-9]*$~iu';
+        $this->regex = $allowSpaces ? '~^[\p{L}0-9\s]*$~iu' : '~^[\p{L}0-9]*$~iu';
     }
 
     /**
