@@ -81,14 +81,17 @@ class LengthBetween extends Rule
         $length = strlen($value);
 
         if ($this->max !== null) {
-            if (($this->inclusive && $length > $this->max) || (!$this->inclusive && $length >= $this->max)) {
+            $maxLength = $this->inclusive ? $this->max : $this->max - 1;
+            if ($length > $maxLength) {
                 return $this->error(self::TOO_LONG);
             }
         }
 
-        if (($this->inclusive && $length < $this->min) || (!$this->inclusive && $length <= $this->min)) {
+        $minLength = $this->inclusive ? $this->min : $this->min + 1;
+        if ($length < $minLength) {
             return $this->error(self::TOO_SHORT);
         }
+
         return true;
     }
 
