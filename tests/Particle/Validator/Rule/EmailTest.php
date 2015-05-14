@@ -35,7 +35,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->validator->validate(['email' => $value]));
         $expected = [
             'email' => [
-                Email::INVALID_FORMAT => 'The value of "email" must be a valid email address'
+                Email::INVALID_FORMAT => 'email must be a valid email address'
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());

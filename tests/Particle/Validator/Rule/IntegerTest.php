@@ -65,7 +65,7 @@ class IntegerTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Integer::NOT_AN_INTEGER => 'The value of "integer" must represent an integer'
+            Integer::NOT_AN_INTEGER => 'integer must be an integer'
         ];
 
         return $messages[$reason];

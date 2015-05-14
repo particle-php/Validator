@@ -25,7 +25,7 @@ class DatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($result);
         $expected = [
             'time' => [
-                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'The value of "time" is not a valid date'
+                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'time must be a valid date'
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());
@@ -47,7 +47,7 @@ class DatetimeTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($result);
         $expected = [
             'time' => [
-                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'The value of "time" is not a valid date'
+                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'time must be a valid date'
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());

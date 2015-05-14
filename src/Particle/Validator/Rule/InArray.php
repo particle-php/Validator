@@ -28,7 +28,7 @@ class InArray extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_IN_ARRAY => 'The value of "{{ name }}" is not in the defined set of values',
+        self::NOT_IN_ARRAY => '{{ name }} must be in the defined set of values',
     ];
 
     protected $array = [];

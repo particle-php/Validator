@@ -49,7 +49,7 @@ class DigitsTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Digits::NOT_DIGITS => 'The value of "digits" must consist only out of digits'
+            Digits::NOT_DIGITS => 'digits may only consist out of digits'
         ];
 
         return $messages[$reason];

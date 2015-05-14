@@ -28,7 +28,7 @@ class Integer extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_AN_INTEGER => 'The value of "{{ name }}" must represent an integer',
+        self::NOT_AN_INTEGER => '{{ name }} must be an integer',
     ];
 
     /**

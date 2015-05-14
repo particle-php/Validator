@@ -28,7 +28,7 @@ class Digits extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_DIGITS => 'The value of "{{ name }}" must consist only out of digits',
+        self::NOT_DIGITS => '{{ name }} may only consist out of digits',
     ];
 
     /**

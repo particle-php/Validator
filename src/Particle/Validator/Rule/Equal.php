@@ -28,7 +28,7 @@ class Equal extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_EQUAL => 'The value of "{{ name }}" must be equal to "{{ testvalue }}"'
+        self::NOT_EQUAL => '{{ name }} must be equal to "{{ testvalue }}"'
     ];
 
     /**
