@@ -80,7 +80,7 @@ class CallbackTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Callback::INVALID_VALUE => 'The value of "first name" is invalid'
+            Callback::INVALID_VALUE => 'first name is invalid'
         ];
 
         return $messages[$reason];

@@ -30,7 +30,7 @@ class Callback extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_VALUE => 'The value of "{{ name }}" is invalid',
+        self::INVALID_VALUE => '{{ name }} is invalid',
     ];
 
     /**

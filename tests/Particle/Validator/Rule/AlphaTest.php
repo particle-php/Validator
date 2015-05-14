@@ -94,7 +94,7 @@ class AlphaTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Alpha::NOT_ALPHA => 'The value of "first name" can only consist out of alphabetic characters',
+            Alpha::NOT_ALPHA => 'first name may only consist out of alphabetic characters',
         ];
 
         return $messages[$reason];

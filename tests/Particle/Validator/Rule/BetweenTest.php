@@ -78,7 +78,7 @@ class BetweenTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Between::NOT_BETWEEN => 'Value of "number" must be between 1 and 10'
+            Between::NOT_BETWEEN => 'number must be between 1 and 10'
         ];
 
         return $messages[$reason];
