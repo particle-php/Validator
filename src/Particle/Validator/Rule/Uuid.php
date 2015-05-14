@@ -42,7 +42,7 @@ class Uuid extends Regex
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_UUID => 'The value of "{{ name }}" must be a valid UUID (v{{ version }})'
+        self::INVALID_UUID => '{{ name }} must be a valid UUID (v{{ version }})'
     ];
 
     /**

@@ -33,8 +33,8 @@ class LengthBetween extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::TOO_LONG => 'The length of "{{ name }}" is too long, must be shorter than {{ max }} characters',
-        self::TOO_SHORT => 'The length of "{{ name }}" is too short, must be longer than {{ min}} characters'
+        self::TOO_LONG => '{{ name }} is too long and must be shorter than {{ max }} characters',
+        self::TOO_SHORT => '{{ name }} is too short and must be longer than {{ min }} characters'
     ];
 
     /**

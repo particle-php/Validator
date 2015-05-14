@@ -27,7 +27,7 @@ class RegexTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->validator->validate(['first_name' => 'Berry']));
         $expected = [
             'first_name' => [
-                Regex::NO_MATCH => 'The value of "first name" is invalid'
+                Regex::NO_MATCH => 'first name is invalid'
             ]
         ];
 

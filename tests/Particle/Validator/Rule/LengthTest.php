@@ -60,8 +60,8 @@ class LengthTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Length::TOO_SHORT => 'The value of "first name" is too short, should be 5 characters long',
-            Length::TOO_LONG => 'The value of "first name" is too long, should be 5 characters long',
+            Length::TOO_SHORT => 'first name is too short and must be 5 characters long',
+            Length::TOO_LONG => 'first name is too long and must be 5 characters long',
         ];
         return $messages[$reason];
     }

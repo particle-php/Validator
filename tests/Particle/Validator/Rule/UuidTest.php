@@ -28,7 +28,7 @@ class UuidV4Test extends PHPUnit_Framework_TestCase
 
         $expected = [
             'guid' => [
-                Uuid::INVALID_UUID => 'The value of "guid" must be a valid UUID (v4)'
+                Uuid::INVALID_UUID => 'guid must be a valid UUID (v4)'
             ]
         ];
 

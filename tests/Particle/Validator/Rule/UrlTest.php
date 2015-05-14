@@ -36,7 +36,7 @@ class UrlTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->validator->validate(['url' => $value]));
         $expected = [
             'url' => [
-                Url::INVALID_URL => 'The value of "url" must be a valid URL'
+                Url::INVALID_URL => 'url must be a valid URL'
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());
