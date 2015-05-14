@@ -1,8 +1,9 @@
 <?php
+namespace Particle\Tests;
 
 use Particle\Validator\MessageStack;
 
-class MessageChainTest extends PHPUnit_Framework_TestCase
+class MessageChainTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanFormatMessagesByReplacingPlaceholders()
     {

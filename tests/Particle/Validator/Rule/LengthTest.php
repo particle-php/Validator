@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Length;
 use Particle\Validator\Validator;
 
-class LengthTest extends PHPUnit_Framework_TestCase
+class LengthTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

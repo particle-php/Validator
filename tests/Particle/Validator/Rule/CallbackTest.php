@@ -1,9 +1,11 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Exception\InvalidValueException;
 use Particle\Validator\Rule\Callback;
 use Particle\Validator\Validator;
 
-class CallbackTest extends PHPUnit_Framework_TestCase
+class CallbackTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator
@@ -17,7 +19,7 @@ class CallbackTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsTrueWhenCallbackReturnsTrue()
     {
-        $this->validator->required('first_name')->callback(function($value) {
+        $this->validator->required('first_name')->callback(function ($value) {
             return $value === 'berry';
         });
 
@@ -27,7 +29,7 @@ class CallbackTest extends PHPUnit_Framework_TestCase
 
     public function testReturnsFalseAndLogsErrorWhenCallbackReturnsFalse()
     {
-        $this->validator->required('first_name')->callback(function($value) {
+        $this->validator->required('first_name')->callback(function ($value) {
             return $value !== 'berry';
         });
 
@@ -45,7 +47,7 @@ class CallbackTest extends PHPUnit_Framework_TestCase
 
     public function testCanLogDifferentErrorMessageByThrowingException()
     {
-        $this->validator->required('first_name')->callback(function($value) {
+        $this->validator->required('first_name')->callback(function ($value) {
             if ($value !== 'berry') {
                 throw new InvalidValueException(
                     'This is my error',
@@ -69,7 +71,7 @@ class CallbackTest extends PHPUnit_Framework_TestCase
 
     public function testCanReadTheContextOfValidation()
     {
-        $this->validator->required('first_name')->callback(function($value, $context) {
+        $this->validator->required('first_name')->callback(function ($value, $context) {
             return $context['last_name'] === 'Langerak' && $value === 'Berry';
         });
 

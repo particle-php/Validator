@@ -1,10 +1,11 @@
 <?php
+namespace Particle\Tests;
 
 use Particle\Validator\Chain;
 use Particle\Validator\Rule;
 use Particle\Validator\Validator;
 
-class ContextTest extends PHPUnit_Framework_TestCase
+class ContextTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator
@@ -18,7 +19,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     public function testCanBeValidatedIndependently()
     {
-        $this->validator->context('insert', function(Validator $context) {
+        $this->validator->context('insert', function (Validator $context) {
             $context->required('first_name')->length(5);
         });
 
@@ -82,7 +83,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     public function testContextCanCopyRulesFromOtherContext()
     {
-        $this->validator->context('insert', function(Validator $context) {
+        $this->validator->context('insert', function (Validator $context) {
             $context->overwriteMessages([
                 'first_name' => [
                     Rule\Length::TOO_SHORT => 'From inside the "insert" context.'
@@ -92,7 +93,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
             $context->required('first_name')->length(5);
         });
 
-        $this->validator->context('update', function(Validator $context) {
+        $this->validator->context('update', function (Validator $context) {
             $context->copyContext('insert');
         });
 
@@ -108,15 +109,15 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     public function testContextCopyCanAlterChains()
     {
-        $this->validator->context('insert', function(Validator $context) {
+        $this->validator->context('insert', function (Validator $context) {
             $context->required('first_name')->length(5);
         });
 
-        $this->validator->context('update', function(Validator $context) {
-            $context->copyContext('insert', function(array $chains) {
+        $this->validator->context('update', function (Validator $context) {
+            $context->copyContext('insert', function (array $chains) {
                 /** @var Chain $chain */
                 foreach ($chains as $chain) {
-                    $chain->required(function() {
+                    $chain->required(function () {
                         return false; // all fields optional.
                     });
                 }
@@ -128,15 +129,15 @@ class ContextTest extends PHPUnit_Framework_TestCase
 
     public function testContextCopyClonesButDoesNotOverwrite()
     {
-        $this->validator->context('insert', function(Validator $context) {
+        $this->validator->context('insert', function (Validator $context) {
             $context->required('first_name')->length(5);
         });
 
-        $this->validator->context('update', function(Validator $context) {
-            $context->copyContext('insert', function(array $chains) {
+        $this->validator->context('update', function (Validator $context) {
+            $context->copyContext('insert', function (array $chains) {
                 /** @var Chain $chain */
                 foreach ($chains as $chain) {
-                    $chain->required(function() {
+                    $chain->required(function () {
                         return false; // all fields optional.
                     });
                 }

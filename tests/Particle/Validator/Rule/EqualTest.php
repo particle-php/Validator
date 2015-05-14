@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Equal;
 use Particle\Validator\Validator;
 
-class EqualTest extends PHPUnit_Framework_TestCase
+class EqualTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

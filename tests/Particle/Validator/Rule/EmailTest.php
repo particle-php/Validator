@@ -1,9 +1,11 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Digits;
 use Particle\Validator\Rule\Email;
 use Particle\Validator\Validator;
 
-class EmailTest extends PHPUnit_Framework_TestCase
+class EmailTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

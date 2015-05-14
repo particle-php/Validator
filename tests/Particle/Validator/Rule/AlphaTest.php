@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Alpha;
 use Particle\Validator\Validator;
 
-class AlphaTest extends PHPUnit_Framework_TestCase
+class AlphaTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

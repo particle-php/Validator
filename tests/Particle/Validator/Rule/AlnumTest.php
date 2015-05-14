@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Alnum;
 use Particle\Validator\Validator;
 
-class AlnumTest extends PHPUnit_Framework_TestCase
+class AlnumTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

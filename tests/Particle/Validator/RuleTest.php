@@ -1,9 +1,10 @@
 <?php
+namespace Particle\Tests;
 
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
-class RuleTest extends PHPUnit_Framework_TestCase
+class RuleTest extends \PHPUnit_Framework_TestCase
 {
     public function testUsesMessageStack()
     {
