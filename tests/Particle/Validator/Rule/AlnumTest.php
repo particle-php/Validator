@@ -94,7 +94,7 @@ class AlnumTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Alnum::NOT_ALNUM => 'The value of "first name" can only consist out of numeric and alphabetic characters'
+            Alnum::NOT_ALNUM => 'first name may only consist out of numeric and alphabetic characters'
         ];
 
         return $messages[$reason];

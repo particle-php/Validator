@@ -28,7 +28,7 @@ class Datetime extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_VALUE => 'The value of "{{ name }}" is not a valid date',
+        self::INVALID_VALUE => '{{ name }} must be a valid date',
     ];
 
     /**

@@ -33,8 +33,8 @@ class Length extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::TOO_SHORT => 'The value of "{{ name }}" is too short, should be {{ length }} characters long',
-        self::TOO_LONG => 'The value of "{{ name }}" is too long, should be {{ length }} characters long'
+        self::TOO_SHORT => '{{ name }} is too short and must be {{ length }} characters long',
+        self::TOO_LONG => '{{ name }} is too long and must be {{ length }} characters long',
     ];
 
     /**

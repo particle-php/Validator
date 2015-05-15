@@ -35,8 +35,8 @@ class Required extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NON_EXISTENT_KEY => 'The key "{{ key }}" is required, but does not exist',
-        self::EMPTY_VALUE => 'The value of "{{ name }}" can not be empty'
+        self::NON_EXISTENT_KEY => '{{ key }} must be provided, but does not exist',
+        self::EMPTY_VALUE => '{{ name }} must be provided and may not be empty',
     ];
 
     /**

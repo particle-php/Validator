@@ -27,7 +27,7 @@ class InArrayTest extends PHPUnit_Framework_TestCase
 
         $expected = [
             'group' => [
-                InArray::NOT_IN_ARRAY => 'The value of "group" is not in the defined set of values'
+                InArray::NOT_IN_ARRAY => 'group must be in the defined set of values'
             ]
         ];
 
@@ -40,14 +40,14 @@ class InArrayTest extends PHPUnit_Framework_TestCase
 
         $this->validator->overwriteMessages([
             'group' => [
-                InArray::NOT_IN_ARRAY => 'The value of "{{ name }}" must be one of {{ values }}'
+                InArray::NOT_IN_ARRAY => '{{ name }} must be one of {{ values }}'
             ]
         ]);
         $this->assertFalse($this->validator->validate(['group' => 'none']));
 
         $expected = [
             'group' => [
-                InArray::NOT_IN_ARRAY => 'The value of "group" must be one of "users", "admins"'
+                InArray::NOT_IN_ARRAY => 'group must be one of "users", "admins"'
             ]
         ];
 

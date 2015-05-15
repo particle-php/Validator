@@ -38,7 +38,7 @@ class Alnum extends Regex
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_ALNUM => 'The value of "{{ name }}" can only consist out of numeric and alphabetic characters'
+        self::NOT_ALNUM => '{{ name }} may only consist out of numeric and alphabetic characters'
     ];
 
     /**

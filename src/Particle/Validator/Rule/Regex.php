@@ -28,7 +28,7 @@ class Regex extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NO_MATCH => 'The value of "{{ name }}" is invalid'
+        self::NO_MATCH => '{{ name }} is invalid'
     ];
 
     /**

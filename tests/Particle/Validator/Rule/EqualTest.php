@@ -28,7 +28,7 @@ class EqualTest extends PHPUnit_Framework_TestCase
 
         $expected = [
             'first_name' => [
-                Equal::NOT_EQUAL => 'The value of "first name" must be equal to "0"'
+                Equal::NOT_EQUAL => 'first name must be equal to "0"'
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());

@@ -49,8 +49,8 @@ class LengthBetweenTest extends PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            LengthBetween::TOO_SHORT => 'The length of "first name" is too short, must be longer than 2 characters',
-            LengthBetween::TOO_LONG => 'The length of "first name" is too long, must be shorter than 7 characters',
+            LengthBetween::TOO_SHORT => 'first name is too short and must be longer than 2 characters',
+            LengthBetween::TOO_LONG => 'first name is too long and must be shorter than 7 characters',
         ];
 
         return $messages[$reason];

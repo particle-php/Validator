@@ -28,7 +28,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::NON_EXISTENT_KEY => 'The key "first_name" is required, but does not exist',
+                    Required::NON_EXISTENT_KEY => 'first_name must be provided, but does not exist',
                 ]
             ],
             $this->validator->getMessages()
@@ -45,7 +45,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::NON_EXISTENT_KEY => 'The key "first_name" is required, but does not exist',
+                    Required::NON_EXISTENT_KEY => 'first_name must be provided, but does not exist',
                 ]
             ],
             $this->validator->getMessages()
@@ -62,7 +62,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'The value of "first name" can not be empty'
+                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
                 ]
             ],
             $this->validator->getMessages()
@@ -113,7 +113,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'The value of "first name" can not be empty'
+                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
                 ]
             ],
             $this->validator->getMessages()
@@ -132,7 +132,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::NON_EXISTENT_KEY => 'The key "first_name" is required, but does not exist',
+                    Required::NON_EXISTENT_KEY => 'first_name must be provided, but does not exist',
                 ]
             ],
             $this->validator->getMessages()
@@ -155,7 +155,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'The value of "first name" can not be empty'
+                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
                 ]
             ],
             $this->validator->getMessages()

@@ -14,7 +14,7 @@ class RuleTest extends PHPUnit_Framework_TestCase
         $ms->shouldReceive('append')->withArgs([
             'key',
             Rule\Length::TOO_SHORT,
-            'The value of "{{ name }}" is too short, should be {{ length }} characters long',
+            '{{ name }} is too short and must be {{ length }} characters long',
             [
                 'key' => 'key',
                 'name' => 'name',

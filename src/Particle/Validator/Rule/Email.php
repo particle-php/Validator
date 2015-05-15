@@ -28,7 +28,7 @@ class Email extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID_FORMAT => 'The value of "{{ name }}" must be a valid email address',
+        self::INVALID_FORMAT => '{{ name }} must be a valid email address',
     ];
 
     /**

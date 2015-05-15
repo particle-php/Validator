@@ -38,7 +38,7 @@ class Alpha extends Regex
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_ALPHA => 'The value of "{{ name }}" can only consist out of alphabetic characters'
+        self::NOT_ALPHA => '{{ name }} may only consist out of alphabetic characters'
     ];
 
     /**

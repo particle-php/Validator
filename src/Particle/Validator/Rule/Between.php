@@ -28,7 +28,7 @@ class Between extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_BETWEEN => 'Value of "{{ name }}" must be between {{ min }} and {{ max }}'
+        self::NOT_BETWEEN => '{{ name }} must be between {{ min }} and {{ max }}'
     ];
 
     /**
