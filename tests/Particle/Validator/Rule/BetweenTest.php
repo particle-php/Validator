@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Between;
 use Particle\Validator\Validator;
 
-class BetweenTest extends PHPUnit_Framework_TestCase
+class BetweenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

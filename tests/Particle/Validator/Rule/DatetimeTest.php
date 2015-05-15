@@ -1,7 +1,10 @@
 <?php
-use Particle\Validator\Validator;
+namespace Particle\Tests\Rule;
 
-class DatetimeTest extends PHPUnit_Framework_TestCase
+use Particle\Validator\Validator;
+use \DateTime;
+
+class DatetimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

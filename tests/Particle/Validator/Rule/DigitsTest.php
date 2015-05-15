@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Digits;
 use Particle\Validator\Validator;
 
-class DigitsTest extends PHPUnit_Framework_TestCase
+class DigitsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

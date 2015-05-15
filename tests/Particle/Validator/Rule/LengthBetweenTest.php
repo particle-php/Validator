@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\LengthBetween;
 use Particle\Validator\Validator;
 
-class LengthBetweenTest extends PHPUnit_Framework_TestCase
+class LengthBetweenTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

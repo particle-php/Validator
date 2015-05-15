@@ -1,12 +1,13 @@
 <?php
+namespace Particle\Tests;
+
 use Particle\Validator\MessageStack;
 use Particle\Validator\Rule;
 use Particle\Validator\Validator;
-
 use Particle\Validator\Rule\Required;
 use Particle\Validator\Value\Container;
 
-class ValidatorTest extends PHPUnit_Framework_TestCase
+class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator
@@ -122,7 +123,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testRequiredCanBeConditional()
     {
-        $this->validator->optional('first_name')->required(function(array $values) {
+        $this->validator->optional('first_name')->required(function (array $values) {
             return $values['foo'] === 'bar';
         });
 
@@ -145,7 +146,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testAllowEmptyCanBeConditional()
     {
-        $this->validator->required('first_name', 'first name', true)->allowEmpty(function($values) {
+        $this->validator->required('first_name', 'first name', true)->allowEmpty(function ($values) {
             return $values['foo'] !== 'bar';
         });
 

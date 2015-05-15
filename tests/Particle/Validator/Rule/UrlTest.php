@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Url;
 use Particle\Validator\Validator;
 
-class UrlTest extends PHPUnit_Framework_TestCase
+class UrlTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

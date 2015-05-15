@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Validator;
 use Particle\Validator\Rule\Uuid;
 
-class UuidV4Test extends PHPUnit_Framework_TestCase
+class UuidV4Test extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

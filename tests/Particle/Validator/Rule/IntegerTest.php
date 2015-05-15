@@ -1,8 +1,10 @@
 <?php
+namespace Particle\Tests\Rule;
+
 use Particle\Validator\Rule\Integer;
 use Particle\Validator\Validator;
 
-class IntegerTest extends PHPUnit_Framework_TestCase
+class IntegerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator

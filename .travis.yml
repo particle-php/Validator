@@ -9,7 +9,7 @@ before_script:
 
 script:
   - php vendor/bin/phpunit --coverage-clover=coverage.clover
-  - php vendor/bin/phpcs -n --standard=PSR2 ./src
+  - php vendor/bin/phpcs -n --standard=PSR2 --ignore=vendor .
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
