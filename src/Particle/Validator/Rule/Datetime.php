@@ -69,9 +69,13 @@ class Datetime extends Rule
      */
     protected function datetime($value, $format = null)
     {
-        if ($format === null) {
-            return @date_create($value);
+        if ($format !== null) {
+            $dt = date_create_from_format($format, $value);
+            if ($dt instanceof \DateTime && $dt->getLastErrors()['warning_count'] === 0) {
+                return $dt;
+            }
+            return null;
         }
-        return @date_create_from_format($format, $value);
+        return @date_create($value);
     }
 }

@@ -21,6 +21,7 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('time')->datetime('H:i');
         $result = $this->validator->validate(['time' => '18:00']);
 
+        $this->assertEquals([], $this->validator->getMessages());
         $this->assertTrue($result);
 
         $result = $this->validator->validate(['time' => (new DateTime())->format('Y-m-d H:i:s')]);
@@ -53,6 +54,27 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
                 \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'time must be a valid date'
             ]
         ];
+        $this->assertEquals($expected, $this->validator->getMessages());
+    }
+
+
+    /**
+     * @link https://github.com/particle-php/Validator/issues/31
+     */
+    public function testReturnsFalseOnParsableButValidFormat()
+    {
+        $this->validator->required('date')->datetime('Ymd');
+        $result = $this->validator->validate([
+            'date' => '12111978',
+        ]);
+
+        $this->assertFalse($result);
+        $expected = [
+            'date' => [
+                \Particle\Validator\Rule\DateTime::INVALID_VALUE => 'date must be a valid date'
+            ]
+        ];
+
         $this->assertEquals($expected, $this->validator->getMessages());
     }
 
