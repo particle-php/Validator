@@ -18,9 +18,14 @@ use Particle\Validator\Rule;
 class Between extends Rule
 {
     /**
-     * A constant for an error message if the value is not between min and max.
+     * A constant for an error message if the value is exceeding the max value.
      */
-    const NOT_BETWEEN = 'Between::NOT_BETWEEN';
+    const TOO_BIG = 'Between::TOO_BIG';
+
+    /**
+     * A constant for an error message if the value is below the min value.
+     */
+    const TOO_SMALL = 'Between::TOO_SMALL';
 
     /**
      * The message templates which can be returned by this validator.
@@ -28,7 +33,8 @@ class Between extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_BETWEEN => '{{ name }} must be between {{ min }} and {{ max }}'
+        self::TOO_BIG => '{{ name }} must be less than or equal to {{ max }}',
+        self::TOO_SMALL => '{{ name }} must be greater than or equal to {{ min }}',
     ];
 
     /**
@@ -46,22 +52,15 @@ class Between extends Rule
     protected $max;
 
     /**
-     * @var bool
-     */
-    protected $inclusive;
-
-    /**
      * Construct the Between rule.
      *
      * @param int $min
      * @param int $max
-     * @param bool $inclusive
      */
-    public function __construct($min, $max, $inclusive = true)
+    public function __construct($min, $max)
     {
         $this->min = $min;
         $this->max = $max;
-        $this->inclusive = (bool) $inclusive;
     }
 
     /**
@@ -72,15 +71,13 @@ class Between extends Rule
      */
     public function validate($value)
     {
-        // inclusive
-        if ($this->inclusive && $value >= $this->min && $value <= $this->max) {
-            return true;
+        if ($value < $this->min) {
+            return $this->error(self::TOO_SMALL);
         }
-        // exclusive
-        if ($value > $this->min && $value < $this->max) {
-            return true;
+        if ($value > $this->max) {
+            return $this->error(self::TOO_BIG);
         }
-        return $this->error(self::NOT_BETWEEN);
+        return true;
     }
 
     /**

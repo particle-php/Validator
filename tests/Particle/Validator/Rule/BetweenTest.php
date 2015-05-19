@@ -34,53 +34,39 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->validator->getMessages());
     }
 
-    public function testValidatesExclusiveOnRequest()
-    {
-        $this->validator->required('number')->between(1, 10, false);
-        $result = $this->validator->validate(['number' => 1]);
-
-        $expected = [
-            'number' => [
-                Between::NOT_BETWEEN => $this->getMessage(Between::NOT_BETWEEN)
-            ]
-        ];
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
-
-        $this->assertTrue($this->validator->validate(['number' => 2]));
-        $this->assertFalse($this->validator->validate(['number' => 10]));
-    }
-
-    /**
-     * @dataProvider getInvalidValues
-     * @param $value
-     */
-    public function testReturnsFalseForValuesNotBetweenMinAndMax($value)
+    public function testReturnsFalseForValuesNotBetweenMinAndMaxLowerError()
     {
         $this->validator->required('number')->between(1, 10);
-        $result = $this->validator->validate(['number' => $value]);
+        $result = $this->validator->validate(['number' => 0]);
 
         $expected = [
             'number' => [
-                Between::NOT_BETWEEN => $this->getMessage(Between::NOT_BETWEEN)
+                Between::TOO_SMALL => $this->getMessage(Between::TOO_SMALL)
             ]
         ];
         $this->assertFalse($result);
         $this->assertEquals($expected, $this->validator->getMessages());
     }
 
-    public function getInvalidValues()
+    public function testReturnsFalseForValuesNotBetweenMinAndMaxUpperError()
     {
-        return [
-            [-1, Between::NOT_BETWEEN],
-            [11, Between::NOT_BETWEEN]
+        $this->validator->required('number')->between(1, 10);
+        $result = $this->validator->validate(['number' => 11]);
+
+        $expected = [
+            'number' => [
+                Between::TOO_BIG => $this->getMessage(Between::TOO_BIG)
+            ]
         ];
+        $this->assertFalse($result);
+        $this->assertEquals($expected, $this->validator->getMessages());
     }
 
     public function getMessage($reason)
     {
         $messages = [
-            Between::NOT_BETWEEN => 'number must be between 1 and 10'
+            Between::TOO_SMALL => 'number must be greater than or equal to 1',
+            Between::TOO_BIG => 'number must be less than or equal to 10',
         ];
 
         return $messages[$reason];
