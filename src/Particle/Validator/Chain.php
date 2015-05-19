@@ -96,16 +96,15 @@ class Chain
     }
 
     /**
-     * Validate that the value is between $min and $max (inclusive by default).
+     * Validate that the value is between $min and $max (inclusive).
      *
      * @param int $min
      * @param int $max
-     * @param bool $inclusive
      * @return $this
      */
-    public function between($min, $max, $inclusive = true)
+    public function between($min, $max)
     {
-        return $this->addRule(new Rule\Between($min, $max, $inclusive));
+        return $this->addRule(new Rule\Between($min, $max));
     }
 
     /**

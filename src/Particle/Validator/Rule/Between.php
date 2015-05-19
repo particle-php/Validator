@@ -33,8 +33,8 @@ class Between extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::TOO_BIG => '{{ name }} is too big, upper limit is {{ max }}',
-        self::TOO_SMALL => '{{ name }} is too small, lower limit is {{ min }}',
+        self::TOO_BIG => '{{ name }} must be less than or equal to {{ max }}',
+        self::TOO_SMALL => '{{ name }} must be greater than or equal to {{ min }}',
     ];
 
     /**
@@ -52,22 +52,15 @@ class Between extends Rule
     protected $max;
 
     /**
-     * @var bool
-     */
-    protected $inclusive;
-
-    /**
      * Construct the Between rule.
      *
      * @param int $min
      * @param int $max
-     * @param bool $inclusive
      */
-    public function __construct($min, $max, $inclusive = true)
+    public function __construct($min, $max)
     {
         $this->min = $min;
         $this->max = $max;
-        $this->inclusive = (bool) $inclusive;
     }
 
     /**
@@ -78,18 +71,10 @@ class Between extends Rule
      */
     public function validate($value)
     {
-        $min = $this->min;
-        $max = $this->max;
-
-        // inclusive
-        if (!$this->inclusive) {
-            $min++;
-            $max--;
-        }
-        if ($value < $min) {
+        if ($value < $this->min) {
             return $this->error(self::TOO_SMALL);
         }
-        if ($value > $max) {
+        if ($value > $this->max) {
             return $this->error(self::TOO_BIG);
         }
         return true;
