@@ -65,7 +65,7 @@ class Datetime extends Rule
      *
      * @param string $value
      * @param string $format
-     * @return \DateTime
+     * @return \DateTime|false
      */
     protected function datetime($value, $format = null)
     {
@@ -74,7 +74,7 @@ class Datetime extends Rule
             if ($dt instanceof \DateTime && $dt->getLastErrors()['warning_count'] === 0) {
                 return $dt;
             }
-            return null;
+            return false;
         }
         return @date_create($value);
     }
