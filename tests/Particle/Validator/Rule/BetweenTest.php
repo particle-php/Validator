@@ -65,8 +65,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Between::TOO_SMALL => 'number must be greater than 1',
-            Between::TOO_BIG => 'number must be less than 10',
+            Between::TOO_SMALL => 'number must be greater than or equal to 1',
+            Between::TOO_BIG => 'number must be less than or equal to 10',
         ];
 
         return $messages[$reason];

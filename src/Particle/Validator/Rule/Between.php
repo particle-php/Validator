@@ -33,8 +33,8 @@ class Between extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::TOO_BIG => '{{ name }} must be less than {{ max }}',
-        self::TOO_SMALL => '{{ name }} must be greater than {{ min }}',
+        self::TOO_BIG => '{{ name }} must be less than or equal to {{ max }}',
+        self::TOO_SMALL => '{{ name }} must be greater than or equal to {{ min }}',
     ];
 
     /**
