@@ -109,7 +109,7 @@ class Required extends Rule
      */
     public function validate($value)
     {
-        if (!$this->allowEmpty && strlen($value) === 0) {
+        if (!$this->allowEmpty && ($value === null || (is_string($value) && strlen($value) === 0))) {
             $this->shouldBreak = true;
             return $this->error(self::EMPTY_VALUE);
         }

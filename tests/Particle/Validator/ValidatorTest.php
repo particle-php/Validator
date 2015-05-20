@@ -258,6 +258,17 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->validator->getValues());
     }
 
+    public function testNoFalsePositivesForIssetOnFalse()
+    {
+        $this->validator->required('falsy_value');
+        $result = $this->validator->validate([
+            'falsy_value' => false,
+        ]);
+
+        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result);
+    }
+
     public function testReturnsEmptyArrayInsteadOfValidatedValues()
     {
         $this->validator->required('first_name')->lengthBetween(2, 20);
