@@ -5,7 +5,7 @@
 [![Packagist](https://img.shields.io/packagist/v/particle/validator.svg)](https://packagist.org/packages/particle/validator)
 [![Packagist downloads](https://img.shields.io/packagist/dt/particle/validator.svg)](https://packagist.org/packages/particle/validator)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/particle-php/Validator.svg)](https://scrutinizer-ci.com/g/particle-php/Validator/?branch=master)
-[![Packagist](https://img.shields.io/scrutinizer/coverage/g/particle-php/Validator/master.svg)](https://scrutinizer-ci.com/g/particle-php/Validator/?branch=master)
+[![Scrutinizer](https://img.shields.io/scrutinizer/coverage/g/particle-php/Validator/master.svg)](https://scrutinizer-ci.com/g/particle-php/Validator/?branch=master)
 
 *Particle\Validator* is a very small validation library, with the easiest and most usable API we could possibly create.
 
