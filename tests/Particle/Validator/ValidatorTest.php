@@ -79,6 +79,15 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->validator->getMessages());
     }
 
+    public function testReturnsTrueOnExistingRequiredNullKeyAllowingEmpty()
+    {
+        $this->validator->required('first_name', 'first name', true);
+        $result = $this->validator->validate(['first_name' => null]);
+
+        $this->assertTrue($result);
+        $this->assertEquals([], $this->validator->getMessages());
+    }
+
     public function testReturnsTrueOnNonExistingOptionalKeyAllowingEmpty()
     {
         $this->validator->optional('first_name');
