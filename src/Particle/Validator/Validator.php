@@ -213,7 +213,12 @@ class Validator
     protected function getChain($key, $name, $required, $allowEmpty)
     {
         if (isset($this->chains[$this->context][$key])) {
-            return $this->chains[$this->context][$key];
+            /** @var Chain $chain */
+            $chain = $this->chains[$this->context][$key];
+            $chain->required($required);
+            $chain->allowEmpty($allowEmpty);
+
+            return $chain;
         }
         return $this->chains[$this->context][$key] = $this->buildChain($key, $name, $required, $allowEmpty);
     }

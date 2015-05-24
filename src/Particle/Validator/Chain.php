@@ -58,7 +58,8 @@ class Chain
         $this->key = $key;
         $this->name = $name;
 
-        $this->addRule(new Rule\Required($required, $allowEmpty));
+        $this->addRule(new Rule\Required($required));
+        $this->addRule(new Rule\NotEmpty($allowEmpty));
     }
 
     /**
@@ -241,30 +242,30 @@ class Chain
     }
 
     /**
-     * Set a callable which may be used to alter the required requirement on validation time.
+     * Set a callable or boolean value which may be used to alter the required requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
      *
-     * @param callable $callback
+     * @param callable|bool $callback
      * @return $this
      */
-    public function required(callable $callback)
+    public function required($callback)
     {
         $this->getRequiredRule()->setRequired($callback);
         return $this;
     }
 
     /**
-     * Set a callable which may be used to alter the allow empty requirement on validation time.
+     * Set a callable or boolean value which may be used to alter the allow empty requirement on validation time.
      *
      * This may be incredibly helpful when doing conditional validation.
      *
-     * @param callable $callback
+     * @param callable|bool $callback
      * @return $this
      */
-    public function allowEmpty(callable $callback)
+    public function allowEmpty($callback)
     {
-        $this->getRequiredRule()->setAllowEmpty($callback);
+        $this->getNotEmptyRule()->setAllowEmpty($callback);
         return $this;
     }
 
@@ -315,5 +316,15 @@ class Chain
     protected function getRequiredRule()
     {
         return $this->rules[0];
+    }
+
+    /**
+     * Returns the second rule, which is always the allow empty rule.
+     *
+     * @return Rule\NotEmpty
+     */
+    protected function getNotEmptyRule()
+    {
+        return $this->rules[1];
     }
 }

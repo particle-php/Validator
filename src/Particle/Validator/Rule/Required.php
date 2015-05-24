@@ -12,8 +12,7 @@ use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
 /**
- * This class is responsible for checking if a required value is set, and if
- * a value is not allowed to be empty, also check if the value isn't empty.
+ * This class is responsible for checking if a required value is set.
  *
  * @package Particle\Validator\Rule
  */
@@ -25,18 +24,12 @@ class Required extends Rule
     const NON_EXISTENT_KEY = 'Required::NON_EXISTENT_KEY';
 
     /**
-     * The error code for when a value is empty while this is not allowed.
-     */
-    const EMPTY_VALUE = 'Required::EMPTY_VALUE';
-
-    /**
      * The templates for the possible messages this validator can return.
      *
      * @var array
      */
     protected $messageTemplates = [
-        self::NON_EXISTENT_KEY => '{{ key }} must be provided, but does not exist',
-        self::EMPTY_VALUE => '{{ name }} must be provided and may not be empty',
+        self::NON_EXISTENT_KEY => '{{ key }} must be provided, but does not exist'
     ];
 
     /**
@@ -61,20 +54,6 @@ class Required extends Rule
     protected $requiredCallback;
 
     /**
-     * Indicates if the value can be empty.
-     *
-     * @var bool
-     */
-    protected $allowEmpty;
-
-    /**
-     * Optionally contains a callable to overwrite the allow empty requirement on time of validation.
-     *
-     * @var callable
-     */
-    protected $allowEmptyCallback;
-
-    /**
      * Contains the input container.
      *
      * @var Container
@@ -85,12 +64,10 @@ class Required extends Rule
      * Construct the Required validator.
      *
      * @param bool $required
-     * @param bool $allowEmpty
      */
-    public function __construct($required, $allowEmpty)
+    public function __construct($required)
     {
         $this->required = $required;
-        $this->allowEmpty = $allowEmpty;
     }
 
     /**
@@ -109,11 +86,6 @@ class Required extends Rule
      */
     public function validate($value)
     {
-        if (!$this->allowEmpty && ($value === null || (is_string($value) && strlen($value) === 0))) {
-            $this->shouldBreak = true;
-            return $this->error(self::EMPTY_VALUE);
-        }
-
         return true;
     }
 
@@ -127,12 +99,14 @@ class Required extends Rule
     public function isValid($key, Container $input)
     {
         $this->required = $this->isRequired($input);
-        $this->allowEmpty = $this->hasAllowEmpty($input);
 
         if (!$input->has($key)) {
-            return $this->checkRequired();
-        }
+            $this->shouldBreak = true;
 
+            if ($this->required) {
+                return $this->error(self::NON_EXISTENT_KEY);
+            }
+        }
         return $this->validate($input->get($key));
     }
 
@@ -144,23 +118,35 @@ class Required extends Rule
      * @param callable $required
      * @return $this
      */
-    public function setRequired(callable $required)
+    public function setRequired($required)
     {
-        $this->requiredCallback = $required;
+        if (is_callable($required)) {
+            return $this->setRequiredCallback($required);
+        }
+        return $this->overwriteRequired((bool) $required);
+    }
+
+    /**
+     * Overwrite the required requirement after instantiation of this object.
+     *
+     * @param bool $required
+     * @return $this
+     */
+    protected function overwriteRequired($required)
+    {
+        $this->required = $required;
         return $this;
     }
 
     /**
-     * Set a callable to potentially alter the allow empty requirement at the time of validation.
+     * Set the required callback, and return $this.
      *
-     * This may be incredibly useful for conditional validation.
-     *
-     * @param callable $allowEmpty
+     * @param callable $requiredCallback
      * @return $this
      */
-    public function setAllowEmpty(callable $allowEmpty)
+    protected function setRequiredCallback(callable $requiredCallback)
     {
-        $this->allowEmptyCallback = $allowEmpty;
+        $this->requiredCallback = $requiredCallback;
         return $this;
     }
 
@@ -176,31 +162,5 @@ class Required extends Rule
             $this->required = call_user_func_array($this->requiredCallback, [$input->getArrayCopy()]);
         }
         return $this->required;
-    }
-
-    /**
-     * Determines if the value may be empty.
-     *
-     * @param Container $input
-     * @return bool
-     */
-    public function hasAllowEmpty(Container $input)
-    {
-        if (isset($this->allowEmptyCallback)) {
-            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$input->getArrayCopy()]);
-        }
-        return $this->allowEmpty;
-    }
-
-    /**
-     * Returns an error on a required value, and true on an optional value.
-     *
-     * @return bool
-     */
-    protected function checkRequired()
-    {
-        $this->shouldBreak = true;
-
-        return $this->required ? $this->error(self::NON_EXISTENT_KEY) : true;
     }
 }

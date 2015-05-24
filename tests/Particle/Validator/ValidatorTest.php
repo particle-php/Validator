@@ -63,7 +63,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
+                    Rule\NotEmpty::EMPTY_VALUE => 'first name must not be empty'
                 ]
             ],
             $this->validator->getMessages()
@@ -123,7 +123,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
+                    Rule\NotEmpty::EMPTY_VALUE => 'first name must not be empty'
                 ]
             ],
             $this->validator->getMessages()
@@ -165,7 +165,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'first_name' => [
-                    Required::EMPTY_VALUE => 'first name must be provided and may not be empty'
+                    Rule\NotEmpty::EMPTY_VALUE => 'first name must not be empty'
                 ]
             ],
             $this->validator->getMessages()
@@ -196,14 +196,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testOverwritingKeyWillReuseExistingChainButTheFirstRequirednessWillBeUsed()
+    public function testOverwritingKeyWillReuseExistingChainAndTheLatterRequirednessIsUsed()
     {
-        $first = $this->validator->required('foo');
-        $second = $this->validator->optional('foo');
+        $this->validator->required('foo');
+        $this->validator->optional('foo');
 
-        $stack = new MessageStack();
-        $this->assertEquals($first, $second);
-        $this->assertFalse($second->validate($stack, new Container([]), new Container([]))); // because it's required.
+        $result = $this->validator->validate([]);
+
+        $this->assertTrue($result);
     }
 
     public function testDefaultMessageOverwrites()
