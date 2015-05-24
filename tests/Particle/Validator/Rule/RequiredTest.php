@@ -1,6 +1,7 @@
 <?php
 namespace Particle\Tests\Rule;
 
+use Particle\Validator\Rule\Required;
 use Particle\Validator\Validator;
 
 class RequiredTest extends \PHPUnit_Framework_TestCase
@@ -34,25 +35,42 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
-    public function testReturnsTrueOnNullValue()
+    public function testReturnsTrueOnAnyValue()
     {
-        $this->validator->required('foo', 'foo', true);
-        $result = $this->validator->validate([
-            'foo' => null
-        ]);
-        $this->assertTrue($result);
+        $values = [false, null, true, 0, '', 'string', 0.00];
+
+        $this->validator->required('foo');
+
+        foreach ($values as $value) {
+            $this->validator->validate(['foo' => $value]);
+
+            $this->assertArrayNotHasKey(
+                Required::NON_EXISTENT_KEY,
+                $this->validator->getMessages()
+            );
+        }
     }
 
-    public function testReturnsTrueAndBreaksOnRequiredButNullValue()
+    public function testRequiredCanBeConditional()
     {
-        $this->validator->required('foo', 'foo', true)->callback(function($value) {
-            return false; // always false!
+        $this->validator->optional('first_name')->required(function (array $values) {
+            return $values['foo'] === 'bar';
         });
 
-        $result = $this->validator->validate([
-            'foo' => null,
-        ]);
+        $result = $this->validator->validate(['foo' => 'bar']);
 
+        $this->assertFalse($result);
+        $this->assertEquals(
+            [
+                'first_name' => [
+                    Required::NON_EXISTENT_KEY => 'first_name must be provided, but does not exist',
+                ]
+            ],
+            $this->validator->getMessages()
+        );
+
+        $result = $this->validator->validate(['foo' => 'not bar!']);
         $this->assertTrue($result);
+        $this->assertEquals([], $this->validator->getMessages());
     }
 }
