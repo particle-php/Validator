@@ -40,10 +40,7 @@ class Container
      */
     public function has($key)
     {
-        if (strpos($key, '.') !== false) {
-            return $this->traverse($key, false);
-        }
-        return array_key_exists($key, $this->values);
+        return $this->traverse($key, false);
     }
 
     /**
@@ -54,13 +51,7 @@ class Container
      */
     public function get($key)
     {
-        if ($this->has($key)) {
-            if (strpos($key, '.') !== false) {
-                return $this->traverse($key, true);
-            }
-            return $this->values[$key];
-        }
-        return null;
+        return $this->traverse($key, true);
     }
 
     /**
