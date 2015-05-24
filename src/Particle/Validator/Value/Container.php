@@ -40,7 +40,7 @@ class Container
      */
     public function has($key)
     {
-        return array_key_exists($key, $this->values);
+        return $this->traverse($key, false);
     }
 
     /**
@@ -51,7 +51,7 @@ class Container
      */
     public function get($key)
     {
-        return $this->has($key) ? $this->values[$key] : null;
+        return $this->traverse($key, true);
     }
 
     /**
@@ -63,6 +63,9 @@ class Container
      */
     public function set($key, $value)
     {
+        if (strpos($key, '.') !== false) {
+            return $this->setTraverse($key, $value);
+        }
         $this->values[$key] = $value;
         return $this;
     }
@@ -75,5 +78,47 @@ class Container
     public function getArrayCopy()
     {
         return $this->values;
+    }
+
+    /**
+     * Traverses the key using dot notation. Based on the second parameter, it will return the value or if it was set.
+     *
+     * @param string $key
+     * @param bool $returnValue
+     * @return mixed
+     */
+    protected function traverse($key, $returnValue = true)
+    {
+        $value = $this->values;
+        foreach (explode('.', $key) as $part) {
+            if (!array_key_exists($part, $value)) {
+                return false;
+            }
+            $value = $value[$part];
+        }
+        return $returnValue ? $value : true;
+    }
+
+    /**
+     * Uses dot-notation to set a value.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return $this
+     */
+    protected function setTraverse($key, $value)
+    {
+        $parts = explode('.', $key);
+        $ref = &$this->values;
+
+        foreach ($parts as $i => $part) {
+            if ($i < count($parts) - 1) {
+                $ref[$part] = [];
+            }
+            $ref = &$ref[$part];
+        }
+
+        $ref = $value;
+        return $this;
     }
 }
