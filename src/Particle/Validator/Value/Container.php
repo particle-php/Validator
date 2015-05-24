@@ -73,22 +73,8 @@ class Container
     public function set($key, $value)
     {
         if (strpos($key, '.') !== false) {
-            $parts = explode('.', $key);
-            $root = [];
-            $ref = &$root;
-
-            foreach ($parts as $i => $part) {
-                if ($i < count($parts) - 1) {
-                    $ref[$part] = [];
-                }
-                $ref = &$ref[$part];
-            }
-            $ref = $value;
-
-            $this->values[$parts[0]] = $root[$parts[0]];
-            return $this;
+            return $this->setTraverse($key, $value);
         }
-
         $this->values[$key] = $value;
         return $this;
     }
@@ -113,14 +99,35 @@ class Container
     protected function traverse($key, $returnValue = true)
     {
         $value = $this->values;
-        $parts = explode('.', $key);
-
-        foreach ($parts as $part) {
+        foreach (explode('.', $key) as $part) {
             if (!array_key_exists($part, $value)) {
                 return false;
             }
             $value = $value[$part];
         }
         return $returnValue ? $value : true;
+    }
+
+    /**
+     * Uses dot-notation to set a value.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return $this
+     */
+    protected function setTraverse($key, $value)
+    {
+        $parts = explode('.', $key);
+        $ref = &$this->values;
+
+        foreach ($parts as $i => $part) {
+            if ($i < count($parts) - 1) {
+                $ref[$part] = [];
+            }
+            $ref = &$ref[$part];
+        }
+
+        $ref = $value;
+        return $this;
     }
 }
