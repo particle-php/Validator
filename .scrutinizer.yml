@@ -4,3 +4,12 @@ filter:
 tools:
     php_code_coverage: true
     external_code_coverage: true
+
+    # Marking Particle\Validator\Rule as stable, so the false positive on coupling is removed.
+    # The Chain object is a factory, so it has to have high coupling.
+    php_analyzer:
+        config:
+            metrics_coupling:
+                stable_code:
+                    namespace_prefixes:
+                        - Particle\Validator\Rule
