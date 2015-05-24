@@ -172,5 +172,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testDotNotationWillReturnTrueForNullRequiredValue()
     {
+        $this->validator->required('user.email', 'user email address', true);
+
+        $result = $this->validator->validate([
+            'user' => [
+                'email' => null,
+            ]
+        ]);
+
+        $this->assertTrue($result);
     }
 }
