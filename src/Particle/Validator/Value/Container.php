@@ -74,7 +74,7 @@ class Container
     {
         if (strpos($key, '.') !== false) {
             $parts = explode('.', $key);
-            $root = $this->values;
+            $root = [];
             $ref = &$root;
 
             foreach ($parts as $i => $part) {
