@@ -126,4 +126,51 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->lengthBetween(2, 20);
         $this->assertEquals([], $this->validator->getValues());
     }
+
+    public function testCanUseDotNotationToValidateInArrays()
+    {
+        $this->validator->required('user.contact.email')->email();
+
+        $result = $this->validator->validate([
+            'user' => [
+                'contact' => [
+                    'email' => 'example@particle-php.com'
+                ]
+            ]
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testDotNotationIsAddedToMessagesVerbatim()
+    {
+        $this->validator->required('user.email');
+        $result = $this->validator->validate([]);
+
+        $expected = [
+            'user.email' => [
+                Required::NON_EXISTENT_KEY => 'user.email must be provided, but does not exist'
+            ]
+        ];
+
+        $this->assertFalse($result);
+        $this->assertEquals($expected, $this->validator->getMessages());
+    }
+
+    public function testDotNotationIsAlsoUsedForOutputValueContainer()
+    {
+        $input = [
+            'user' => [
+                'email' => 'example@particle-php.com'
+            ]
+        ];
+
+        $this->validator->required('user.email');
+        $this->validator->validate($input);
+        $this->assertEquals($input, $this->validator->getValues());
+    }
+
+    public function testDotNotationWillReturnTrueForNullRequiredValue()
+    {
+    }
 }
