@@ -31,23 +31,6 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->validator->getMessages());
     }
 
-    /**
-     * @dataProvider getValues
-     * @param $value
-     * @param $error
-     */
-    public function testReturnsFalseIfLengthIsExactlyMinOrMaxAndRuleIsExclusive($value, $error)
-    {
-        $this->validator->required('first_name')->lengthBetween(2, 7, false);
-        $this->assertFalse($this->validator->validate(['first_name' => $value]));
-        $expected = [
-            'first_name' => [
-                $error => $this->getMessage($error)
-            ]
-        ];
-        $this->assertEquals($expected, $this->validator->getMessages());
-    }
-
     public function getMessage($reason)
     {
         $messages = [
@@ -56,13 +39,5 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
         ];
 
         return $messages[$reason];
-    }
-
-    public function getValues()
-    {
-        return [
-            ['Ad', LengthBetween::TOO_SHORT],
-            ['Richard', LengthBetween::TOO_LONG]
-        ];
     }
 }

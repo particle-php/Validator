@@ -201,12 +201,11 @@ class Chain
      *
      * @param int $min
      * @param int|null $max
-     * @param bool $inclusive
      * @return $this
      */
-    public function lengthBetween($min, $max, $inclusive = true)
+    public function lengthBetween($min, $max)
     {
-        return $this->addRule(new Rule\LengthBetween($min, $max, $inclusive));
+        return $this->addRule(new Rule\LengthBetween($min, $max));
     }
 
     /**

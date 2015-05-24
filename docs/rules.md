@@ -12,9 +12,9 @@ Validate the value to consist only out of alphanumeric characters.
 
 Validate that the value only consists our of alphabetic characters.
 
-### between($min, $max, $inclusive = true)
+### between($min, $max)
 
-Validate that the value is between $min and $max (inclusive by default).
+Validate that the value is between $min and $max (inclusive).
 
 ### callback(callable $callable)
 
@@ -48,10 +48,10 @@ Validates that the value is in the array with optional "loose" checking.
 
 Validate the value to be of precisely length $length.
 
-### lengthBetween($min, $max, $inclusive = true)
+### lengthBetween($min, $max)
 
-Validates that the length of the value is between $min and $max.
-If $max is null, it has no upper limit. The default is inclusive.
+Validates that the length of the value is between $min and $max (inclusive).
+If $max is null, it has no upper limit.
 
 ### regex($regex)
 
