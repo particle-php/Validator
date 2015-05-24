@@ -246,12 +246,12 @@ class Chain
      *
      * This may be incredibly helpful when doing conditional validation.
      *
-     * @param callable|bool $callback
+     * @param callable|bool $required
      * @return $this
      */
-    public function required($callback)
+    public function required($required)
     {
-        $this->getRequiredRule()->setRequired($callback);
+        $this->getRequiredRule()->setRequired($required);
         return $this;
     }
 
@@ -260,12 +260,12 @@ class Chain
      *
      * This may be incredibly helpful when doing conditional validation.
      *
-     * @param callable|bool $callback
+     * @param callable|bool $allowEmpty
      * @return $this
      */
-    public function allowEmpty($callback)
+    public function allowEmpty($allowEmpty)
     {
-        $this->getNotEmptyRule()->setAllowEmpty($callback);
+        $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
         return $this;
     }
 

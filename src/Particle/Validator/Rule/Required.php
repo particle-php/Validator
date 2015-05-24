@@ -115,7 +115,7 @@ class Required extends Rule
      *
      * This may be incredibly useful for conditional validation.
      *
-     * @param callable $required
+     * @param callable|bool $required
      * @return $this
      */
     public function setRequired($required)
