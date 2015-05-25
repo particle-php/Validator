@@ -15,7 +15,7 @@ use Particle\Validator\Rule;
  *
  * @package Particle\Validator\Rule
  */
-class LengthBetween extends Rule
+class LengthBetween extends Between
 {
     /**
      * A constant that is used when the value is too long.
@@ -33,8 +33,8 @@ class LengthBetween extends Rule
      * @var array
      */
     protected $messageTemplates = [
-        self::TOO_LONG => '{{ name }} is too long and must be shorter than {{ max }} characters',
-        self::TOO_SHORT => '{{ name }} is too short and must be longer than {{ min }} characters'
+        self::TOO_LONG => '{{ name }} must be shorter than {{ max }} characters',
+        self::TOO_SHORT => '{{ name }} must be longer than {{ min }} characters'
     ];
 
     /**
@@ -52,22 +52,13 @@ class LengthBetween extends Rule
     protected $min;
 
     /**
-     * Whether or not the min and max length are inclusive.
-     *
-     * @var bool
-     */
-    protected $inclusive;
-
-    /**
      * @param int $min
      * @param int|null $max
-     * @param bool $inclusive
      */
-    public function __construct($min, $max, $inclusive = true)
+    public function __construct($min, $max)
     {
         $this->min = $min;
         $this->max = $max;
-        $this->inclusive = $inclusive;
     }
 
     /**
@@ -80,19 +71,22 @@ class LengthBetween extends Rule
     {
         $length = strlen($value);
 
+        return !$this->tooSmall($length, self::TOO_SHORT) && !$this->tooLarge($length, self::TOO_LONG);
+    }
+
+    /**
+     * Returns whether or not the value is too long, and logs an error if it is.
+     *
+     * @param mixed $value
+     * @param string $error
+     * @return bool
+     */
+    protected function tooLarge($value, $error)
+    {
         if ($this->max !== null) {
-            $maxLength = $this->inclusive ? $this->max : $this->max - 1;
-            if ($length > $maxLength) {
-                return $this->error(self::TOO_LONG);
-            }
+            return parent::tooLarge($value, $error);
         }
-
-        $minLength = $this->inclusive ? $this->min : $this->min + 1;
-        if ($length < $minLength) {
-            return $this->error(self::TOO_SHORT);
-        }
-
-        return true;
+        return false;
     }
 
     /**

@@ -31,18 +31,26 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $this->validator->getMessages());
     }
 
-    /**
-     * @dataProvider getValues
-     * @param $value
-     * @param $error
-     */
-    public function testReturnsFalseIfLengthIsExactlyMinOrMaxAndRuleIsExclusive($value, $error)
+    public function testReturnsFalseIfInvalid()
     {
-        $this->validator->required('first_name')->lengthBetween(2, 7, false);
-        $this->assertFalse($this->validator->validate(['first_name' => $value]));
+        $this->validator->required('first_name')->lengthBetween(3, 6);
+        $result = $this->validator->validate(['first_name' => 'ad']);
+
+        $this->assertFalse($result);
+
         $expected = [
             'first_name' => [
-                $error => $this->getMessage($error)
+                LengthBetween::TOO_SHORT => $this->getMessage(LengthBetween::TOO_SHORT)
+            ]
+        ];
+        $this->assertEquals($expected, $this->validator->getMessages());
+
+        $result = $this->validator->validate(['first_name' => 'Richard']);
+
+        $this->assertFalse($result);
+        $expected = [
+            'first_name' => [
+                LengthBetween::TOO_LONG => $this->getMessage(LengthBetween::TOO_LONG)
             ]
         ];
         $this->assertEquals($expected, $this->validator->getMessages());
@@ -51,18 +59,10 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            LengthBetween::TOO_SHORT => 'first name is too short and must be longer than 2 characters',
-            LengthBetween::TOO_LONG => 'first name is too long and must be shorter than 7 characters',
+            LengthBetween::TOO_SHORT => 'first name must be longer than 3 characters',
+            LengthBetween::TOO_LONG => 'first name must be shorter than 6 characters',
         ];
 
         return $messages[$reason];
-    }
-
-    public function getValues()
-    {
-        return [
-            ['Ad', LengthBetween::TOO_SHORT],
-            ['Richard', LengthBetween::TOO_LONG]
-        ];
     }
 }

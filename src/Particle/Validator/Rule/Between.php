@@ -71,13 +71,39 @@ class Between extends Rule
      */
     public function validate($value)
     {
+        return !$this->tooSmall($value, self::TOO_SMALL) && !$this->tooLarge($value, self::TOO_BIG);
+    }
+
+    /**
+     * Returns whether or not the value is too small, and logs an error if it is.
+     *
+     * @param mixed $value
+     * @param string $error
+     * @return bool
+     */
+    protected function tooSmall($value, $error)
+    {
         if ($value < $this->min) {
-            return $this->error(self::TOO_SMALL);
+            $this->error($error);
+            return true;
         }
+        return false;
+    }
+
+    /**
+     * Returns whether or not the value is too large, and logs an error if it is.
+     *
+     * @param mixed $value
+     * @param string $error
+     * @return bool
+     */
+    protected function tooLarge($value, $error)
+    {
         if ($value > $this->max) {
-            return $this->error(self::TOO_BIG);
+            $this->error($error);
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
