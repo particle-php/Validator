@@ -144,22 +144,8 @@ class Validator
      */
     public function copyContext($otherContext, callable $callback = null)
     {
-        if (isset($this->messageOverwrites[$otherContext])) {
-            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
-        }
-
-        if (isset($this->chains[$otherContext])) {
-            $clonedChains = [];
-            foreach ($this->chains[$otherContext] as $key => $chain) {
-                $clonedChains[$key] = clone $chain;
-            }
-
-            if ($callback !== null) {
-                $callback($clonedChains);
-            }
-
-            $this->chains[$this->context] = $clonedChains;
-        }
+        $this->copyMessages($otherContext);
+        $this->copyChains($otherContext, $callback);
 
         return $this;
     }
@@ -177,8 +163,7 @@ class Validator
         $this->context = self::DEFAULT_CONTEXT;
     }
 
-    /**
-     * Overwrite the messages for specific keys.
+    /** * Overwrite the messages for specific keys.
      *
      * @param array $messages
      * @return $this
@@ -255,5 +240,51 @@ class Validator
         }
 
         return $this->messageStack;
+    }
+
+    /**
+     * Copies the messages of the context $otherContext to the current context.
+     *
+     * @param string $otherContext
+     */
+    protected function copyMessages($otherContext)
+    {
+        if (isset($this->messageOverwrites[$otherContext])) {
+            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
+        }
+    }
+
+    /**
+     * Copies the chains of the context $otherContext to the current context.
+     *
+     * @param string $otherContext
+     * @param callable|null $callback
+     */
+    protected function copyChains($otherContext, $callback)
+    {
+        if (isset($this->chains[$otherContext])) {
+            $clonedChains = [];
+            foreach ($this->chains[$otherContext] as $key => $chain) {
+                $clonedChains[$key] = clone $chain;
+            }
+
+            $this->chains[$this->context] = $this->runChainCallback($clonedChains, $callback);
+        }
+    }
+
+    /**
+     * Executes the callback $callback and returns the resulting chains.
+     *
+     * @param Chain[] $chains
+     * @param callable|null $callback
+     * @return Chain[]
+     */
+    protected function runChainCallback($chains, $callback)
+    {
+        if ($callback !== null) {
+            $callback($chains);
+        }
+
+        return $chains;
     }
 }
