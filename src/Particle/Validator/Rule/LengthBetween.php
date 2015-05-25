@@ -15,7 +15,7 @@ use Particle\Validator\Rule;
  *
  * @package Particle\Validator\Rule
  */
-class LengthBetween extends Rule
+class LengthBetween extends Between
 {
     /**
      * A constant that is used when the value is too long.
@@ -71,15 +71,22 @@ class LengthBetween extends Rule
     {
         $length = strlen($value);
 
-        if ($this->max !== null && $length > $this->max) {
-            return $this->error(self::TOO_LONG);
-        }
+        return !$this->tooSmall($length, self::TOO_SHORT) && !$this->tooLarge($length, self::TOO_LONG);
+    }
 
-        if ($length < $this->min) {
-            return $this->error(self::TOO_SHORT);
+    /**
+     * Returns whether or not the value is too long, and logs an error if it is.
+     *
+     * @param mixed $value
+     * @param string $error
+     * @return bool
+     */
+    protected function tooLarge($value, $error)
+    {
+        if ($this->max !== null) {
+            return parent::tooLarge($value, $error);
         }
-
-        return true;
+        return false;
     }
 
     /**
