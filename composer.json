@@ -23,8 +23,8 @@
         "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
-        "psr-0": {
-            "Particle\\Validator": "src/"
+        "psr-4": {
+            "Particle\\Validator\\": "src/"
         }
     }
 }
