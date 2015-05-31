@@ -1,11 +1,9 @@
 <?php
 namespace Particle\Tests;
 
-use Particle\Validator\MessageStack;
 use Particle\Validator\Rule;
 use Particle\Validator\Validator;
 use Particle\Validator\Rule\Required;
-use Particle\Validator\Value\Container;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
