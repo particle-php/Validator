@@ -22,21 +22,31 @@ class MyEntity
         $this->id = $id;
         return $this;
     }
-
+    
     public function validate() {
         $v = new Validator;
+        $v->required('id')->integer();
         
         return new ValidationResult(
-            $v->validate($this->values)),
+            $v->validate($this->values())),
             $v->getMessages()
         );
+    }
+    
+    protected function values()
+    {
+        return [
+            'id' => $this->id,
+        ];
     }
 }
 
 // in a controller:
 $entity = new Entity();
 $entity->setId($this->getParam('id'));
+
 $result = $entity->validate();
+
 if (!$result->isValid()) {
     return $this->renderTemplate([
         'messages' => $result->getMessages() // or maybe even just pass in $result.
