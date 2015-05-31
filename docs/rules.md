@@ -24,6 +24,23 @@ Validate that the value is a boolean value.
 
 Validate by executing a callback function, and returning its result.
 
+If you want to add more than one callback validator, you might want to have different error messages
+as well. This is supported by throwing an Exception of type "InvalidValueException". Small example:
+
+```php
+$v = new Validator;
+$v->required('userId')->callback(function ($value) {
+    if (!getUserFromDb($value)) {
+        throw new Particle\Validator\Exception\InvalidValueException(
+            'Unable to find the user with id ' . $value,
+            'userId'
+        );
+    }
+    return true;
+});
+```
+
+
 ### datetime($format = null)
 
 Validates that the value is a date. If format is passed, it *must* be in that format.
