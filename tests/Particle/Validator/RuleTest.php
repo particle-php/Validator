@@ -11,8 +11,8 @@ class RuleTest extends \PHPUnit_Framework_TestCase
         $length = new Rule\Length(5);
         $length->setParameters('key', 'name');
 
-        $ms = \Mockery::mock('Particle\Validator\MessageStack');
-        $ms->shouldReceive('append')->withArgs([
+        $ms = $this->getMock('Particle\Validator\MessageStack', ['append']);
+        $ms->expects($this->once())->method('append')->with(
             'key',
             Rule\Length::TOO_SHORT,
             '{{ name }} is too short and must be {{ length }} characters long',
@@ -21,7 +21,7 @@ class RuleTest extends \PHPUnit_Framework_TestCase
                 'name' => 'name',
                 'length' => 5
             ]
-        ]);
+        );
 
         $length->setMessageStack($ms);
 
