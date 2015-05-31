@@ -8,7 +8,11 @@
     "authors" : [
         {
             "name": "Berry Langerak",
-            "email": "berry@berryllium.nl"
+            "email": "berry@berryllium.nl",
+            "role": "developer"
+        },
+        {
+            "name": "Rick van der Staaij"
         }
     ],
     "require": {

@@ -16,6 +16,10 @@ Validate that the value only consists our of alphabetic characters.
 
 Validate that the value is between $min and $max (inclusive).
 
+### bool()
+
+Validate that the value is a boolean value.
+
 ### callback(callable $callable)
 
 Validate by executing a callback function, and returning its result.
