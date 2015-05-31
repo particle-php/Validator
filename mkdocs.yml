@@ -4,6 +4,7 @@ pages:
 - [index.md, Home]
 - [installation.md, Installing]
 - [required-optional.md, Required and optional]
+- [nested-values.md, Using nested arrays]
 - [rules.md, Default rules]
 - [messages.md, Overwriting messages]
 - [contexts.md, Using contexts]
