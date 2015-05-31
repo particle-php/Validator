@@ -31,9 +31,16 @@ class InArray extends Rule
         self::NOT_IN_ARRAY => '{{ name }} must be in the defined set of values',
     ];
 
+    /**
+     * The array that contains the values to check.
+     *
+     * @var array
+     */
     protected $array = [];
 
     /**
+     * A bool denoting whether or not strict checking should be done.
+     *
      * @var bool
      */
     protected $strict;

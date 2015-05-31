@@ -9,4 +9,4 @@ pages:
 - [messages.md, Overwriting messages]
 - [contexts.md, Using contexts]
 - [extending.md, Extending the Validator]
-
+- [validation-result.md, Using ValidationResult]
