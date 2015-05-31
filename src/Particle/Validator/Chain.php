@@ -109,6 +109,16 @@ class Chain
     }
 
     /**
+     * Validate that the value is a boolean.
+     *
+     * @return $this
+     */
+    public function bool()
+    {
+        return $this->addRule(new Rule\Bool());
+    }
+
+    /**
      * Validate by executing a callback function, and returning its result.
      *
      * @param callable $callable
