@@ -12,7 +12,7 @@
         >
     <testsuites>
         <testsuite name="Particle Validator Test Suite">
-            <directory suffix="Test.php">tests/Particle/Validator</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
