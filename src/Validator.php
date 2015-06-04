@@ -22,7 +22,9 @@ class Validator
      *
      * @var array
      */
-    protected $chains = [];
+    protected $chains = [
+        self::DEFAULT_CONTEXT => [],
+    ];
 
     /**
      * Contains an array of context => messages.

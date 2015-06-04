@@ -180,4 +180,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($result);
     }
+
+    public function testUnconfiguredValidatorWillNotShowNotice()
+    {
+        $this->assertTrue($this->validator->validate(['value' => 'yes']));
+    }
 }
