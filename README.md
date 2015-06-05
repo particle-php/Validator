@@ -14,10 +14,10 @@
 ```php
 $v = new Validator;
 $v->required('first_name')->length(5);
-$v->validate(['first_name' => 'Berry']); // bool(true).
+$v->isValid(['first_name' => 'Berry']); // bool(true).
 
 $v->required('last_name')->length(10);
-$v->validate(['first_name' => 'Berry']); // bool(false).
+$v->isValid(['first_name' => 'Berry']); // bool(false).
 
 $v->getMessages(); // array with error messages.
 ```

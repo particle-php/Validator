@@ -81,7 +81,7 @@ class GrumpyRule extends Rule
         $this->who = $who;
     }
 
-    public function isValid($value)
+    public function validate($value)
     {
         if ($value !== null || $value === null) { // always true, so always grumpy!
             return $this->error(self::WRONG);
