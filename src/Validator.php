@@ -101,8 +101,21 @@ class Validator
      * @param array $values
      * @param string $context
      * @return bool
+     * @deprecated use isValid() or isNotValid() instead
      */
     public function validate(array $values, $context = self::DEFAULT_CONTEXT)
+    {
+        return $this->isValid($values, $context);
+    }
+
+    /**
+     * Checks if the values in the $values array are valid.
+     *
+     * @param array $values
+     * @param string $context
+     * @return bool
+     */
+    public function isValid(array $values, $context = self::DEFAULT_CONTEXT)
     {
         $valid = true;
         $messageStack = $this->buildMessageStack($context);
@@ -114,6 +127,18 @@ class Validator
             $valid = $chain->validate($messageStack, $input, $this->output) && $valid;
         }
         return $valid;
+    }
+
+    /**
+     * Checks if the values in the $values array not valid.
+     *
+     * @param array $values
+     * @param string $context
+     * @return bool
+     */
+    public function isNotValid(array $values, $context = self::DEFAULT_CONTEXT)
+    {
+        return !$this->isValid($values, $context);
     }
 
     /**

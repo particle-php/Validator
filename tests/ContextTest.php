@@ -25,7 +25,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
         $this->validator->required('first_name')->length(3);
 
-        $result = $this->validator->validate(['first_name' => 'berry'], 'insert');
+        $result = $this->validator->isValid(['first_name' => 'berry'], 'insert');
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -49,7 +49,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->validator->validate(['first_name' => 'Rick'], 'insert');
+        $this->validator->isValid(['first_name' => 'Rick'], 'insert');
         $expected = [
             'first_name' => [
                 Rule\Length::TOO_SHORT => 'This is from inside the context.'
@@ -70,7 +70,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->validator->validate(['first_name' => 'Rick'], 'insert');
+        $this->validator->isValid(['first_name' => 'Rick'], 'insert');
 
         $expected = [
             'first_name' => [
@@ -97,7 +97,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             $context->copyContext('insert');
         });
 
-        $this->assertFalse($this->validator->validate(['first_name' => 'Rick'], 'update'));
+        $this->assertFalse($this->validator->isValid(['first_name' => 'Rick'], 'update'));
 
         $expected = [
             'first_name' => [
@@ -124,7 +124,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             });
         });
 
-        $this->assertTrue($this->validator->validate([], 'update'));
+        $this->assertTrue($this->validator->isValid([], 'update'));
     }
 
     public function testContextCopyClonesButDoesNotOverwrite()
@@ -144,6 +144,6 @@ class ContextTest extends \PHPUnit_Framework_TestCase
             });
         });
 
-        $this->assertFalse($this->validator->validate([], 'insert'));
+        $this->assertFalse($this->validator->isValid([], 'insert'));
     }
 }

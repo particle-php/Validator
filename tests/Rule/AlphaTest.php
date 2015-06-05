@@ -23,7 +23,7 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueForValidValues($value)
     {
         $this->validator->required('first_name')->alpha();
-        $result = $this->validator->validate(['first_name' => $value]);
+        $result = $this->validator->isValid(['first_name' => $value]);
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -36,7 +36,7 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueForValidValuesWithSpaces($value)
     {
         $this->validator->required('first_name')->alpha(true);
-        $result = $this->validator->validate(['first_name' => $value]);
+        $result = $this->validator->isValid(['first_name' => $value]);
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -49,7 +49,7 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueForDifferentAlphabets($value)
     {
         $this->validator->required('first_name')->alpha(true);
-        $result = $this->validator->validate(['first_name' => $value]);
+        $result = $this->validator->isValid(['first_name' => $value]);
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -62,7 +62,7 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseForValuesWithSpaces($value, $errorReason)
     {
         $this->validator->required('first_name')->alpha();
-        $result = $this->validator->validate(['first_name' => $value]);
+        $result = $this->validator->isValid(['first_name' => $value]);
 
         $expected = ['first_name' => [$errorReason => $this->getMessage($errorReason)]];
 

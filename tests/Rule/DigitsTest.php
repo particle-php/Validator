@@ -19,7 +19,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnOnlyDigitCharacters()
     {
         $this->validator->required('digits')->digits();
-        $this->assertTrue($this->validator->validate(['digits' => '123456789']));
+        $this->assertTrue($this->validator->isValid(['digits' => '123456789']));
     }
 
     /**
@@ -29,7 +29,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnNonDigitCharacters($value)
     {
         $this->validator->required('digits')->digits();
-        $this->assertFalse($this->validator->validate(['digits' => $value]));
+        $this->assertFalse($this->validator->isValid(['digits' => $value]));
 
         $expected = [
             'digits' => [

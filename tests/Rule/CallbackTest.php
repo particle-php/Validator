@@ -23,7 +23,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             return $value === 'berry';
         });
 
-        $result = $this->validator->validate(['first_name' => 'berry']);
+        $result = $this->validator->isValid(['first_name' => 'berry']);
         $this->assertTrue($result);
     }
 
@@ -33,7 +33,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             return $value !== 'berry';
         });
 
-        $result = $this->validator->validate(['first_name' => 'berry']);
+        $result = $this->validator->isValid(['first_name' => 'berry']);
         $this->assertFalse($result);
 
         $expected = [
@@ -57,7 +57,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             return true;
         });
 
-        $result = $this->validator->validate(['first_name' => 'bill']);
+        $result = $this->validator->isValid(['first_name' => 'bill']);
         $this->assertFalse($result);
 
         $expected = [
@@ -75,7 +75,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             return $context['last_name'] === 'Langerak' && $value === 'Berry';
         });
 
-        $result = $this->validator->validate(['first_name' => 'Berry', 'last_name' => 'Langerak']);
+        $result = $this->validator->isValid(['first_name' => 'Berry', 'last_name' => 'Langerak']);
         $this->assertTrue($result);
     }
 

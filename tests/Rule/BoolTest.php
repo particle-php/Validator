@@ -24,7 +24,7 @@ class BoolTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnlyOnValidBools($value, $expected)
     {
         $this->validator->required('active')->bool();
-        $result = $this->validator->validate(['active' => $value]);
+        $result = $this->validator->isValid(['active' => $value]);
         $this->assertEquals($expected, $result);
 
         if ($expected === false) {

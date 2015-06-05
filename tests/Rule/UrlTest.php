@@ -23,7 +23,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnValidUrls($value)
     {
         $this->validator->required('url')->url();
-        $this->assertTrue($this->validator->validate(['url' => $value]));
+        $this->assertTrue($this->validator->isValid(['url' => $value]));
         $this->assertEquals([], $this->validator->getMessages());
     }
 
@@ -35,7 +35,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnInvalidUrls($value, $error)
     {
         $this->validator->required('url')->url();
-        $this->assertFalse($this->validator->validate(['url' => $value]));
+        $this->assertFalse($this->validator->isValid(['url' => $value]));
         $expected = [
             'url' => [
                 Url::INVALID_URL => 'url must be a valid URL'

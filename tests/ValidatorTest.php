@@ -26,7 +26,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertFalse($this->validator->validate([]));
+        $this->assertFalse($this->validator->isValid([]));
         $this->assertEquals(
             [
                 'foo' => [
@@ -42,7 +42,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('foo');
         $this->validator->optional('foo');
 
-        $result = $this->validator->validate([]);
+        $result = $this->validator->isValid([]);
 
         $this->assertTrue($result);
     }
@@ -54,7 +54,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->validator->required('first_name', 'Voornaam')->length(5);
-        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+        $this->assertFalse($this->validator->isValid(['first_name' => 'Rick']));
 
         $expected = [
             'first_name' => [
@@ -78,7 +78,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->validator->required('first_name')->length(5);
-        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+        $this->assertFalse($this->validator->isValid(['first_name' => 'Rick']));
 
         $expected = [
             'first_name' => [
@@ -94,7 +94,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->lengthBetween(2, 20);
         $this->validator->required('last_name')->lengthBetween(2, 60);
 
-        $this->validator->validate([
+        $this->validator->isValid([
             'first_name' => 'Berry',
             'last_name' => 'Langerak',
             'is_admin' => true
@@ -111,7 +111,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testNoFalsePositivesForIssetOnFalse()
     {
         $this->validator->required('falsy_value');
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
             'falsy_value' => false,
         ]);
 
@@ -129,7 +129,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('user.contact.email')->email();
 
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
             'user' => [
                 'contact' => [
                     'email' => 'example@particle-php.com'
@@ -143,7 +143,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testDotNotationIsAddedToMessagesVerbatim()
     {
         $this->validator->required('user.email');
-        $result = $this->validator->validate([]);
+        $result = $this->validator->isValid([]);
 
         $expected = [
             'user.email' => [
@@ -164,7 +164,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->validator->required('user.email');
-        $this->validator->validate($input);
+        $this->validator->isValid($input);
         $this->assertEquals($input, $this->validator->getValues());
     }
 
@@ -172,7 +172,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('user.email', 'user email address', true);
 
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
             'user' => [
                 'email' => null,
             ]
@@ -183,6 +183,33 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testUnconfiguredValidatorWillNotShowNotice()
     {
-        $this->assertTrue($this->validator->validate(['value' => 'yes']));
+        $this->assertTrue($this->validator->isValid(['value' => 'yes']));
+    }
+
+    public function testIsNotValid()
+    {
+        $this->validator->required('first_name')->lengthBetween(2, 20);
+        $this->validator->required('last_name')->lengthBetween(2, 20);
+
+        $this->assertTrue($this->validator->isNotValid([
+            'first_name' => 'Berry',
+            'last_name' => 'Langelangelangelangelangerak',
+        ]));
+    }
+
+    /**
+     * Test if the deprecated function still works, should get dropped in version 2 though.
+     */
+    public function testDeprecatedValidate()
+    {
+        $this->validator->required('first_name')->lengthBetween(2, 20);
+        $this->validator->required('last_name')->lengthBetween(2, 60);
+
+        $isValid = $this->validator->validate([
+            'first_name' => 'Berry',
+            'last_name' => 'Langerak',
+        ]);
+
+        $this->assertTrue($isValid);
     }
 }

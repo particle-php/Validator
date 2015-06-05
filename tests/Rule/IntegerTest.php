@@ -23,7 +23,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnValidInteger($value)
     {
         $this->validator->required('integer')->integer();
-        $this->assertTrue($this->validator->validate(['integer' => $value]));
+        $this->assertTrue($this->validator->isValid(['integer' => $value]));
     }
 
     /**
@@ -33,7 +33,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnInvalidIntegers($value)
     {
         $this->validator->required('integer')->integer();
-        $this->assertFalse($this->validator->validate(['integer' => $value]));
+        $this->assertFalse($this->validator->isValid(['integer' => $value]));
 
         $expected = [
             'integer' => [
