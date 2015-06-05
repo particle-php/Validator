@@ -286,7 +286,7 @@ class Chain
      * @param Container $output
      * @return bool
      */
-    public function validate(MessageStack $messageStack, Container $input, Container $output)
+    public function isValid(MessageStack $messageStack, Container $input, Container $output)
     {
         $valid = true;
         $output->set($this->key, $input->get($this->key));

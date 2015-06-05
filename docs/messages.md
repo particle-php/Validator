@@ -19,7 +19,7 @@ $v->overwriteMessages([
     ]
 ]);
 
-$v->validate([
+$v->isValid([
     'first_name' => 'this is too long',
     'last_name' => 'this is also too long',
 ]);

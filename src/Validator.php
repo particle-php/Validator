@@ -124,13 +124,13 @@ class Validator
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
-            $valid = $chain->validate($messageStack, $input, $this->output) && $valid;
+            $valid = $chain->isValid($messageStack, $input, $this->output) && $valid;
         }
         return $valid;
     }
 
     /**
-     * Checks if the values in the $values array not valid.
+     * Checks if the values in the $values array are not valid.
      *
      * @param array $values
      * @param string $context

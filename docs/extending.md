@@ -81,7 +81,7 @@ class GrumpyRule extends Rule
         $this->who = $who;
     }
 
-    public function validate($value)
+    public function isValid($value)
     {
         if ($value !== null || $value === null) { // always true, so always grumpy!
             return $this->error(self::WRONG);
@@ -104,7 +104,7 @@ All that's left is actually using your own validator:
 ```php
 $v = new MyValidator;
 $v->required('foo')->grumpy('Silly sally');
-$v->validate(['foo' => true]);
+$v->isValid(['foo' => true]);
 
 // output: 'Silly Sally hates the value of "foo"'
 echo $v->getMessages()['foo'][Grumpy::WRONG]; 
