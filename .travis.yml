@@ -3,8 +3,10 @@ language: php
 php:
   - 5.5
 
-before_script:
+install:
   - composer install
+
+before_script:
   - phpenv rehash
 
 script:
