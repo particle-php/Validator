@@ -25,12 +25,12 @@ class BoolTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('active')->bool();
         $result = $this->validator->validate(['active' => $value]);
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result->isValid());
 
         if ($expected === false) {
             $this->assertEquals(
                 $this->getMessage(Bool::NOT_BOOL),
-                $this->validator->getMessages()['active'][Bool::NOT_BOOL]
+                $result->getMessages()['active'][Bool::NOT_BOOL]
             );
         }
     }

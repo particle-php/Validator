@@ -25,8 +25,8 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->alpha();
         $result = $this->validator->validate(['first_name' => $value]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     /**
@@ -38,8 +38,8 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->alpha(true);
         $result = $this->validator->validate(['first_name' => $value]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     /**
@@ -51,8 +51,8 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->alpha(true);
         $result = $this->validator->validate(['first_name' => $value]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     /**
@@ -66,8 +66,8 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
 
         $expected = ['first_name' => [$errorReason => $this->getMessage($errorReason)]];
 
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function getAlphaWithoutSpaces()

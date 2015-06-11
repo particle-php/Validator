@@ -19,20 +19,21 @@ class RegexTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueWhenMatchesRegex()
     {
         $this->validator->required('first_name')->regex('/^berry$/i');
-        $this->assertTrue($this->validator->validate(['first_name' => 'Berry']));
-        $this->assertEquals([], $this->validator->getMessages());
+        $result = $this->validator->validate(['first_name' => 'Berry']);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     public function testReturnsFalseOnNoMatch()
     {
         $this->validator->required('first_name')->regex('~this wont match~');
-        $this->assertFalse($this->validator->validate(['first_name' => 'Berry']));
+        $result = $this->validator->validate(['first_name' => 'Berry']);
+        $this->assertFalse($result->isValid());
         $expected = [
             'first_name' => [
                 Regex::NO_MATCH => 'first name is invalid'
             ]
         ];
-
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 }

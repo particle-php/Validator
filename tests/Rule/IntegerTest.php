@@ -23,7 +23,8 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnValidInteger($value)
     {
         $this->validator->required('integer')->integer();
-        $this->assertTrue($this->validator->validate(['integer' => $value]));
+        $result = $this->validator->validate(['integer' => $value]);
+        $this->assertTrue($result->isValid());
     }
 
     /**
@@ -33,14 +34,15 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnInvalidIntegers($value)
     {
         $this->validator->required('integer')->integer();
-        $this->assertFalse($this->validator->validate(['integer' => $value]));
+        $result = $this->validator->validate(['integer' => $value]);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'integer' => [
                 Integer::NOT_AN_INTEGER => $this->getMessage(Integer::NOT_AN_INTEGER)
             ]
         ];
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function getValidIntegerValues()

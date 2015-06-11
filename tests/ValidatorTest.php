@@ -25,15 +25,16 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "{{ key }}".'
             ]
         ]);
+        $result = $this->validator->validate([]);
 
-        $this->assertFalse($this->validator->validate([]));
+        $this->assertFalse($result->isValid());
         $this->assertEquals(
             [
                 'foo' => [
                     Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "foo".'
                 ]
             ],
-            $this->validator->getMessages()
+            $result->getMessages()
         );
     }
 
@@ -44,7 +45,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->validator->validate([]);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     public function testDefaultMessageOverwrites()
@@ -52,9 +53,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->overwriteDefaultMessages([
             Rule\Length::TOO_SHORT => 'this is my overwritten message. {{ length }} is the length.'
         ]);
-
         $this->validator->required('first_name', 'Voornaam')->length(5);
-        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+        $result = $this->validator->validate(['first_name' => 'Rick']);
 
         $expected = [
             'first_name' => [
@@ -62,7 +62,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testSpecificMessageWillHavePrecedenceOverDefaultMessage()
@@ -78,15 +79,16 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->validator->required('first_name')->length(5);
-        $this->assertFalse($this->validator->validate(['first_name' => 'Rick']));
+
+        $result = $this->validator->validate(['first_name' => 'Rick']);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'first_name' => [
                 Rule\Length::TOO_SHORT => 'This is overwritten for first_name only.'
             ]
         ];
-
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testReturnsValidatedValues()
@@ -94,7 +96,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('first_name')->lengthBetween(2, 20);
         $this->validator->required('last_name')->lengthBetween(2, 60);
 
-        $this->validator->validate([
+        $result = $this->validator->validate([
             'first_name' => 'Berry',
             'last_name' => 'Langerak',
             'is_admin' => true
@@ -105,7 +107,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             'last_name' => 'Langerak',
         ];
 
-        $this->assertEquals($expected, $this->validator->getValues());
+        $this->assertEquals($expected, $result->getValues());
     }
 
     public function testNoFalsePositivesForIssetOnFalse()
@@ -115,14 +117,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             'falsy_value' => false,
         ]);
 
-        $this->assertEquals([], $this->validator->getMessages());
-        $this->assertTrue($result);
-    }
-
-    public function testReturnsEmptyArrayInsteadOfValidatedValues()
-    {
-        $this->validator->required('first_name')->lengthBetween(2, 20);
-        $this->assertEquals([], $this->validator->getValues());
+        $this->assertEquals([], $result->getMessages());
+        $this->assertTrue($result->isValid());
     }
 
     public function testCanUseDotNotationToValidateInArrays()
@@ -137,7 +133,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     public function testDotNotationIsAddedToMessagesVerbatim()
@@ -151,8 +147,8 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testDotNotationIsAlsoUsedForOutputValueContainer()
@@ -162,10 +158,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'email' => 'example@particle-php.com'
             ]
         ];
-
         $this->validator->required('user.email');
-        $this->validator->validate($input);
-        $this->assertEquals($input, $this->validator->getValues());
+        $result = $this->validator->validate($input);
+        $this->assertEquals($input, $result->getValues());
     }
 
     public function testDotNotationWillReturnTrueForNullRequiredValue()
@@ -178,11 +173,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
+    /**
+     * Bug fix test: Check if no notice is shown when no validation rules are configured.
+     */
     public function testUnconfiguredValidatorWillNotShowNotice()
     {
-        $this->assertTrue($this->validator->validate(['value' => 'yes']));
+        $this->assertTrue($this->validator->validate(['value' => 'yes'])->isValid());
     }
 }
