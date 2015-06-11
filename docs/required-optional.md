@@ -13,33 +13,33 @@ A bit of code says more than a thousand words, so we'll cover all possible use-c
 
 ```php
 $v->required('foo')->lengthBetween(0, 100);
-$v->validate(['foo' => '']); // false, because allowEmpty is false by default.
+$v->isValid(['foo' => '']); // false, because allowEmpty is false by default.
 ```
 
 ### Validate a required value, which is allowed to be empty.
 
 ```php
 $v->required('foo', 'foo', true); // third parameter is "allowEmpty".
-$v->validate(['foo' => '']); // true, because allowEmpty is true.
+$v->isValid(['foo' => '']); // true, because allowEmpty is true.
 ```
 
 ### Validate an optional value, which is not allowed to be empty
 
 ```php
 $v->optional('foo')->lengthBetween(0, 100);
-$v->validate(['foo' => '']); // false, because allowEmpty is false and the key exists.
+$v->isValid(['foo' => '']); // false, because allowEmpty is false and the key exists.
 ```
 
 ### Validate a non-existing optional value, which is not allowed to be empty
 
 ```php
 $v->optional('foo')->lengthBetween(20, 100);
-$v->validate([]); // true, because the optional key is not present.
+$v->isValid([]); // true, because the optional key is not present.
 ```
 
 ### Validate an optional value, which is allowed to be empty.
 
 ```php
 $v->optional('foo', 'foo', true)->lengthBetween(0, 100);
-$v->validate(['foo' => '']); // true, because allowEmpty is true.
+$v->isValid(['foo' => '']); // true, because allowEmpty is true.
 ```

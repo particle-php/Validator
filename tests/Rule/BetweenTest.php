@@ -19,7 +19,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueForValuesBetweenMinAndMax()
     {
         $this->validator->required('number')->between(1, 10);
-        $result = $this->validator->validate(['number' => 5]);
+        $result = $this->validator->isValid(['number' => 5]);
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -28,7 +28,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function testValidatesInclusiveByDefault()
     {
         $this->validator->required('number')->between(1, 10);
-        $result = $this->validator->validate(['number' => 1]);
+        $result = $this->validator->isValid(['number' => 1]);
 
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
@@ -37,7 +37,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseForValuesNotBetweenMinAndMaxLowerError()
     {
         $this->validator->required('number')->between(1, 10);
-        $result = $this->validator->validate(['number' => 0]);
+        $result = $this->validator->isValid(['number' => 0]);
 
         $expected = [
             'number' => [
@@ -51,7 +51,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseForValuesNotBetweenMinAndMaxUpperError()
     {
         $this->validator->required('number')->between(1, 10);
-        $result = $this->validator->validate(['number' => 11]);
+        $result = $this->validator->isValid(['number' => 11]);
 
         $expected = [
             'number' => [

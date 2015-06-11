@@ -20,7 +20,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('foo');
 
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
         ]);
 
         $this->assertFalse($result);
@@ -29,7 +29,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnSetRequiredValues()
     {
         $this->validator->required('foo');
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
             'foo' => 'bar'
         ]);
         $this->assertTrue($result);
@@ -42,7 +42,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('foo');
 
         foreach ($values as $value) {
-            $this->validator->validate(['foo' => $value]);
+            $this->validator->isValid(['foo' => $value]);
 
             $this->assertArrayNotHasKey(
                 Required::NON_EXISTENT_KEY,
@@ -57,7 +57,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
             return $values['foo'] === 'bar';
         });
 
-        $result = $this->validator->validate(['foo' => 'bar']);
+        $result = $this->validator->isValid(['foo' => 'bar']);
 
         $this->assertFalse($result);
         $this->assertEquals(
@@ -69,7 +69,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
             $this->validator->getMessages()
         );
 
-        $result = $this->validator->validate(['foo' => 'not bar!']);
+        $result = $this->validator->isValid(['foo' => 'not bar!']);
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
     }

@@ -23,12 +23,12 @@ class MyEntity
         return $this;
     }
     
-    public function validate() {
+    public function isValid() {
         $v = new Validator;
         $v->required('id')->integer();
         
         return new ValidationResult(
-            $v->validate($this->values())),
+            $v->isValid($this->values())),
             $v->getMessages()
         );
     }
@@ -45,7 +45,7 @@ class MyEntity
 $entity = new Entity();
 $entity->setId($this->getParam('id'));
 
-$result = $entity->validate();
+$result = $entity->isValid();
 
 if (!$result->isValid()) {
     return $this->renderTemplate([

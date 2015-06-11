@@ -19,14 +19,14 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueWhenMatchesUuidV4()
     {
         $this->validator->required('guid')->uuid();
-        $this->assertTrue($this->validator->validate(['guid' => '44c0ffee-988a-49dc-0bad-a55c0de2d1e4']));
+        $this->assertTrue($this->validator->isValid(['guid' => '44c0ffee-988a-49dc-0bad-a55c0de2d1e4']));
         $this->assertEquals([], $this->validator->getMessages());
     }
 
     public function testReturnsFalseOnNoMatch()
     {
         $this->validator->required('guid')->uuid();
-        $this->assertFalse($this->validator->validate(['guid' => 'xxc0ffee-988a-49dc-0bad-a55c0de2d1e4']));
+        $this->assertFalse($this->validator->isValid(['guid' => 'xxc0ffee-988a-49dc-0bad-a55c0de2d1e4']));
 
         $expected = [
             'guid' => [

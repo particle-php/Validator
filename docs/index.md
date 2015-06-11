@@ -29,7 +29,7 @@ $data = [
     'last_name' => 'Doe',
 ];
 
-$validator->validate($data); // bool(true)
+$validator->isValid($data); // bool(true)
 ```
 
 ## Why Particle\Validator?

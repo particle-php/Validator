@@ -19,22 +19,22 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueIfLengthIsExactlyMinOrMax()
     {
         $this->validator->required('first_name')->lengthBetween(2, 7);
-        $this->assertTrue($this->validator->validate(['first_name' => 'ad']));
-        $this->assertTrue($this->validator->validate(['first_name' => 'Richard']));
+        $this->assertTrue($this->validator->isValid(['first_name' => 'ad']));
+        $this->assertTrue($this->validator->isValid(['first_name' => 'Richard']));
         $this->assertEquals([], $this->validator->getMessages());
     }
 
     public function testReturnsTrueIfMaxIsNull()
     {
         $this->validator->required('password')->lengthBetween(2, null);
-        $this->assertTrue($this->validator->validate(['password' => str_repeat('foo', 100)]));
+        $this->assertTrue($this->validator->isValid(['password' => str_repeat('foo', 100)]));
         $this->assertEquals([], $this->validator->getMessages());
     }
 
     public function testReturnsFalseIfInvalid()
     {
         $this->validator->required('first_name')->lengthBetween(3, 6);
-        $result = $this->validator->validate(['first_name' => 'ad']);
+        $result = $this->validator->isValid(['first_name' => 'ad']);
 
         $this->assertFalse($result);
 
@@ -45,7 +45,7 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($expected, $this->validator->getMessages());
 
-        $result = $this->validator->validate(['first_name' => 'Richard']);
+        $result = $this->validator->isValid(['first_name' => 'Richard']);
 
         $this->assertFalse($result);
         $expected = [

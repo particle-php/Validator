@@ -19,13 +19,13 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueIfValueIsInArrayWithStrictChecking()
     {
         $this->validator->required('group')->inArray(['foo', 'bar']);
-        $this->assertTrue($this->validator->validate(['group' => 'foo']));
+        $this->assertTrue($this->validator->isValid(['group' => 'foo']));
     }
 
     public function testReturnsFalseIfValueIsNotInArrayWithStrictChecking()
     {
         $this->validator->required('group')->inArray([0]);
-        $this->assertFalse($this->validator->validate(['group' => '0']));
+        $this->assertFalse($this->validator->isValid(['group' => '0']));
 
         $expected = [
             'group' => [
@@ -45,7 +45,7 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
                 InArray::NOT_IN_ARRAY => '{{ name }} must be one of {{ values }}'
             ]
         ]);
-        $this->assertFalse($this->validator->validate(['group' => 'none']));
+        $this->assertFalse($this->validator->isValid(['group' => 'none']));
 
         $expected = [
             'group' => [
@@ -59,6 +59,6 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueIfValueIsSortOfInArrayWithoutStrictChecking()
     {
         $this->validator->required('group')->inArray([0], false);
-        $this->assertTrue($this->validator->validate(['group' => '0']));
+        $this->assertTrue($this->validator->isValid(['group' => '0']));
     }
 }

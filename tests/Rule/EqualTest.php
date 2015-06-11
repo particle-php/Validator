@@ -19,14 +19,14 @@ class EqualTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnEqualValue()
     {
         $this->validator->required('first_name')->equals('berry');
-        $this->assertTrue($this->validator->validate(['first_name' => 'berry']));
+        $this->assertTrue($this->validator->isValid(['first_name' => 'berry']));
     }
 
     public function testReturnsFalseOnNonEqualValue()
     {
         $this->validator->required('first_name')->equals(0);
-        $this->assertFalse($this->validator->validate(['first_name' => '0'])); // strict typing all the way!
-        $this->assertFalse($this->validator->validate(['first_name' => 'No cigar, and not even close.']));
+        $this->assertFalse($this->validator->isValid(['first_name' => '0'])); // strict typing all the way!
+        $this->assertFalse($this->validator->isValid(['first_name' => 'No cigar, and not even close.']));
 
         $expected = [
             'first_name' => [

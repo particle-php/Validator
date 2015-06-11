@@ -23,7 +23,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnNonEmptyValues($value)
     {
         $this->validator->optional('foo', 'foo', false);
-        $result = $this->validator->validate(['foo' => $value]);
+        $result = $this->validator->isValid(['foo' => $value]);
 
         $this->assertTrue($result);
     }
@@ -34,7 +34,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnEmptyValues($value)
     {
         $this->validator->optional('foo', 'foo', false);
-        $result = $this->validator->validate(['foo' => $value]);
+        $result = $this->validator->isValid(['foo' => $value]);
 
         $this->assertFalse($result);
         $this->assertArrayHasKey(NotEmpty::EMPTY_VALUE, $this->validator->getMessages()['foo']);
@@ -44,7 +44,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('foo', 'foo', true)->length(5);
 
-        $result = $this->validator->validate([
+        $result = $this->validator->isValid([
             'foo' => null,
         ]);
 
@@ -58,7 +58,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             return $values['foo'] !== 'bar';
         });
 
-        $result = $this->validator->validate(['foo' => 'bar', 'first_name' => '']);
+        $result = $this->validator->isValid(['foo' => 'bar', 'first_name' => '']);
 
         $this->assertFalse($result);
         $this->assertEquals(
@@ -70,7 +70,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             $this->validator->getMessages()
         );
 
-        $result = $this->validator->validate(['foo' => 'not bar!', 'first_name' => '']);
+        $result = $this->validator->isValid(['foo' => 'not bar!', 'first_name' => '']);
         $this->assertTrue($result);
         $this->assertEquals([], $this->validator->getMessages());
     }
