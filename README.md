@@ -13,13 +13,23 @@
 
 ```php
 $v = new Validator;
+
 $v->required('first_name')->length(5);
-$v->validate(['first_name' => 'Berry']); // bool(true).
 
-$v->required('last_name')->length(10);
-$v->validate(['first_name' => 'Berry']); // bool(false).
+$result = $v->validate(['first_name' => 'Berry']);
+$result->isValid(); // bool(true).
+$result->getMessages(); // array(0)
 
-$v->getMessages(); // array with error messages.
+$result = $v->validate(['first_name' => 'Rick']);
+$result->isValid(); // bool(false).
+$result->getMessages();
+/**
+ * array(1) {
+ *     ["first_name"]=> array(1) {
+ *         ["Length::TOO_SHORT"]=> string(53) "first_name is too short and must be 5 characters long"
+ *     }
+ * }
+ */
 ```
 
 ## Features
