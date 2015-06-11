@@ -3,6 +3,9 @@ language: php
 php:
   - 5.5
 
+before_install:
+  - composer self-update
+
 install:
   - composer install
 
