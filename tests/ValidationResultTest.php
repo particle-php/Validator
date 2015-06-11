@@ -19,6 +19,7 @@ class ValidationResultTest extends \PHPUnit_Framework_TestCase
         ];
 
         $result = new ValidationResult(false, $messages, $values);
+
         $this->assertFalse($result->isValid());
         $this->assertTrue($result->isNotValid());
         $this->assertEquals($messages, $result->getMessages());

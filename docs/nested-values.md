@@ -14,6 +14,6 @@ $values = [
 $v = new Validator;
 $v->required('user.username')->alpha();
 
-$v->validate($values); // bool(true)
-$v->getValues() === $values; /// bool(true)
+$result = $v->validate($values);
+$result->getValues() === $values; // bool(true)
 ```

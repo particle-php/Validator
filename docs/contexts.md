@@ -15,8 +15,8 @@ $v->context('update', function(Validator $context) {
     $context->optional('first_name')->lengthBetween(2, 30);
 });
 
-$v->validate([], 'update'); // bool(true)
-$v->validate([], 'insert'); // bool(false), because first_name is required.
+$v->validate([], 'update')->isValid(); // bool(true)
+$v->validate([], 'insert')->isValid(); // bool(false), because first_name is required.
 ```
 
 ## Copying from another context
@@ -41,7 +41,8 @@ $v->context('update', function(Validator $context) {
     $context->optional('first_name');
 });
 
-$v->validate([], 'update'); // bool(true)
+$result = $v->validate([], 'update');
+$result->isValid(); // bool(true)
 ```
 
 ## Extended example of copying
