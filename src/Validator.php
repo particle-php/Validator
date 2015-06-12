@@ -117,21 +117,8 @@ class Validator
         return new ValidationResult(
             $isValid,
             $this->messageStack->getMessages(),
-            $this->getValues()
+            $this->output->getArrayCopy()
         );
-    }
-
-    /**
-     * Returns all validated values
-     *
-     * @return array
-     */
-    protected function getValues()
-    {
-        if (!$this->output instanceof Container) {
-            return [];
-        }
-        return $this->output->getArrayCopy();
     }
 
     /**
