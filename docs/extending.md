@@ -104,10 +104,10 @@ All that's left is actually using your own validator:
 ```php
 $v = new MyValidator;
 $v->required('foo')->grumpy('Silly sally');
-$v->validate(['foo' => true]);
+$result = $v->validate(['foo' => true]);
 
 // output: 'Silly Sally hates the value of "foo"'
-echo $v->getMessages()['foo'][Grumpy::WRONG]; 
+echo $result->getMessages()['foo'][Grumpy::WRONG]; 
 ```
 
 That's that: you can now go wild on adding rules. If you think a rule should be added to the main

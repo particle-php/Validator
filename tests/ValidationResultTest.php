@@ -8,15 +8,21 @@ class ValidationResultTest extends \PHPUnit_Framework_TestCase
 {
     public function testReturnsResultAndMessages()
     {
-        // lamest test ever, but then, the ValidationResult is only for convenience.
+        $values = [
+            'first_name' => 'test',
+        ];
+
         $messages = [
             'first_name' => [
                 Alpha::NOT_ALPHA => 'first name may only consist out of alphabetical characters'
             ]
         ];
 
-        $result = new ValidationResult(false, $messages);
+        $result = new ValidationResult(false, $messages, $values);
+
         $this->assertFalse($result->isValid());
+        $this->assertTrue($result->isNotValid());
         $this->assertEquals($messages, $result->getMessages());
+        $this->assertEquals($values, $result->getValues());
     }
 }

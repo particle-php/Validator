@@ -21,8 +21,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('number')->between(1, 10);
         $result = $this->validator->validate(['number' => 5]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     public function testValidatesInclusiveByDefault()
@@ -30,8 +30,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         $this->validator->required('number')->between(1, 10);
         $result = $this->validator->validate(['number' => 1]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     public function testReturnsFalseForValuesNotBetweenMinAndMaxLowerError()
@@ -44,8 +44,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
                 Between::TOO_SMALL => $this->getMessage(Between::TOO_SMALL)
             ]
         ];
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testReturnsFalseForValuesNotBetweenMinAndMaxUpperError()
@@ -58,8 +58,8 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
                 Between::TOO_BIG => $this->getMessage(Between::TOO_BIG)
             ]
         ];
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function getMessage($reason)

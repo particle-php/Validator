@@ -25,7 +25,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
         $this->validator->optional('foo', 'foo', false);
         $result = $this->validator->validate(['foo' => $value]);
 
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     /**
@@ -36,8 +36,8 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
         $this->validator->optional('foo', 'foo', false);
         $result = $this->validator->validate(['foo' => $value]);
 
-        $this->assertFalse($result);
-        $this->assertArrayHasKey(NotEmpty::EMPTY_VALUE, $this->validator->getMessages()['foo']);
+        $this->assertFalse($result->isValid());
+        $this->assertArrayHasKey(NotEmpty::EMPTY_VALUE, $result->getMessages()['foo']);
     }
 
     public function testBreaksChainOnAllowedEmptyValues()
@@ -48,8 +48,8 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             'foo' => null,
         ]);
 
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     public function testAllowEmptyCanBeConditional()
@@ -60,19 +60,19 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->validator->validate(['foo' => 'bar', 'first_name' => '']);
 
-        $this->assertFalse($result);
+        $this->assertFalse($result->isValid());
         $this->assertEquals(
             [
                 'first_name' => [
                     NotEmpty::EMPTY_VALUE => 'first name must not be empty'
                 ]
             ],
-            $this->validator->getMessages()
+            $result->getMessages()
         );
 
         $result = $this->validator->validate(['foo' => 'not bar!', 'first_name' => '']);
-        $this->assertTrue($result);
-        $this->assertEquals([], $this->validator->getMessages());
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
 

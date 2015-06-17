@@ -19,13 +19,15 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueIfValueIsInArrayWithStrictChecking()
     {
         $this->validator->required('group')->inArray(['foo', 'bar']);
-        $this->assertTrue($this->validator->validate(['group' => 'foo']));
+        $result = $this->validator->validate(['group' => 'foo']);
+        $this->assertTrue($result->isValid());
     }
 
     public function testReturnsFalseIfValueIsNotInArrayWithStrictChecking()
     {
         $this->validator->required('group')->inArray([0]);
-        $this->assertFalse($this->validator->validate(['group' => '0']));
+        $result = $this->validator->validate(['group' => '0']);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'group' => [
@@ -33,7 +35,7 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testCanUseTheValuesInErrorMessage()
@@ -45,20 +47,21 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
                 InArray::NOT_IN_ARRAY => '{{ name }} must be one of {{ values }}'
             ]
         ]);
-        $this->assertFalse($this->validator->validate(['group' => 'none']));
+        $result = $this->validator->validate(['group' => 'none']);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'group' => [
                 InArray::NOT_IN_ARRAY => 'group must be one of "users", "admins"'
             ]
         ];
-
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testReturnsTrueIfValueIsSortOfInArrayWithoutStrictChecking()
     {
         $this->validator->required('group')->inArray([0], false);
-        $this->assertTrue($this->validator->validate(['group' => '0']));
+        $result = $this->validator->validate(['group' => '0']);
+        $this->assertTrue($result->isValid());
     }
 }

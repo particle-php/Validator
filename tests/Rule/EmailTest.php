@@ -24,23 +24,25 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnValidEmailaddresses($value)
     {
         $this->validator->required('email')->email();
-        $this->assertTrue($this->validator->validate(['email' => $value]));
+        $result = $this->validator->validate(['email' => $value]);
+        $this->assertTrue($result->isValid());
     }
 
     /**
      * @dataProvider getInvalidAddresses
      * @param string $value
      */
-    public function testReturnsFalseOnInvalidEmailaddresses($value)
+    public function testReturnsFalseOnInvalidEmailAddresses($value)
     {
         $this->validator->required('email')->email();
-        $this->assertFalse($this->validator->validate(['email' => $value]));
+        $result = $this->validator->validate(['email' => $value]);
+        $this->assertFalse($result->isValid());
         $expected = [
             'email' => [
                 Email::INVALID_FORMAT => 'email must be a valid email address'
             ]
         ];
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     /**

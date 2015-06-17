@@ -27,8 +27,8 @@ class LengthTest extends \PHPUnit_Framework_TestCase
         $result = $this->validator->validate(['first_name' => $value]);
 
         $expected = ['first_name' => [$error => $this->getMessage($error)]];
-        $this->assertFalse($result);
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     /**
@@ -39,8 +39,7 @@ class LengthTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('first_name')->length(5);
         $result = $this->validator->validate(['first_name' => $value]);
-
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     public function getInvalidValues()

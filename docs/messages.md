@@ -19,7 +19,7 @@ $v->overwriteMessages([
     ]
 ]);
 
-$v->validate([
+$result = $v->validate([
     'first_name' => 'this is too long',
     'last_name' => 'this is also too long',
 ]);
@@ -37,6 +37,5 @@ $v->validate([
  *     ]
  * ];
  */
-
-var_dump($v->getMessages());
+var_dump($result->getMessages());
 ```

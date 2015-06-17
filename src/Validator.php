@@ -96,45 +96,29 @@ class Validator
     }
 
     /**
-     * Validates the values in the $values array and returns the result as a bool.
+     * Validates the values in the $values array and returns a ValidationResult.
      *
      * @param array $values
      * @param string $context
-     * @return bool
+     * @return ValidationResult
      */
     public function validate(array $values, $context = self::DEFAULT_CONTEXT)
     {
-        $valid = true;
+        $isValid = true;
         $messageStack = $this->buildMessageStack($context);
         $this->output = new Container();
         $input = new Container($values);
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
-            $valid = $chain->validate($messageStack, $input, $this->output) && $valid;
+            $isValid = $chain->validate($messageStack, $input, $this->output) && $isValid;
         }
-        return $valid;
-    }
 
-    /**
-     * @return array
-     */
-    public function getValues()
-    {
-        if (!$this->output instanceof Container) {
-            return [];
-        }
-        return $this->output->getArrayCopy();
-    }
-
-    /**
-     * Returns an array of all validation failures.
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->messageStack->getMessages();
+        return new ValidationResult(
+            $isValid,
+            $this->messageStack->getMessages(),
+            $this->output->getArrayCopy()
+        );
     }
 
     /**

@@ -1,11 +1,11 @@
-# Using ValidationResult
+# ValidationResult
 
 A lot of the times, your software will be split into separate layers, where each layer has its own
 responsibility (think about MVC, for example). The chances are that the layer that does the validation
 of incoming data is not the same that determines what to do next, or the layer that displays messages
 to a user.
 
-This is why Particle\Validator includes a ValidationResult class: so that you can pass that to other
+This is why Particle\Validator results a ValidationResult class: so that you can pass that to other
 layers which will then determine what to do with the result. Usage of this class can not be any
 simpler:
 
@@ -27,10 +27,7 @@ class MyEntity
         $v = new Validator;
         $v->required('id')->integer();
         
-        return new ValidationResult(
-            $v->validate($this->values())),
-            $v->getMessages()
-        );
+        return new $v->validate($this->values());
     }
     
     protected function values()

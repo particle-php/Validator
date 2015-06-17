@@ -24,7 +24,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         });
 
         $result = $this->validator->validate(['first_name' => 'berry']);
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     public function testReturnsFalseAndLogsErrorWhenCallbackReturnsFalse()
@@ -34,7 +34,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         });
 
         $result = $this->validator->validate(['first_name' => 'berry']);
-        $this->assertFalse($result);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'first_name' => [
@@ -42,7 +42,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testCanLogDifferentErrorMessageByThrowingException()
@@ -58,7 +58,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         });
 
         $result = $this->validator->validate(['first_name' => 'bill']);
-        $this->assertFalse($result);
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'first_name' => [
@@ -66,7 +66,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testCanReadTheContextOfValidation()
@@ -76,7 +76,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         });
 
         $result = $this->validator->validate(['first_name' => 'Berry', 'last_name' => 'Langerak']);
-        $this->assertTrue($result);
+        $this->assertTrue($result->isValid());
     }
 
     public function getMessage($reason)
