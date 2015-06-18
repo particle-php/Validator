@@ -10,26 +10,12 @@ Overwriting the Validator itself is quite simple:
 ```php
 use Particle\Validator\Validator;
 
+/**
+ * @method MyChain required()
+ * @method MyChain optional()
+ */
 class MyValidator extends Validator
 {
-    /**
-     * {@inheritdoc}
-     * @return MyChain
-     */
-    public function required($key, $name, $allowEmpty = false)
-    {
-        return parent::required($key, $name, $allowEmpty);
-    }
-    
-    /**
-     * {@inheritdoc}
-     * @return MyChain
-     */
-    public function optional($key, $name, $allowEmpty = false)
-    {
-        return parent::optional($key, $name, $allowEmpty);
-    }
-    
     /**
      * {@inheritdoc}
      * @return MyChain
@@ -63,7 +49,7 @@ class MyChain extends Chain
 So we've exposed a new public method to the chain: `grumpy`. However, that rule doesn't exist
 in the default validator, so we have to build it:
 
-```
+```php
 use Particle\Validator\Rule;
 
 class GrumpyRule extends Rule
