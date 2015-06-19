@@ -28,5 +28,10 @@
         "psr-4": {
             "Particle\\Validator\\": "src/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
     }
 }

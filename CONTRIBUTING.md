@@ -21,6 +21,10 @@ to download the required dependencies for testing.
 
 ### Bug fixes
 
+The on-going development will take place in the `master` branch. Bug fixes should be based on the latest 
+release branch (e.g. `v1.0`, if the bug occurs in `v1.0.0`). After this, we can merge v1.0 back into the
+master branch to get the bug fix in the current development version.
+
 If you have fixed a bug, please add unit tests that prove that the code that was broken before, now works.
 
 # Running tests
