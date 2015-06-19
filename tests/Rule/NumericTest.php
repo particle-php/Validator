@@ -23,7 +23,9 @@ class NumericTest extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueOnValidInteger($value)
     {
         $this->validator->required('number')->numeric();
-        $this->assertTrue($this->validator->validate(['number' => $value]));
+        $result = $this->validator->validate(['number' => $value]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
     }
 
     /**
@@ -33,14 +35,16 @@ class NumericTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnInvalidIntegers($value)
     {
         $this->validator->required('number')->numeric();
-        $this->assertFalse($this->validator->validate(['number' => $value]));
+        $result = $this->validator->validate(['number' => $value]);
+
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'number' => [
                 Numeric::NOT_NUMERIC => $this->getMessage(Numeric::NOT_NUMERIC)
             ]
         ];
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function getValidNumericValues()
