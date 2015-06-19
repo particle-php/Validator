@@ -74,6 +74,10 @@ Validate the value to be of precisely length $length.
 Validates that the length of the value is between $min and $max (inclusive).
 If $max is null, it has no upper limit.
 
+### numeric
+
+Validates that the value is numeric (so either a float, or an integer).
+
 ### regex($regex)
 
 Validates that the value matches the regular expression $regex.
