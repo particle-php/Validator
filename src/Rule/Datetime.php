@@ -72,7 +72,10 @@ class Datetime extends Rule
         if ($format !== null) {
             $dt = date_create_from_format($format, $value);
             if ($dt instanceof \DateTime && $dt->getLastErrors()['warning_count'] === 0) {
-                return $dt;
+                // ensures that the format structure is respected.
+                if ($dt->format($format) === $value) {
+                    return $dt;
+                }
             }
             return false;
         }
