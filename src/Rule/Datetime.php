@@ -70,12 +70,24 @@ class Datetime extends Rule
     protected function datetime($value, $format = null)
     {
         if ($format !== null) {
-            $dt = date_create_from_format($format, $value);
-            if ($dt instanceof \DateTime && $dt->getLastErrors()['warning_count'] === 0) {
-                return $dt;
-            }
-            return false;
+            return $this->checkDate(date_create_from_format($format, $value), $format, $value);
         }
         return @date_create($value);
+    }
+
+    /**
+     * Checks if $dateTime is a valid date-time object, and if the formatted date is the same as the value passed.
+     *
+     * @param \DateTime|null $dateTime
+     * @param string $format
+     * @param mixed $value
+     * @return bool
+     */
+    protected function checkDate($dateTime, $format, $value)
+    {
+        if ($dateTime instanceof \DateTime && $dateTime->getLastErrors()['warning_count'] === 0) {
+            return $dateTime->format($format) === $value;
+        }
+        return false;
     }
 }
