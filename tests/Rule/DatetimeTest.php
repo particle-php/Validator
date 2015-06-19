@@ -63,7 +63,6 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
-
     /**
      * @link https://github.com/particle-php/Validator/issues/31
      */
@@ -74,6 +73,30 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
             'date' => '12111978',
         ]);
 
+        $this->assertFalse($result->isValid());
+        $expected = [
+            'date' => [
+                \Particle\Validator\Rule\DateTime::INVALID_VALUE => 'date must be a valid date'
+            ]
+        ];
+
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
+
+    /**
+     * @link https://github.com/particle-php/Validator/issues/59
+     */
+    public function testCheckForFormatRespect()
+    {
+        $this->validator->required('date')->datetime('Ymd');
+        $result = $this->validator->validate(
+            [
+                 'date' => '2015125',
+            ]
+        );
+
+        // should fail because Ymd expects 20151205 instead of 2015125
         $this->assertFalse($result->isValid());
         $expected = [
             'date' => [
