@@ -219,6 +219,16 @@ class Chain
     }
 
     /**
+     * Validates that the value is either a integer or a float.
+     *
+     * @return $this
+     */
+    public function numeric()
+    {
+        return $this->addRule(new Rule\Numeric());
+    }
+
+    /**
      * Validates that the value matches the regular expression $regex.
      *
      * @param string $regex
