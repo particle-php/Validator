@@ -86,7 +86,9 @@ class Datetime extends Rule
     protected function checkDate($dateTime, $format, $value)
     {
         if ($dateTime instanceof \DateTime && $dateTime->getLastErrors()['warning_count'] === 0) {
-            return $dateTime->format($format) === $value;
+            if ($dateTime->format($format) === $value) {
+                return $dateTime;
+            }
         }
         return false;
     }
