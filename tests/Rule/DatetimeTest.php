@@ -97,14 +97,14 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         );
 
         // should fail because Ymd expects 20151205 instead of 2015125
-        $this->assertFalse($result);
+        $this->assertFalse($result->isValid());
         $expected = [
             'date' => [
                 \Particle\Validator\Rule\DateTime::INVALID_VALUE => 'date must be a valid date'
             ]
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function getMessage($reason)
