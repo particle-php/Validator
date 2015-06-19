@@ -70,15 +70,28 @@ class Datetime extends Rule
     protected function datetime($value, $format = null)
     {
         if ($format !== null) {
-            $dt = date_create_from_format($format, $value);
-            if ($dt instanceof \DateTime && $dt->getLastErrors()['warning_count'] === 0) {
-                // ensures that the format structure is respected.
-                if ($dt->format($format) === $value) {
-                    return $dt;
-                }
+            $dateTime = date_create_from_format($format, $value);
+            if ($dateTime instanceof \DateTime
+                && $dateTime->getLastErrors()['warning_count'] === 0
+                && $this->isFormatRespected($format, $dateTime, $value)
+            ) {
+                return $dateTime;
             }
             return false;
         }
         return @date_create($value);
+    }
+
+    /**
+     * checks if the value respects the format passed to the rule.
+     *
+     * @param string $format the format passed to DateTime
+     * @param \DateTime $dateTime
+     * @param $value the value to be checked
+     * @return bool
+     */
+    protected function isFormatRespected($format, \DateTime $dateTime, $value)
+    {
+        return $dateTime->format($format) === $value;
     }
 }
