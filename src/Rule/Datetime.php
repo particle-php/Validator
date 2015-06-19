@@ -83,10 +83,10 @@ class Datetime extends Rule
     /**
      * Checks if $dateTime is a valid date-time object, and if the formatted date is the same as the value passed.
      *
-     * @param \DateTime|null $dateTime
+     * @param \DateTime $dateTime
      * @param string $format
      * @param mixed $value
-     * @return bool
+     * @return \DateTime|false
      */
     protected function checkDate($dateTime, $format, $value)
     {
