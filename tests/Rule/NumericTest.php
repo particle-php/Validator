@@ -20,7 +20,7 @@ class NumericTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getValidNumericValues
      * @param mixed $value
      */
-    public function testReturnsTrueOnValidInteger($value)
+    public function testReturnsTrueOnValidNumeric($value)
     {
         $this->validator->required('number')->numeric();
         $result = $this->validator->validate(['number' => $value]);
@@ -32,7 +32,7 @@ class NumericTest extends \PHPUnit_Framework_TestCase
      * @dataProvider getInvalidNumericValues
      * @param string $value
      */
-    public function testReturnsFalseOnInvalidIntegers($value)
+    public function testReturnsFalseOnInvalidNumeric($value)
     {
         $this->validator->required('number')->numeric();
         $result = $this->validator->validate(['number' => $value]);
