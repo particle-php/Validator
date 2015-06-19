@@ -70,7 +70,12 @@ class Datetime extends Rule
     protected function datetime($value, $format = null)
     {
         if ($format !== null) {
-            return $this->checkDate(date_create_from_format($format, $value), $format, $value);
+            $dateTime = date_create_from_format($format, $value);
+
+            if ($dateTime instanceof \DateTime) {
+                return $this->checkDate($dateTime, $format, $value);
+            }
+            return false;
         }
         return @date_create($value);
     }
@@ -85,10 +90,8 @@ class Datetime extends Rule
      */
     protected function checkDate($dateTime, $format, $value)
     {
-        if ($dateTime instanceof \DateTime && $dateTime->getLastErrors()['warning_count'] === 0) {
-            if ($dateTime->format($format) === $value) {
-                return $dateTime;
-            }
+        if ($dateTime->getLastErrors()['warning_count'] === 0 && $dateTime->format($format) === $value) {
+            return $dateTime;
         }
         return false;
     }
