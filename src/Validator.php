@@ -9,6 +9,7 @@
 namespace Particle\Validator;
 
 use Particle\Validator\Value\Container;
+use Particle\Validator\Exception\ValidationNotRunException;
 
 class Validator
 {
@@ -134,6 +135,11 @@ class Validator
      */
     public function getMessages()
     {
+        if (is_null($this->messageStack))
+        {
+            throw new ValidationNotRunException();
+        }
+
         return $this->messageStack->getMessages();
     }
 
