@@ -131,6 +131,7 @@ class Validator
     /**
      * Returns an array of all validation failures.
      *
+     * @throws ValidationNotRunException
      * @return array
      */
     public function getMessages()
