@@ -1,10 +1,10 @@
 <?php
 namespace Particle\Tests\Rule;
 
-use Particle\Validator\Rule\Bool;
+use Particle\Validator\Rule\Boolean;
 use Particle\Validator\Validator;
 
-class BoolTest extends \PHPUnit_Framework_TestCase
+class BooleanTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Validator
@@ -29,8 +29,8 @@ class BoolTest extends \PHPUnit_Framework_TestCase
 
         if ($expected === false) {
             $this->assertEquals(
-                $this->getMessage(Bool::NOT_BOOL),
-                $result->getMessages()['active'][Bool::NOT_BOOL]
+                $this->getMessage(Boolean::NOT_BOOL),
+                $result->getMessages()['active'][Boolean::NOT_BOOL]
             );
         }
     }
@@ -53,7 +53,7 @@ class BoolTest extends \PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            Bool::NOT_BOOL => 'active must be either true or false'
+            Boolean::NOT_BOOL => 'active must be either true or false'
         ];
 
         return $messages[$reason];

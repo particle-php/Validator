@@ -15,7 +15,7 @@ use Particle\Validator\Rule;
  *
  * @package Particle\Validator\Rule
  */
-class Bool extends Rule
+class Boolean extends Rule
 {
     /**
      * A constant that will be used when the value is not in the array without strict checking.
