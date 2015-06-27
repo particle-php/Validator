@@ -136,8 +136,7 @@ class Validator
      */
     public function getMessages()
     {
-        if (is_null($this->messageStack))
-        {
+        if (is_null($this->messageStack)) {
             throw new ValidationNotRunException();
         }
 
