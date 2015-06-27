@@ -219,6 +219,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is less than $value.
+     *
+     * @param int $value
+     * @return $this
+     */
+    public function lessThan($value)
+    {
+        return $this->addRule(new Rule\LessThan($value));
+    }
+
+    /**
      * Validates that the value is either a integer or a float.
      *
      * @return $this
