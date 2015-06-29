@@ -115,7 +115,7 @@ class Chain
      */
     public function bool()
     {
-        return $this->addRule(new Rule\Bool());
+        return $this->addRule(new Rule\Boolean());
     }
 
     /**
