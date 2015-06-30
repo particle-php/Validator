@@ -185,4 +185,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->validator->validate(['value' => 'yes']));
     }
+
+    public function testGetMessagesThrowsExceptionBeforeValidationHasRun()
+    {
+        $this->setExpectedException('\Particle\Validator\Exception\ValidationNotRunException', 'Validation has not run yet');
+
+        $this->validator->getMessages();
+    }
 }
