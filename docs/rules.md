@@ -61,6 +61,10 @@ Validates that the value is a valid email address (format only).
 
 Validates that the value is equal to $value.
 
+### greaterThan($value)
+
+Validates that the value is greater than $value.
+
 ### inArray(array $array, $strict = true)
 
 Validates that the value is in the array with optional "loose" checking.

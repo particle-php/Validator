@@ -182,6 +182,17 @@ class Chain
     }
 
     /**
+     * Validates that the value is greater than $value.
+     *
+     * @param int $value
+     * @return $this
+     */
+    public function greaterThan($value)
+    {
+        return $this->addRule(new Rule\GreaterThan($value));
+    }
+
+    /**
      * Validates that the value is in the array with optional "loose" checking.
      *
      * @param array $array
