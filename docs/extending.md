@@ -56,7 +56,7 @@ class GrumpyRule extends Rule
 {
     const WRONG = 'GrumpyRule::WRONG';
     
-    protected $messages = [
+    protected $messageTemplates = [
         self::WRONG => '{{ who }} hates the value of "{{ name }}"',
     ];
     
