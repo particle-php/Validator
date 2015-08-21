@@ -14,31 +14,47 @@
 ```php
 $v = new Validator;
 
-$v->required('first_name')->length(5);
+$v->required('user.first_name')->lengthBetween(2, 50)->alpha();
+$v->required('user.last_name')->lengthBetween(2, 50)->alpha();
+$v->required('newsletter')->bool();
 
-$result = $v->validate(['first_name' => 'Berry']);
-$result->isValid(); // bool(true).
-$result->getMessages(); // array(0)
+$result = $v->validate([
+    'user' => [
+        'first_name' => 'John',
+        'last_name' => 'D',
+    ],
+    'newsletter' => true,
+]);
 
-$result = $v->validate(['first_name' => 'Rick']);
 $result->isValid(); // bool(false).
 $result->getMessages();
 /**
  * array(1) {
- *     ["first_name"]=> array(1) {
- *         ["Length::TOO_SHORT"]=> string(53) "first_name is too short and must be 5 characters long"
+ *     ["user.last_name"]=> array(1) {
+ *         ["Length::TOO_SHORT"]=> string(53) "last_name is too short and must be 2 characters long."
  *     }
  * }
  */
 ```
 
-## Features
+## Functional features
 
-* Validate an array of data and get an array of error messages
-* Override the error messages
-* Get the validated data array
-* Validate different contexts (insert, update, ect)
-* IDE auto-completion for easy development
+* Validate an array of data
+* Get an array of error messages
+* Overwrite the default error messages on rules, or error messages on specific values
+* Get the validated values of an array
+* Validate different contexts (insert, update, ect) inheriting validations of the default context
+* A large set of default validation rules
+* Ability to extend the validator to add your own custom rules
+
+## Non functional features
+
+* Easy to write (IDE auto-completion for easy development)
+* Easy to read (improves peer review)
+* Ability to separate controller and view logic
+* Fully documented: [validator.particle-php.com](http://validator.particle-php.com)
+* Fully tested: [Scrutinizer](https://scrutinizer-ci.com/g/particle-php/Validator/)
+* Zero dependencies
 
 ===
 
