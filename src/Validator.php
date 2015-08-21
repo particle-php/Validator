@@ -116,7 +116,7 @@ class Validator
 
         return new ValidationResult(
             $isValid,
-            $this->messageStack->getMessages(),
+            $this->messageStack,
             $this->output->getArrayCopy()
         );
     }
