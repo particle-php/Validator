@@ -18,21 +18,21 @@ class MessageStack
     /**
      * Contains a list of all validation messages.
      *
-     * @var array
+     * @var array<string $key, array<string $reason, array<string message, array<mixed $parameters>>>>
      */
     protected $messages = [];
 
     /**
      * Contains an array of field and reason specific message overwrites.
      *
-     * @var array
+     * @var array<string $key, array<string $reason, string message>>
      */
     protected $overwrites = [];
 
     /**
      * Contains an array of global message overwrites.
      *
-     * @var array
+     * @var array<string $key, array<string $reason, string message>>
      */
     protected $defaultMessages = [];
 
@@ -46,15 +46,10 @@ class MessageStack
      */
     public function append($key, $reason, $message, array $parameters)
     {
-        if (isset($this->defaultMessages[$reason])) {
-            $message = $this->defaultMessages[$reason];
-        }
-
-        if (isset($this->overwrites[$key][$reason])) {
-            $message = $this->overwrites[$key][$reason];
-        }
-
-        $this->messages[$key][$reason] = $this->format($message, $parameters);
+        $this->messages[$key][$reason] = [
+            'message' => $message,
+            'parameters' => $parameters,
+        ];
     }
 
     /**
@@ -64,7 +59,18 @@ class MessageStack
      */
     public function getMessages()
     {
-        return $this->messages;
+        $finalMessages = [];
+
+        foreach ($this->messages as $key => $reasons) {
+            foreach ($reasons as $reason => $message) {
+                $finalMessages[$key][$reason] = $this->format(
+                    $this->overwriteFinalMessage($message['message'], $key, $reason),
+                    $message['parameters']
+                );
+            }
+        }
+
+        return $finalMessages;
     }
 
     /**
@@ -92,9 +98,30 @@ class MessageStack
     }
 
     /**
+     * Overwrites a message if overwrites are set
+     *
+     * @param string $message
+     * @param string $key
+     * @param string $reason
+     * @return string
+     */
+    protected function overwriteFinalMessage($message, $key, $reason)
+    {
+        if (isset($this->defaultMessages[$reason])) {
+            $message = $this->defaultMessages[$reason];
+        }
+
+        if (isset($this->overwrites[$key][$reason])) {
+            $message = $this->overwrites[$key][$reason];
+        }
+
+        return $message;
+    }
+
+    /**
      * @param string $message
      * @param array $parameters
-     * @return mixed
+     * @return string
      */
     protected function format($message, array $parameters)
     {

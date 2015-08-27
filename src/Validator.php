@@ -105,7 +105,7 @@ class Validator
     public function validate(array $values, $context = self::DEFAULT_CONTEXT)
     {
         $isValid = true;
-        $messageStack = $this->buildMessageStack($context);
+        $messageStack = $this->buildMessageStack();
         $this->output = new Container();
         $input = new Container($values);
 
@@ -116,7 +116,7 @@ class Validator
 
         return new ValidationResult(
             $isValid,
-            $this->messageStack->getMessages(),
+            $this->messageStack,
             $this->output->getArrayCopy()
         );
     }
@@ -130,7 +130,6 @@ class Validator
      */
     public function copyContext($otherContext, callable $callback = null)
     {
-        $this->copyMessages($otherContext);
         $this->copyChains($otherContext, $callback);
 
         return $this;
@@ -147,17 +146,6 @@ class Validator
         $this->context = $name;
         $closure($this);
         $this->context = self::DEFAULT_CONTEXT;
-    }
-
-    /** * Overwrite the messages for specific keys.
-     *
-     * @param array $messages
-     * @return $this
-     */
-    public function overwriteMessages(array $messages)
-    {
-        $this->messageOverwrites[$this->context] = $messages;
-        return $this;
     }
 
     /**
@@ -211,33 +199,13 @@ class Validator
     /**
      * Build a new MessageStack, set the message overwrites and return it.
      *
-     * @param string $context
      * @return MessageStack
      */
-    protected function buildMessageStack($context)
+    protected function buildMessageStack()
     {
         $this->messageStack = new MessageStack();
         $this->messageStack->overwriteDefaultMessages($this->defaultMessages);
-
-        foreach ([self::DEFAULT_CONTEXT, $context] as $currentContext) {
-            if (isset($this->messageOverwrites[$currentContext])) {
-                $this->messageStack->overwriteMessages($this->messageOverwrites[$currentContext]);
-            }
-        }
-
         return $this->messageStack;
-    }
-
-    /**
-     * Copies the messages of the context $otherContext to the current context.
-     *
-     * @param string $otherContext
-     */
-    protected function copyMessages($otherContext)
-    {
-        if (isset($this->messageOverwrites[$otherContext])) {
-            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
-        }
     }
 
     /**

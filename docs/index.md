@@ -18,12 +18,6 @@ $validator = new Validator;
 $validator->required('first_name')->lengthBetween(2, 30)->alpha();
 $validator->required('last_name')->lengthBetween(2, 40)->alpha();
 
-$validator->overwriteMessages([
-    'last_name' => [
-        LengthBetween::TOO_LONG => 'Your name is too long.'
-    ]
-]);
-
 $data = [
     'first_name' => 'John',
     'last_name' => 'Doe',
@@ -31,6 +25,12 @@ $data = [
 
 $result = $validator->validate($data);
 $result->isValid(); // bool(true)
+
+$result->overwriteMessages([
+    'last_name' => [
+        LengthBetween::TOO_LONG => 'Your name is too long.'
+    ]
+]);
 ```
 
 ## Why Particle\Validator?

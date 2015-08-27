@@ -20,12 +20,12 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testCanOverwriteSpecificMessages()
     {
         $this->validator->required('foo');
-        $this->validator->overwriteMessages([
+        $result = $this->validator->validate([]);
+        $result->overwriteMessages([
             'foo' => [
                 Required::NON_EXISTENT_KEY => 'This is my overwritten message. The key was "{{ key }}".'
             ]
         ]);
-        $result = $this->validator->validate([]);
 
         $this->assertFalse($result->isValid());
         $this->assertEquals(
@@ -72,16 +72,16 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             Rule\Length::TOO_SHORT => 'This is overwritten globally.'
         ]);
 
-        $this->validator->overwriteMessages([
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'This is overwritten for first_name only.'
-            ]
-        ]);
-
         $this->validator->required('first_name')->length(5);
 
         $result = $this->validator->validate(['first_name' => 'Rick']);
         $this->assertFalse($result->isValid());
+
+        $result->overwriteMessages([
+            'first_name' => [
+                Rule\Length::TOO_SHORT => 'This is overwritten for first_name only.'
+            ]
+        ]);
 
         $expected = [
             'first_name' => [

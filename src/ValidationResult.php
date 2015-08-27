@@ -21,7 +21,7 @@ class ValidationResult
     protected $isValid;
 
     /**
-     * @var array
+     * @var MessageStack
      */
     protected $messages;
 
@@ -34,10 +34,10 @@ class ValidationResult
      * Construct the validation result.
      *
      * @param bool $isValid
-     * @param array $messages
+     * @param MessageStack $messages
      * @param array $values
      */
-    public function __construct($isValid, array $messages, array $values)
+    public function __construct($isValid, MessageStack $messages, array $values)
     {
         $this->isValid = $isValid;
         $this->messages = $messages;
@@ -65,13 +65,26 @@ class ValidationResult
     }
 
     /**
+     * Overwrite key-validator specific messages (so [first_name => [Length::TOO_SHORT => 'Message']]).
+     *
+     * @param array $messages
+     * @return $this
+     */
+    public function overwriteMessages(array $messages)
+    {
+        $this->messages->overwriteMessages($messages);
+
+        return $this;
+    }
+
+    /**
      * Returns the array of messages that were collected during validation.
      *
      * @return array
      */
     public function getMessages()
     {
-        return $this->messages;
+        return $this->messages->getMessages();
     }
 
     /**
