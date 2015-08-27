@@ -1,4 +1,4 @@
-# Multifield validation
+# Multi-field validation
 
 There are situations where you need to use multiple values in your validation. A common use case is having two different
 password fields and need to ensure both are identical. 
@@ -36,7 +36,7 @@ class ConfirmedPasswordRule extends Rule
 {
     const NO_MATCH = 'ConfirmedPasswordRule::NO_MATCH';
     
-    protected $messages = [
+    protected $messageTemplates = [
         self::NO_MATCH => 'Passwords do not match',
     ];
     
@@ -50,5 +50,5 @@ class ConfirmedPasswordRule extends Rule
 }
 ```
 
-Notice the usage of ```$this->values``` in this validate method, which can be used to access other values that are up
+Notice the usage of `$this->values` in this validate method, which can be used to access other values that are up
 for validation.

@@ -121,7 +121,7 @@ class MessageStack
     /**
      * @param string $message
      * @param array $parameters
-     * @return mixed
+     * @return string
      */
     protected function format($message, array $parameters)
     {

@@ -13,21 +13,19 @@ $v->overwriteDefaultMessages([
     LengthBetween::TOO_LONG => 'It\'s too long, that value'
 ]);
 
-$v->overwriteMessages([
-    'first_name' => [
-        LengthBetween::TOO_LONG => 'First name is too long, mate'
-    ]
-]);
-
 $result = $v->validate([
     'first_name' => 'this is too long',
     'last_name' => 'this is also too long',
 ]);
 
+$result->overwriteMessages([
+    'first_name' => [
+        LengthBetween::TOO_LONG => 'First name is too long, mate'
+    ]
+]);
 
+var_dump($result->getMessages());
 /**
- * Output:
- *
  *  [
  *     'first_name' => [
  *         LengthBetween::TOO_LONG => 'First name is too long, mate'
@@ -37,5 +35,4 @@ $result = $v->validate([
  *     ]
  * ];
  */
-var_dump($result->getMessages());
 ```

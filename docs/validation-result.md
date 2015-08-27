@@ -37,8 +37,9 @@ class MyEntity
         ];
     }
 }
-
-// in a controller:
+```
+And then in your controller:
+```php
 $entity = new Entity();
 $entity->setId($this->getParam('id'));
 
@@ -46,7 +47,7 @@ $result = $entity->validate();
 
 if (!$result->isValid()) {
     return $this->renderTemplate([
-        'messages' => $result->getMessages() // or maybe even just pass in $result.
+        'messages' => $result->getMessages() // or just pass in $result if you want to overwrite specific messages
     ]);
 }
 ```

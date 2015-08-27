@@ -40,7 +40,6 @@ $v->required('userId')->callback(function ($value) {
 });
 ```
 
-
 ### datetime($format = null)
 
 Validates that the value is a date. If format is passed, it *must* be in that format.
