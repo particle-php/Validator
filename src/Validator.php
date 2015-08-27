@@ -105,7 +105,7 @@ class Validator
     public function validate(array $values, $context = self::DEFAULT_CONTEXT)
     {
         $isValid = true;
-        $messageStack = $this->buildMessageStack($context);
+        $messageStack = $this->buildMessageStack();
         $this->output = new Container();
         $input = new Container($values);
 
