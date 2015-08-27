@@ -130,7 +130,6 @@ class Validator
      */
     public function copyContext($otherContext, callable $callback = null)
     {
-        $this->copyMessages($otherContext);
         $this->copyChains($otherContext, $callback);
 
         return $this;
@@ -200,33 +199,13 @@ class Validator
     /**
      * Build a new MessageStack, set the message overwrites and return it.
      *
-     * @param string $context
      * @return MessageStack
      */
-    protected function buildMessageStack($context)
+    protected function buildMessageStack()
     {
         $this->messageStack = new MessageStack();
         $this->messageStack->overwriteDefaultMessages($this->defaultMessages);
-
-        foreach ([self::DEFAULT_CONTEXT, $context] as $currentContext) {
-            if (isset($this->messageOverwrites[$currentContext])) {
-                $this->messageStack->overwriteMessages($this->messageOverwrites[$currentContext]);
-            }
-        }
-
         return $this->messageStack;
-    }
-
-    /**
-     * Copies the messages of the context $otherContext to the current context.
-     *
-     * @param string $otherContext
-     */
-    protected function copyMessages($otherContext)
-    {
-        if (isset($this->messageOverwrites[$otherContext])) {
-            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
-        }
     }
 
     /**
