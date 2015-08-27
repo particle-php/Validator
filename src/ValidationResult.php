@@ -21,7 +21,7 @@ class ValidationResult
     protected $isValid;
 
     /**
-     * @var array
+     * @var MessageStack
      */
     protected $messages;
 
