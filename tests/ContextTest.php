@@ -31,65 +31,9 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $result->getMessages());
     }
 
-    public function testCanHaveIndependentMessages()
-    {
-        $this->validator->context('insert', function (Validator $context) {
-            $context->required('first_name')->length(5);
-
-            $context->overwriteMessages([
-                'first_name' => [
-                    Rule\Length::TOO_SHORT => 'This is from inside the context.'
-                ]
-            ]);
-        });
-
-        $this->validator->overwriteMessages([
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'This is outside of the context',
-            ]
-        ]);
-
-        $result = $this->validator->validate(['first_name' => 'Rick'], 'insert');
-        $expected = [
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'This is from inside the context.'
-            ]
-        ];
-        $this->assertEquals($expected, $result->getMessages());
-    }
-
-    public function testMessagesWillBeInheritedFromDefaultContext()
-    {
-        $this->validator->context('insert', function (Validator $context) {
-            $context->required('first_name')->length(5);
-        });
-
-        $this->validator->overwriteMessages([
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'This is outside of the context',
-            ]
-        ]);
-
-        $result = $this->validator->validate(['first_name' => 'Rick'], 'insert');
-
-        $expected = [
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'This is outside of the context'
-            ]
-        ];
-
-        $this->assertEquals($expected, $result->getMessages());
-    }
-
     public function testContextCanCopyRulesFromOtherContext()
     {
         $this->validator->context('insert', function (Validator $context) {
-            $context->overwriteMessages([
-                'first_name' => [
-                    Rule\Length::TOO_SHORT => 'From inside the "insert" context.'
-                ]
-            ]);
-
             $context->required('first_name')->length(5);
         });
 
@@ -99,13 +43,6 @@ class ContextTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->validator->validate(['first_name' => 'Rick'], 'update');
         $this->assertFalse($result->isValid());
-
-        $expected = [
-            'first_name' => [
-                Rule\Length::TOO_SHORT => 'From inside the "insert" context.'
-            ]
-        ];
-        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testContextCopyCanAlterChains()

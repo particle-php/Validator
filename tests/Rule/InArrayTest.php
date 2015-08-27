@@ -41,14 +41,14 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
     public function testCanUseTheValuesInErrorMessage()
     {
         $this->validator->required('group')->inArray(['users', 'admins']);
+        $result = $this->validator->validate(['group' => 'none']);
+        $this->assertFalse($result->isValid());
 
-        $this->validator->overwriteMessages([
+        $result->overwriteMessages([
             'group' => [
                 InArray::NOT_IN_ARRAY => '{{ name }} must be one of {{ values }}'
             ]
         ]);
-        $result = $this->validator->validate(['group' => 'none']);
-        $this->assertFalse($result->isValid());
 
         $expected = [
             'group' => [

@@ -149,17 +149,6 @@ class Validator
         $this->context = self::DEFAULT_CONTEXT;
     }
 
-    /** * Overwrite the messages for specific keys.
-     *
-     * @param array $messages
-     * @return $this
-     */
-    public function overwriteMessages(array $messages)
-    {
-        $this->messageOverwrites[$this->context] = $messages;
-        return $this;
-    }
-
     /**
      * Overwrite the default messages with custom messages.
      *
