@@ -212,7 +212,6 @@ class Validator
             $rules = [];
 
             foreach ($subjectRules as $subjectRule) {
-
                 // @todo: overwrite messages
 
                 $options = $subjectRule['messageParameters'];

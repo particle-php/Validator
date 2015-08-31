@@ -89,7 +89,7 @@ class ValidatorOutputTest extends \PHPUnit_Framework_TestCase
      */
     public function testOutputJson()
     {
-        $output = $this->validator->output(function($ruleSet) {
+        $output = $this->validator->output(function ($ruleSet) {
             return json_encode($ruleSet);
         });
 
@@ -103,10 +103,14 @@ class ValidatorOutputTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('first_name')->length(2);
 
-        $output = $this->validator->output(function($ruleSet) {
+        $output = $this->validator->output(function ($ruleSet) {
             return json_encode($ruleSet);
         });
 
-        $this->assertSame('[]', $output);
+        $expectedJson = '{"first_name":[{"name":"Required","options":[]},'
+            . '{"name":"NotEmpty","options":[]},'
+            . '{"name":"Length","options":{"length":2}}]}';
+
+        $this->assertSame($expectedJson, $output);
     }
 }
