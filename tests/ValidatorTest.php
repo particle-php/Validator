@@ -179,7 +179,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * Bug fix test: Check if no notice is shown when no validation rules are configured.
      */
-    public function testUnconfiguredValidatorWillNotShowNotice()
+    public function testNotConfiguredValidatorWillNotShowNotice()
     {
         $this->assertTrue($this->validator->validate(['value' => 'yes'])->isValid());
     }

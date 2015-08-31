@@ -80,7 +80,7 @@ class LessThan extends Rule
      *
      * @return array
      */
-    protected function getMessageParameters()
+    public function getMessageParameters()
     {
         return array_merge(parent::getMessageParameters(), [
             'max' => $this->max,

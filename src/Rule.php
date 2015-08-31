@@ -83,6 +83,16 @@ abstract class Rule
     }
 
     /**
+     * Get all message templates for this rule
+     *
+     * @return array
+     */
+    public function getMessageTemplates()
+    {
+        return $this->messageTemplates;
+    }
+
+    /**
      * Sets the default parameters for each validation rule (key and name).
      *
      * @param string $key
@@ -131,7 +141,7 @@ abstract class Rule
      *
      * @return array
      */
-    protected function getMessageParameters()
+    public function getMessageParameters()
     {
         $name = isset($this->name) ? $this->name : str_replace('_', ' ', $this->key);
 

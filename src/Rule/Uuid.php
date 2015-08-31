@@ -84,7 +84,7 @@ class Uuid extends Regex
      *
      * @return array
      */
-    protected function getMessageParameters()
+    public function getMessageParameters()
     {
         return array_merge(parent::getMessageParameters(), [
             'version' => $this->version
