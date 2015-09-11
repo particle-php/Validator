@@ -48,13 +48,6 @@ class Validator
     protected $defaultMessages = [];
 
     /**
-     * Contains a Value\Container to keep track of all values we *have* validated.
-     *
-     * @var Container
-     */
-    protected $output;
-
-    /**
      * Contains the name of the current context.
      *
      * @var string
@@ -106,18 +99,18 @@ class Validator
     {
         $isValid = true;
         $messageStack = $this->buildMessageStack($context);
-        $this->output = new Container();
+        $output = new Container();
         $input = new Container($values);
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
-            $isValid = $chain->validate($messageStack, $input, $this->output) && $isValid;
+            $isValid = $chain->validate($messageStack, $input, $output) && $isValid;
         }
 
         return new ValidationResult(
             $isValid,
             $this->messageStack->getMessages(),
-            $this->output->getArrayCopy()
+            $output->getArrayCopy()
         );
     }
 
