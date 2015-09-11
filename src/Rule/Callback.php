@@ -76,6 +76,17 @@ class Callback extends Rule
         }
     }
 
+    protected function getMessageParameters()
+    {
+        $values = [];
+
+        if (is_object($this->callback) && method_exists($this->callback, '__toString')) {
+            $values['callback'] = (string) $this->callback;
+        }
+
+        return array_merge(parent::getMessageParameters(), $values);
+    }
+
     /**
      * Validates the value according to this rule, and returns the result as a bool.
      *

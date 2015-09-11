@@ -1,5 +1,5 @@
 <?php
-namespace Particle\Tests;
+namespace Particle\Validator\Tests;
 
 use Particle\Validator\ValidationResult;
 use Particle\Validator\Rule\Alpha;

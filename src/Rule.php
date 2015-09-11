@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator;
 
+use Particle\Validator\Output\Subject;
 use Particle\Validator\Value\Container;
 
 /**
@@ -109,6 +110,25 @@ abstract class Rule
     }
 
     /**
+     * Attach a representation of this rule to the Output\Subject $subject.
+     *
+     * @internal
+     * @param Subject $subject
+     */
+    public function output(Subject $subject, $key, $name)
+    {
+        $this->setParameters($key, $name);
+
+        $outputRule = new Output\Rule(
+            $this->getShortName(),
+            $this->messageTemplates,
+            $this->getMessageParameters()
+        );
+
+        $subject->addRule($outputRule);
+    }
+
+    /**
      * Appends the error for reason $reason to the MessageStack.
      *
      * @param string $reason
@@ -155,5 +175,15 @@ abstract class Rule
         }
 
         return $messageTemplate;
+    }
+
+    /**
+     * Returns the name of this class, without the namespace.
+     *
+     * @return string
+     */
+    protected function getShortName()
+    {
+        return substr(get_class($this), strrpos(get_class($this), '\\') + 1);
     }
 }

@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
+use Particle\Validator\Output\Subject;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
@@ -67,7 +68,7 @@ class NotEmpty extends Rule
      */
     public function __construct($allowEmpty)
     {
-        $this->allowEmpty = $allowEmpty;
+        $this->allowEmpty = (bool) $allowEmpty;
     }
 
     /**
@@ -136,6 +137,23 @@ class NotEmpty extends Rule
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function getMessageParameters()
+    {
+        $values = [
+            'allowEmpty' => $this->allowEmpty,
+            'callback' => null,
+        ];
+
+        if (is_object($this->allowEmptyCallback) && method_exists($this->allowEmptyCallback, '__toString')) {
+            $values['callback'] = (string) $this->allowEmptyCallback;
+        }
+
+        return array_merge(parent::getMessageParameters(), $values);
+    }
+
+    /**
      * Overwrite the allow empty requirement after instantiation of this rule.
      *
      * @param bool $allowEmpty
@@ -168,7 +186,7 @@ class NotEmpty extends Rule
     protected function allowEmpty(Container $input)
     {
         if (isset($this->allowEmptyCallback)) {
-            $this->allowEmpty = call_user_func_array($this->allowEmptyCallback, [$input->getArrayCopy()]);
+            $this->allowEmpty = call_user_func($this->allowEmptyCallback, $input->getArrayCopy());
         }
         return $this->allowEmpty;
     }

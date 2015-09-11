@@ -29,6 +29,11 @@
             "Particle\\Validator\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Particle\\Validator\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"

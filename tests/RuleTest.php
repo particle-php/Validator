@@ -1,5 +1,5 @@
 <?php
-namespace Particle\Tests;
+namespace Particle\Validator\Tests;
 
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;

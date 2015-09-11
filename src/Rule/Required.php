@@ -8,6 +8,8 @@
  */
 namespace Particle\Validator\Rule;
 
+use Particle\Validator\Output\Structure;
+use Particle\Validator\Output\Subject;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
@@ -149,6 +151,24 @@ class Required extends Rule
         $this->requiredCallback = $requiredCallback;
         return $this;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getMessageParameters()
+    {
+        $values = [
+            'required' => $this->required,
+            'callback' => null,
+        ];
+
+        if (is_object($this->requiredCallback) && method_exists($this->requiredCallback, '__toString')) {
+            $values['callback'] = (string) $this->requiredCallback;
+        }
+
+        return array_merge(parent::getMessageParameters(), $values);
+    }
+
 
     /**
      * Determines if the value is required.

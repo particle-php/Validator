@@ -137,19 +137,41 @@ class Validator
     }
 
     /**
-     * Create a new validation context with the closure $closure.
+     * Create a new validation context with the callback $callback.
      *
      * @param string $name
-     * @param \Closure $closure
+     * @param callable $callback
      */
-    public function context($name, \Closure $closure)
+    public function context($name, callable $callback)
     {
         $this->context = $name;
-        $closure($this);
+        call_user_func($callback, $this);
         $this->context = self::DEFAULT_CONTEXT;
     }
 
-    /** * Overwrite the messages for specific keys.
+    /**
+     * Output the structure of the Validator by calling the $output callable with a representation of Validators'
+     * internal structure.
+     *
+     * @param callable $output
+     * @param string $context
+     * @return mixed
+     */
+    public function output(callable $output, $context = self::DEFAULT_CONTEXT)
+    {
+        $structure = new Output\Structure();
+        if (array_key_exists($context, $this->chains)) {
+            /* @var Chain $chain */
+            foreach ($this->chains[$context] as $chain) {
+                $chain->output($structure);
+            }
+        }
+
+        return call_user_func($output, $structure);
+    }
+
+    /**
+     * Overwrite the messages for specific keys.
      *
      * @param array $messages
      * @return $this
