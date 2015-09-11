@@ -50,6 +50,7 @@ class ContextTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $result = $this->validator->validate(['first_name' => 'Rick'], 'insert');
+
         $expected = [
             'first_name' => [
                 Rule\Length::TOO_SHORT => 'This is from inside the context.'

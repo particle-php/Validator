@@ -92,9 +92,33 @@ class MessageStack
     }
 
     /**
+     * Merges an existing MessageStack into this one by taking over it's overwrites and defaults.
+     *
+     * @param MessageStack $messageStack
+     */
+    public function merge(MessageStack $messageStack)
+    {
+        $this->mergeDefaultMessages($messageStack);
+        $this->mergeOverwrites($messageStack);
+    }
+
+    /**
+     * Reset the messages to an empty array.
+     *
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->messages = [];
+        return $this;
+    }
+
+    /**
+     * Formats the message $message with $parameters by replacing {{ name }} with $parameters['name'].
+     *
      * @param string $message
      * @param array $parameters
-     * @return mixed
+     * @return string
      */
     protected function format($message, array $parameters)
     {
@@ -106,5 +130,35 @@ class MessageStack
         };
 
         return preg_replace_callback('~{{\s*([^}\s]+)\s*}}~', $replace, $message);
+    }
+
+    /**
+     * Merges the default messages from $messageStack to this MessageStack.
+     *
+     * @param MessageStack $messageStack
+     */
+    protected function mergeDefaultMessages(MessageStack $messageStack)
+    {
+        foreach ($messageStack->defaultMessages as $key => $message) {
+            if (!array_key_exists($key, $this->defaultMessages)) {
+                $this->defaultMessages[$key] = $message;
+            }
+        }
+    }
+
+    /**
+     * Merges the message overwrites from $messageStack to this MessageStack.
+     *
+     * @param MessageStack $messageStack
+     */
+    protected function mergeOverwrites(MessageStack $messageStack)
+    {
+        foreach ($messageStack->overwrites as $key => $reasons) {
+            foreach ($reasons as $reason => $message) {
+                if (!isset($this->overwrites[$key][$reason])) {
+                    $this->overwrites[$key][$reason] = $message;
+                }
+            }
+        }
     }
 }

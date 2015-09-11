@@ -8,6 +8,8 @@
  */
 namespace Particle\Validator;
 
+use Particle\Validator\Exception\NoSuchContextException;
+use Particle\Validator\Tests\MessageChainTest;
 use Particle\Validator\Value\Container;
 
 class Validator
@@ -27,25 +29,11 @@ class Validator
     ];
 
     /**
-     * Contains an array of context => messages.
+     * Contains an array of contex => MessageStack.
      *
-     * @var MessageStack
+     * @var MessageStack[]
      */
-    protected $messageStack;
-
-    /**
-     * Message overwrites.
-     *
-     * @var array
-     */
-    protected $messageOverwrites = [];
-
-    /**
-     * An array containing all the default messages.
-     *
-     * @var array
-     */
-    protected $defaultMessages = [];
+    protected $messageStacks = [];
 
     /**
      * Contains the name of the current context.
@@ -60,6 +48,7 @@ class Validator
     public function __construct()
     {
         $this->context = self::DEFAULT_CONTEXT;
+        $this->messageStacks[$this->context] = new MessageStack();
     }
 
     /**
@@ -98,20 +87,28 @@ class Validator
     public function validate(array $values, $context = self::DEFAULT_CONTEXT)
     {
         $isValid = true;
-        $messageStack = $this->buildMessageStack($context);
         $output = new Container();
         $input = new Container($values);
+        $stack = $this->getMessageStack($context);
+
+        if ($context !== self::DEFAULT_CONTEXT) {
+            $stack->merge($this->getMessageStack(self::DEFAULT_CONTEXT));
+        }
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
-            $isValid = $chain->validate($messageStack, $input, $output) && $isValid;
+            $isValid = $chain->validate($stack, $input, $output) && $isValid;
         }
 
-        return new ValidationResult(
+        $result = new ValidationResult(
             $isValid,
-            $this->messageStack->getMessages(),
+            $stack->getMessages(),
             $output->getArrayCopy()
         );
+
+        $stack->reset();
+
+        return $result;
     }
 
     /**
@@ -123,8 +120,10 @@ class Validator
      */
     public function copyContext($otherContext, callable $callback = null)
     {
-        $this->copyMessages($otherContext);
         $this->copyChains($otherContext, $callback);
+        if ($otherContext !== self::DEFAULT_CONTEXT) {
+            $this->getMessageStack($this->context)->merge($this->getMessageStack($otherContext));
+        }
 
         return $this;
     }
@@ -137,6 +136,8 @@ class Validator
      */
     public function context($name, callable $callback)
     {
+        $this->addMessageStack($name);
+
         $this->context = $name;
         call_user_func($callback, $this);
         $this->context = self::DEFAULT_CONTEXT;
@@ -171,7 +172,7 @@ class Validator
      */
     public function overwriteMessages(array $messages)
     {
-        $this->messageOverwrites[$this->context] = $messages;
+        $this->getMessageStack($this->context)->overwriteMessages($messages);
         return $this;
     }
 
@@ -183,7 +184,7 @@ class Validator
      */
     public function overwriteDefaultMessages(array $messages)
     {
-        $this->defaultMessages = $messages;
+        $this->getMessageStack($this->context)->overwriteDefaultMessages($messages);
         return $this;
     }
 
@@ -224,38 +225,6 @@ class Validator
     }
 
     /**
-     * Build a new MessageStack, set the message overwrites and return it.
-     *
-     * @param string $context
-     * @return MessageStack
-     */
-    protected function buildMessageStack($context)
-    {
-        $this->messageStack = new MessageStack();
-        $this->messageStack->overwriteDefaultMessages($this->defaultMessages);
-
-        foreach ([self::DEFAULT_CONTEXT, $context] as $currentContext) {
-            if (isset($this->messageOverwrites[$currentContext])) {
-                $this->messageStack->overwriteMessages($this->messageOverwrites[$currentContext]);
-            }
-        }
-
-        return $this->messageStack;
-    }
-
-    /**
-     * Copies the messages of the context $otherContext to the current context.
-     *
-     * @param string $otherContext
-     */
-    protected function copyMessages($otherContext)
-    {
-        if (isset($this->messageOverwrites[$otherContext])) {
-            $this->messageOverwrites[$this->context] = $this->messageOverwrites[$otherContext];
-        }
-    }
-
-    /**
      * Copies the chains of the context $otherContext to the current context.
      *
      * @param string $otherContext
@@ -287,5 +256,35 @@ class Validator
         }
 
         return $chains;
+    }
+
+    /**
+     * Returns a message stack for the context $context.
+     *
+     * @param $context
+     * @return MessageStack
+     * @throws NoSuchContextException
+     */
+    protected function getMessageStack($context)
+    {
+        if (!array_key_exists($context, $this->messageStacks)) {
+            throw new NoSuchContextException(
+                "Context " . $context . " does not have a message stack"
+            );
+        }
+
+        return $this->messageStacks[$context];
+    }
+
+    /**
+     * Adds a message stack.
+     *
+     * @param string $name
+     */
+    protected function addMessageStack($name)
+    {
+        $messageStack = new MessageStack();
+
+        $this->messageStacks[$name] = $messageStack;
     }
 }
