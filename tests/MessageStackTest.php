@@ -63,9 +63,9 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
         $ms->append('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']);
 
         $expected = [
-                'key' => [
-                    'reason' => 'This is my specific message. The key was "foo"',
-                ]
+            'key' => [
+                'reason' => 'This is my specific message. The key was "foo"',
+            ]
         ];
 
         $this->assertEquals($expected, $ms->getMessages());
