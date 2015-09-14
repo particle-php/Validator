@@ -62,13 +62,13 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
 
         $ms->append('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']);
 
-        $this->assertEquals([
+        $expected = [
                 'key' => [
                     'reason' => 'This is my specific message. The key was "foo"',
                 ]
-            ],
-            $ms->getMessages()
-        );
+        ];
+
+        $this->assertEquals($expected, $ms->getMessages());
     }
 
     public function testMergeWillMergeMessagesOfOtherMessageStacks()
