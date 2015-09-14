@@ -3,6 +3,8 @@ namespace Particle\Validator\Tests;
 
 use Particle\Validator\Output\Structure;
 use Particle\Validator\Rule;
+use Particle\Validator\Rule\Email;
+use Particle\Validator\Rule\LengthBetween;
 use Particle\Validator\Tests\Support\Statement;
 use Particle\Validator\Validator;
 use Particle\Validator\Rule\Required;
@@ -204,6 +206,16 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             return $output;
         };
 
+        $this->validator->overwriteDefaultMessages([
+            LengthBetween::TOO_LONG => 'This is too long to output!'
+        ]);
+
+        $this->validator->overwriteMessages([
+            'email' => [
+                Email::INVALID_FORMAT => 'This is not a valid email address',
+            ]
+        ]);
+
         $this->validator->required('email')->email();
         $this->validator->optional('firstname')->allowEmpty(true)->lengthBetween(0, 20);
 
@@ -238,7 +250,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 [
                     'rule' => 'Email',
                     'messages' => [
-                        Rule\Email::INVALID_FORMAT => '{{ name }} must be a valid email address',
+                        Rule\Email::INVALID_FORMAT => 'This is not a valid email address',
                     ],
                     'parameters' => [
                         'key' => 'email',
@@ -274,7 +286,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 [
                     'rule' => 'LengthBetween',
                     'messages' => [
-                        'LengthBetween::TOO_LONG' => '{{ name }} must be shorter than {{ max }} characters',
+                        LengthBetween::TOO_LONG => 'This is too long to output!',
                         'LengthBetween::TOO_SHORT' => '{{ name }} must be longer than {{ min }} characters',
                     ],
                     'parameters' => [

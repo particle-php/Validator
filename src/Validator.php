@@ -153,11 +153,13 @@ class Validator
      */
     public function output(callable $output, $context = self::DEFAULT_CONTEXT)
     {
+        $stack = $this->getMessageStack($context);
+
         $structure = new Output\Structure();
         if (array_key_exists($context, $this->chains)) {
             /* @var Chain $chain */
             foreach ($this->chains[$context] as $chain) {
-                $chain->output($structure);
+                $chain->output($structure, $stack);
             }
         }
 

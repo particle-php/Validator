@@ -58,6 +58,26 @@ class MessageStack
     }
 
     /**
+     * Returns an overwrite (either default or specific message) for the reason and key, or false.
+     *
+     * @param string $reason
+     * @param string $key
+     * @return string|bool
+     */
+    public function getOverwrite($reason, $key)
+    {
+        if (isset($this->overwrites[$key][$reason])) {
+            return $this->overwrites[$key][$reason];
+        }
+
+        if (array_key_exists($reason, $this->defaultMessages)) {
+            return $this->defaultMessages[$reason];
+        }
+
+        return false;
+    }
+
+    /**
      * Returns a list of all messages.
      *
      * @return array
@@ -161,4 +181,5 @@ class MessageStack
             }
         }
     }
+
 }

@@ -317,14 +317,15 @@ class Chain
      *
      * @internal
      * @param Structure $structure
+     * @param MessageStack $messageStack
      * @return Structure
      */
-    public function output(Structure $structure)
+    public function output(Structure $structure, MessageStack $messageStack)
     {
         $subject = new Subject($this->key, $this->name);
 
         foreach ($this->rules as $rule) {
-            $rule->output($subject, $this->key, $this->name);
+            $rule->output($subject, $messageStack, $this->key, $this->name);
         }
 
         $structure->addSubject($subject);

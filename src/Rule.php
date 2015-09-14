@@ -114,14 +114,17 @@ abstract class Rule
      *
      * @internal
      * @param Subject $subject
+     * @param MessageStack $messageStack
+     * @param string $key
+     * @param string $name
      */
-    public function output(Subject $subject, $key, $name)
+    public function output(Subject $subject, MessageStack $messageStack, $key, $name)
     {
         $this->setParameters($key, $name);
 
         $outputRule = new Output\Rule(
             $this->getShortName(),
-            $this->messageTemplates,
+            $this->getMessageTemplates($messageStack),
             $this->getMessageParameters()
         );
 
@@ -185,5 +188,25 @@ abstract class Rule
     protected function getShortName()
     {
         return substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+    }
+
+    /**
+     * Get an array of Message Templates to be returned in output.
+     *
+     * @param MessageStack $messageStack
+     * @return array
+     */
+    protected function getMessageTemplates(MessageStack $messageStack)
+    {
+        $messages = $this->messageTemplates;
+        foreach ($messages as $reason => $message) {
+            $overwrite = $messageStack->getOverwrite($reason, $this->key);
+
+            if (is_string($overwrite)) {
+                $messages[$reason] = $overwrite;
+            }
+        }
+
+        return $messages;
     }
 }
