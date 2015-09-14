@@ -2,6 +2,8 @@
 namespace Particle\Validator\Tests;
 
 use Particle\Validator\MessageStack;
+use Particle\Validator\Rule\NotEmpty;
+use Particle\Validator\Rule\Required;
 
 class MessageChainTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,13 +62,42 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
 
         $ms->append('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']);
 
-        $this->assertEquals(
-            [
+        $this->assertEquals([
                 'key' => [
                     'reason' => 'This is my specific message. The key was "foo"',
                 ]
             ],
             $ms->getMessages()
         );
+    }
+
+    public function testMergeWillMergeMessagesOfOtherMessageStacks()
+    {
+        $stack = new MessageStack();
+        $stackTwo = new MessageStack();
+
+        $stack->overwriteMessages([
+            'foo' => [
+                Required::NON_EXISTENT_KEY => 'Non existent key',
+            ]
+        ]);
+
+        $stack->overwriteDefaultMessages([
+            NotEmpty::EMPTY_VALUE => 'Empty value',
+        ]);
+
+        $stackTwo->merge($stack);
+
+        $messages = [
+            $stackTwo->getOverwrite(Required::NON_EXISTENT_KEY, 'foo'),
+            $stackTwo->getOverwrite(NotEmpty::EMPTY_VALUE, 'bar')
+        ];
+
+        $expected = [
+            'Non existent key',
+            'Empty value'
+        ];
+
+        $this->assertEquals($expected, $messages);
     }
 }

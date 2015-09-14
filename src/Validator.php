@@ -8,8 +8,6 @@
  */
 namespace Particle\Validator;
 
-use Particle\Validator\Exception\NoSuchContextException;
-use Particle\Validator\Tests\MessageChainTest;
 use Particle\Validator\Value\Container;
 
 class Validator
@@ -29,7 +27,7 @@ class Validator
     ];
 
     /**
-     * Contains an array of contex => MessageStack.
+     * Contains an array of context => MessageStack.
      *
      * @var MessageStack[]
      */
@@ -263,18 +261,12 @@ class Validator
     /**
      * Returns a message stack for the context $context.
      *
-     * @param $context
+     * @param string $context
      * @return MessageStack
      * @throws NoSuchContextException
      */
     protected function getMessageStack($context)
     {
-        if (!array_key_exists($context, $this->messageStacks)) {
-            throw new NoSuchContextException(
-                "Context " . $context . " does not have a message stack"
-            );
-        }
-
         return $this->messageStacks[$context];
     }
 
