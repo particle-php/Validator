@@ -116,7 +116,7 @@ abstract class Rule
      */
     protected function error($reason)
     {
-        if($this->messageStack){
+        if ($this->messageStack) {
             $this->messageStack->append(
                 $this->key,
                 $reason,
