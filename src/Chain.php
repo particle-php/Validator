@@ -153,14 +153,14 @@ class Chain
     }
 
     /**
-     * Validates the value represents a valid integer
+     * Validates a value to be a nested array, which can then be validated using a new Validator instance.
      *
-     * @return $this
-     * @see \Particle\Validator\Rule\Integer
+     * @param callable $callback
+     * @return Chain
      */
-    public function integer()
+    public function each(callable $callback)
     {
-        return $this->addRule(new Rule\Integer());
+        return $this->addRule(new Rule\Each($callback));
     }
 
     /**
@@ -204,6 +204,17 @@ class Chain
     public function inArray(array $array, $strict = true)
     {
         return $this->addRule(new Rule\InArray($array, $strict));
+    }
+
+    /**
+     * Validates the value represents a valid integer
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\Integer
+     */
+    public function integer()
+    {
+        return $this->addRule(new Rule\Integer());
     }
 
     /**
