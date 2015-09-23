@@ -58,6 +58,26 @@ class MessageStack
     }
 
     /**
+     * Returns an overwrite (either default or specific message) for the reason and key, or false.
+     *
+     * @param string $reason
+     * @param string $key
+     * @return string|bool
+     */
+    public function getOverwrite($reason, $key)
+    {
+        if ($this->hasOverwrite($key, $reason)) {
+            return $this->overwrites[$key][$reason];
+        }
+
+        if (array_key_exists($reason, $this->defaultMessages)) {
+            return $this->defaultMessages[$reason];
+        }
+
+        return false;
+    }
+
+    /**
      * Returns a list of all messages.
      *
      * @return array
@@ -92,9 +112,33 @@ class MessageStack
     }
 
     /**
+     * Merges an existing MessageStack into this one by taking over it's overwrites and defaults.
+     *
+     * @param MessageStack $messageStack
+     */
+    public function merge(MessageStack $messageStack)
+    {
+        $this->mergeDefaultMessages($messageStack);
+        $this->mergeOverwrites($messageStack);
+    }
+
+    /**
+     * Reset the messages to an empty array.
+     *
+     * @return $this
+     */
+    public function reset()
+    {
+        $this->messages = [];
+        return $this;
+    }
+
+    /**
+     * Formats the message $message with $parameters by replacing {{ name }} with $parameters['name'].
+     *
      * @param string $message
      * @param array $parameters
-     * @return mixed
+     * @return string
      */
     protected function format($message, array $parameters)
     {
@@ -106,5 +150,47 @@ class MessageStack
         };
 
         return preg_replace_callback('~{{\s*([^}\s]+)\s*}}~', $replace, $message);
+    }
+
+    /**
+     * Merges the default messages from $messageStack to this MessageStack.
+     *
+     * @param MessageStack $messageStack
+     */
+    protected function mergeDefaultMessages(MessageStack $messageStack)
+    {
+        foreach ($messageStack->defaultMessages as $key => $message) {
+            if (!array_key_exists($key, $this->defaultMessages)) {
+                $this->defaultMessages[$key] = $message;
+            }
+        }
+    }
+
+    /**
+     * Merges the message overwrites from $messageStack to this MessageStack.
+     *
+     * @param MessageStack $messageStack
+     */
+    protected function mergeOverwrites(MessageStack $messageStack)
+    {
+        foreach ($messageStack->overwrites as $key => $reasons) {
+            foreach ($reasons as $reason => $message) {
+                if (!$this->hasOverwrite($key, $reason)) {
+                    $this->overwrites[$key][$reason] = $message;
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns whether an overwrite exists for the key $key with reason $reason.
+     *
+     * @param string $key
+     * @param string $reason
+     * @return bool
+     */
+    protected function hasOverwrite($key, $reason)
+    {
+        return isset($this->overwrites[$key][$reason]);
     }
 }

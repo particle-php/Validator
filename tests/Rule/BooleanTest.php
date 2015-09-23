@@ -1,5 +1,5 @@
 <?php
-namespace Particle\Tests\Rule;
+namespace Particle\Validator\Tests\Rule;
 
 use Particle\Validator\Rule\Boolean;
 use Particle\Validator\Validator;

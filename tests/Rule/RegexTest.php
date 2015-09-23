@@ -1,5 +1,5 @@
 <?php
-namespace Particle\Tests\Rule;
+namespace Particle\Validator\Tests\Rule;
 
 use Particle\Validator\Rule\Regex;
 use Particle\Validator\Validator;

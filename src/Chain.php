@@ -8,6 +8,8 @@
  */
 namespace Particle\Validator;
 
+use Particle\Validator\Output\Structure;
+use Particle\Validator\Output\Subject;
 use Particle\Validator\Value\Container;
 
 /**
@@ -308,6 +310,27 @@ class Chain
     {
         $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
         return $this;
+    }
+
+    /**
+     * Attach a representation of this Chain to the Output\Structure $structure.
+     *
+     * @internal
+     * @param Structure $structure
+     * @param MessageStack $messageStack
+     * @return Structure
+     */
+    public function output(Structure $structure, MessageStack $messageStack)
+    {
+        $subject = new Subject($this->key, $this->name);
+
+        foreach ($this->rules as $rule) {
+            $rule->output($subject, $messageStack);
+        }
+
+        $structure->addSubject($subject);
+
+        return $structure;
     }
 
     /**

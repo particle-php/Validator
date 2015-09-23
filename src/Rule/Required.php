@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
+use Particle\Validator\StringifyCallbackTrait;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
@@ -18,6 +19,8 @@ use Particle\Validator\Value\Container;
  */
 class Required extends Rule
 {
+    use StringifyCallbackTrait;
+
     /**
      * The error code when a required field doesn't exist.
      */
@@ -148,6 +151,17 @@ class Required extends Rule
     {
         $this->requiredCallback = $requiredCallback;
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getMessageParameters()
+    {
+        return array_merge(parent::getMessageParameters(), [
+            'required' => $this->required,
+            'callback' => $this->getCallbackAsString($this->requiredCallback)
+        ]);
     }
 
     /**
