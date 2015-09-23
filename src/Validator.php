@@ -87,11 +87,7 @@ class Validator
         $isValid = true;
         $output = new Container();
         $input = new Container($values);
-        $stack = $this->getMessageStack($context);
-
-        if ($context !== self::DEFAULT_CONTEXT) {
-            $stack->merge($this->getMessageStack(self::DEFAULT_CONTEXT));
-        }
+        $stack = $this->getMergedMessageStack($context);
 
         foreach ($this->chains[$context] as $chain) {
             /** @var Chain $chain */
@@ -263,7 +259,6 @@ class Validator
      *
      * @param string $context
      * @return MessageStack
-     * @throws NoSuchContextException
      */
     protected function getMessageStack($context)
     {
@@ -280,5 +275,23 @@ class Validator
         $messageStack = new MessageStack();
 
         $this->messageStacks[$name] = $messageStack;
+    }
+
+    /**
+     * Returns the message stack. If the context isn't the default context, it will merge the message of the default
+     * context first.
+     *
+     * @param string $context
+     * @return MessageStack
+     */
+    protected function getMergedMessageStack($context)
+    {
+        $stack = $this->getMessageStack($context);
+
+        if ($context !== self::DEFAULT_CONTEXT) {
+            $stack->merge($this->getMessageStack(self::DEFAULT_CONTEXT));
+        }
+
+        return $stack;
     }
 }
