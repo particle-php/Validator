@@ -137,12 +137,14 @@ abstract class Rule
      */
     protected function error($reason)
     {
-        $this->messageStack->append(
-            $this->key,
-            $reason,
-            $this->getMessage($reason),
-            $this->getMessageParameters()
-        );
+        if ($this->messageStack) {
+            $this->messageStack->append(
+                $this->key,
+                $reason,
+                $this->getMessage($reason),
+                $this->getMessageParameters()
+            );
+        }
 
         return false;
     }

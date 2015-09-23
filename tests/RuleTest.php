@@ -27,4 +27,14 @@ class RuleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($length->isValid('first_name', new Container(['first_name' => ''])));
     }
+    
+    /**
+     * test for issue #83
+     * was triggering fatal error if failling rule didnt have a messagestack
+     */
+    public function testRuleWithoutMessageStack()
+    {
+        $length = new \Particle\Validator\Rule\Length(5);
+        $this->assertFalse($length->validate("four"));
+    }
 }
