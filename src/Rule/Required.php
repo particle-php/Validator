@@ -8,8 +8,6 @@
  */
 namespace Particle\Validator\Rule;
 
-use Particle\Validator\Output\Structure;
-use Particle\Validator\Output\Subject;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 

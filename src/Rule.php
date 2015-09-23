@@ -115,12 +115,10 @@ abstract class Rule
      * @internal
      * @param Subject $subject
      * @param MessageStack $messageStack
-     * @param string $key
-     * @param string $name
      */
-    public function output(Subject $subject, MessageStack $messageStack, $key, $name)
+    public function output(Subject $subject, MessageStack $messageStack)
     {
-        $this->setParameters($key, $name);
+        $this->setParameters($subject->getKey(), $subject->getName());
 
         $outputRule = new Output\Rule(
             $this->getShortName(),
