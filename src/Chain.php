@@ -336,7 +336,7 @@ class Chain
         $subject = new Subject($this->key, $this->name);
 
         foreach ($this->rules as $rule) {
-            $rule->output($subject, $messageStack, $this->key, $this->name);
+            $rule->output($subject, $messageStack);
         }
 
         $structure->addSubject($subject);

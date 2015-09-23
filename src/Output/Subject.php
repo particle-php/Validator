@@ -61,6 +61,16 @@ class Subject
     }
 
     /**
+     * Returns the name for this subject.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Returns an array of all rules in this subject.
      *
      * @return Rule[]

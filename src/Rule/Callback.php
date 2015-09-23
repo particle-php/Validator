@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
+use Particle\Validator\StringifyCallbackTrait;
 use Particle\Validator\Exception\InvalidValueException;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
@@ -19,6 +20,8 @@ use Particle\Validator\Value\Container;
  */
 class Callback extends Rule
 {
+    use StringifyCallbackTrait;
+
     /**
      * A constant that will be used to indicate that the callback returned false.
      */
@@ -76,15 +79,14 @@ class Callback extends Rule
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function getMessageParameters()
     {
-        $values = [];
-
-        if (is_object($this->callback) && method_exists($this->callback, '__toString')) {
-            $values['callback'] = (string) $this->callback;
-        }
-
-        return array_merge(parent::getMessageParameters(), $values);
+        return array_merge(parent::getMessageParameters(), [
+            'callback' => $this->getCallbackAsString($this->callback),
+        ]);
     }
 
     /**

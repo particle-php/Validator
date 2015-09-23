@@ -8,7 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
-use Particle\Validator\Output\Subject;
+use Particle\Validator\StringifyCallbackTrait;
 use Particle\Validator\Rule;
 use Particle\Validator\Value\Container;
 
@@ -19,6 +19,8 @@ use Particle\Validator\Value\Container;
  */
 class NotEmpty extends Rule
 {
+    use StringifyCallbackTrait;
+
     /**
      * The error code for when a value is empty while this is not allowed.
      */
@@ -141,16 +143,10 @@ class NotEmpty extends Rule
      */
     protected function getMessageParameters()
     {
-        $values = [
+        return array_merge(parent::getMessageParameters(), [
             'allowEmpty' => $this->allowEmpty,
-            'callback' => null,
-        ];
-
-        if (is_object($this->allowEmptyCallback) && method_exists($this->allowEmptyCallback, '__toString')) {
-            $values['callback'] = (string) $this->allowEmptyCallback;
-        }
-
-        return array_merge(parent::getMessageParameters(), $values);
+            'callback' => $this->getCallbackAsString($this->allowEmptyCallback)
+        ]);
     }
 
     /**
