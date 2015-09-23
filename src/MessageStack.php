@@ -66,7 +66,7 @@ class MessageStack
      */
     public function getOverwrite($reason, $key)
     {
-        if (isset($this->overwrites[$key][$reason])) {
+        if ($this->hasOverwrite($key, $reason)) {
             return $this->overwrites[$key][$reason];
         }
 
@@ -175,10 +175,22 @@ class MessageStack
     {
         foreach ($messageStack->overwrites as $key => $reasons) {
             foreach ($reasons as $reason => $message) {
-                if (!isset($this->overwrites[$key][$reason])) {
+                if (!$this->hasOverwrite($key, $reason)) {
                     $this->overwrites[$key][$reason] = $message;
                 }
             }
         }
+    }
+
+    /**
+     * Returns whether an overwrite exists for the key $key with reason $reason.
+     *
+     * @param string $key
+     * @param string $reason
+     * @return bool
+     */
+    protected function hasOverwrite($key, $reason)
+    {
+        return isset($this->overwrites[$key][$reason]);
     }
 }
