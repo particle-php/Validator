@@ -262,13 +262,14 @@ class Chain
     }
 
     /**
-     * Validates that the value is a valid URL.
+     * Validates that the value is a valid URL. The schemes array is to selectively whitelist URL schemes.
      *
+     * @param array $schemes
      * @return $this
      */
-    public function url()
+    public function url(array $schemes = [])
     {
-        return $this->addRule(new Rule\Url());
+        return $this->addRule(new Rule\Url($schemes));
     }
 
     /**
