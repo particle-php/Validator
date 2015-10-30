@@ -1,7 +1,9 @@
 # Extending Validator
 
-Extending Particle\Validator leads to some boilerplate code, because of the fact that the 
-rules actually exist as methods on a "Chain" object, because we want IDE-supported code-completion. 
+## Using inheritance
+
+Extending Particle\Validator using inheritance leads to some boilerplate code, because of the fact that 
+the rules actually exist as methods on a "Chain" object, because we want IDE-supported code-completion. 
 So, in order to write your own rules, you'll need to overwrite two classes: the Validator 
 itself, and the Chain.
 
@@ -98,3 +100,21 @@ echo $result->getMessages()['foo'][Grumpy::WRONG];
 
 That's that: you can now go wild on adding rules. If you think a rule should be added to the main
 Particle\Validator repository, please create a pull request (or an issue).
+
+## Using Chain::mount(Rule $rule)
+
+Although you probably don't want to use this in environments where you use the same rule over and
+over and over, it's still nice to know that you can mount whatever rule you want onto an existing 
+chain. Given the same Grumpy rule as before:
+
+```php
+$v = new Validator;
+$v->required('foo')->mount(new GrumpyRule('Silly Sally'));
+$result = $v->validate(['foo' => true]);
+
+// output: 'Silly Sally hates the value of "foo"'
+echo $result->getMessages()['foo'][Grumpy::WRONG]; 
+```
+
+As you can see, no inheritance was needed, but on the down-side, there is no auto-completion, which
+makes this approach a little less attractive, usability-wise.
