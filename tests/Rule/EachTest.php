@@ -87,7 +87,7 @@ class EachTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             'foo.first.bar' => [
-                Boolean::NOT_BOOL => 'Not a valid bool, foo.first.bar'
+                Boolean::NOT_BOOL => 'Not a valid bool, bar'
             ]
         ];
 

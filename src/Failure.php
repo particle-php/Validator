@@ -90,6 +90,5 @@ class Failure
     public function overwriteKey($key)
     {
         $this->key = $key;
-        $this->parameters['key'] = $key;
     }
 }
