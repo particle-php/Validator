@@ -83,20 +83,6 @@ class MessageStack
     }
 
     /**
-     * Returns a list of all messages.
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        $this->messages = [];
-        foreach ($this->failures as $failure) {
-            $this->messages[$failure->getKey()][$failure->getReason()] = $failure->format();
-        }
-        return $this->messages;
-    }
-
-    /**
      * Overwrite key-validator specific messages (so [first_name => [Length::TOO_SHORT => 'Message']]).
      *
      * @param array $messages

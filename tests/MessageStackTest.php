@@ -8,70 +8,6 @@ use Particle\Validator\Rule\Required;
 
 class MessageChainTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCanFormatMessagesByReplacingPlaceholders()
-    {
-        $ms = new MessageStack();
-        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{key}}"', ['key' => 'foo']));
-        $result = $ms->getMessages()['key']['reason'];
-
-        $this->assertEquals('The value of "key" is "foo"', $result);
-    }
-
-    public function testWillIgnoreWhitespaceInPlaceholders()
-    {
-        $ms = new MessageStack();
-        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{    key  }}"', ['key' => 'foo']));
-        $result = $ms->getMessages()['key']['reason'];
-
-        $this->assertEquals('The value of "key" is "foo"', $result);
-    }
-
-    public function testWillNotReplaceUnknownPlaceholder()
-    {
-        $ms = new MessageStack();
-        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{ key }}"', []));
-        $result = $ms->getMessages()['key']['reason'];
-
-        $this->assertEquals('The value of "key" is "{{ key }}"', $result);
-    }
-
-    public function testWillAppendMessagesToTheKeyAndReason()
-    {
-        $ms = new MessageStack();
-        $ms->append(new Failure('key', 'reason', 'This is the message', []));
-        $ms->append(new Failure('key', 'reason2', 'This is another message', []));
-
-        $this->assertEquals(
-            [
-                'key' => [
-                    'reason' => 'This is the message',
-                    'reason2' => 'This is another message'
-                ]
-            ],
-            $ms->getMessages()
-        );
-    }
-
-    public function testCanOverwriteSpecificMessagesWithParameters()
-    {
-        $ms = new MessageStack();
-        $ms->overwriteMessages([
-            'key' => [
-                'reason' => 'This is my specific message. The key was "{{key}}"'
-            ]
-        ]);
-
-        $ms->append(new Failure('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']));
-
-        $expected = [
-            'key' => [
-                'reason' => 'This is my specific message. The key was "foo"',
-            ]
-        ];
-
-        $this->assertEquals($expected, $ms->getMessages());
-    }
-
     public function testMergeWillMergeMessagesOfOtherMessageStacks()
     {
         $stack = new MessageStack();
@@ -100,5 +36,41 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $messages);
+    }
+
+    public function testOverwritesDefaultMessage()
+    {
+        $stack = new MessageStack();
+
+        $stack->overwriteDefaultMessages([
+            NotEmpty::EMPTY_VALUE => 'Empty value',
+        ]);
+
+        $stack->append(new Failure('foo', NotEmpty::EMPTY_VALUE, 'Not important', []));
+
+        $expected = [
+            new Failure('foo', NotEmpty::EMPTY_VALUE, 'Empty value', [])
+        ];
+
+        $this->assertEquals($expected, $stack->getFailures());
+    }
+
+    public function testOverwritesSpecificMessage()
+    {
+        $stack = new MessageStack();
+
+        $stack->overwriteMessages([
+            'foo' => [
+                NotEmpty::EMPTY_VALUE => 'Empty value',
+            ]
+        ]);
+
+        $stack->append(new Failure('foo', NotEmpty::EMPTY_VALUE, 'Not important', []));
+
+        $expected = [
+            new Failure('foo', NotEmpty::EMPTY_VALUE, 'Empty value', [])
+        ];
+
+        $this->assertEquals($expected, $stack->getFailures());
     }
 }
