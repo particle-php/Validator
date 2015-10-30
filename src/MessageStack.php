@@ -37,24 +37,29 @@ class MessageStack
     protected $defaultMessages = [];
 
     /**
+     * @var Failure[]
+     */
+    protected $failures = [];
+
+    /**
      * Will append an error message for the target $key with $reason to the stack.
      *
-     * @param string $key
-     * @param string $reason
-     * @param string $message
-     * @param array $parameters
+     * @param Failure $failure
      */
-    public function append($key, $reason, $message, array $parameters)
+    public function append(Failure $failure)
     {
+        $key = $failure->getKey();
+        $reason = $failure->getReason();
+
         if (isset($this->defaultMessages[$reason])) {
-            $message = $this->defaultMessages[$reason];
+            $failure->overwriteMessageTemplate($this->defaultMessages[$reason]);
         }
 
         if (isset($this->overwrites[$key][$reason])) {
-            $message = $this->overwrites[$key][$reason];
+            $failure->overwriteMessageTemplate($this->overwrites[$key][$reason]);
         }
 
-        $this->messages[$key][$reason] = $this->format($message, $parameters);
+        $this->failures[] = $failure;
     }
 
     /**
@@ -75,16 +80,6 @@ class MessageStack
         }
 
         return false;
-    }
-
-    /**
-     * Returns a list of all messages.
-     *
-     * @return array
-     */
-    public function getMessages()
-    {
-        return $this->messages;
     }
 
     /**
@@ -129,27 +124,8 @@ class MessageStack
      */
     public function reset()
     {
-        $this->messages = [];
+        $this->failures = [];
         return $this;
-    }
-
-    /**
-     * Formats the message $message with $parameters by replacing {{ name }} with $parameters['name'].
-     *
-     * @param string $message
-     * @param array $parameters
-     * @return string
-     */
-    protected function format($message, array $parameters)
-    {
-        $replace = function ($matches) use ($parameters) {
-            if (array_key_exists($matches[1], $parameters)) {
-                return $parameters[$matches[1]];
-            }
-            return $matches[0];
-        };
-
-        return preg_replace_callback('~{{\s*([^}\s]+)\s*}}~', $replace, $message);
     }
 
     /**
@@ -192,5 +168,15 @@ class MessageStack
     protected function hasOverwrite($key, $reason)
     {
         return isset($this->overwrites[$key][$reason]);
+    }
+
+    /**
+     * Returns an array of all failures of the last validation run.
+     *
+     * @return Failure[]
+     */
+    public function getFailures()
+    {
+        return $this->failures;
     }
 }

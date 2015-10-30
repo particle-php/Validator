@@ -138,10 +138,12 @@ abstract class Rule
     protected function error($reason)
     {
         $this->messageStack->append(
-            $this->key,
-            $reason,
-            $this->getMessage($reason),
-            $this->getMessageParameters()
+            new Failure(
+                $this->key,
+                $reason,
+                $this->getMessage($reason),
+                $this->getMessageParameters()
+            )
         );
 
         return false;
