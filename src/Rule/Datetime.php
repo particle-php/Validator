@@ -90,7 +90,9 @@ class Datetime extends Rule
      */
     protected function checkDate($dateTime, $format, $value)
     {
-        if ($dateTime->getLastErrors()['warning_count'] === 0 && $dateTime->format($format) === $value) {
+        $equal = (string) $dateTime->format($format) === (string) $value;
+
+        if ($dateTime->getLastErrors()['warning_count'] === 0 && $equal) {
             return $dateTime;
         }
         return false;
