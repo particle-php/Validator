@@ -63,6 +63,13 @@ class Each extends Rule
         return $result;
     }
 
+    /**
+     * This method will spawn a new validator, validate an inner array, and return its result.
+     *
+     * @param string $index
+     * @param mixed $value
+     * @return bool
+     */
     protected function validateValue($index, $value)
     {
         $innerValidator = new Validator();

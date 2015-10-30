@@ -18,6 +18,43 @@ class EachTest extends \PHPUnit_Framework_TestCase
         $this->validator = new Validator();
     }
 
+    public function testCanValidateNestedRepeatingArrays()
+    {
+        $data = [
+            'invoices' => [
+                1 => [
+                    'id' => 1,
+                    'date' => '2015-10-09',
+                    'lines' => [
+                        ['description' => 'first line'],
+                        ['description' => 'second line'],
+                    ]
+                ],
+                2 => [
+                    'id' => 2,
+                    'date' => '2015-10-09',
+                    'lines' => [
+                        ['description' => 'first line'],
+                    ]
+                ],
+            ]
+        ];
+
+        $this->validator->required('invoices')->each(function (Validator $invoiceValidator) {
+            $invoiceValidator->required('id')->integer();
+            $invoiceValidator->required('date')->datetime('Y-m-d');
+
+            $invoiceValidator->required('lines')->each(function (Validator $lineValidator) {
+                $lineValidator->required('description')->lengthBetween(0, 20);
+            });
+        });
+
+        $result = $this->validator->validate($data);
+
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
     public function testReturnsErrorOnNonArray()
     {
         $this->validator->required('foo')->each(function (Validator $validator) {
