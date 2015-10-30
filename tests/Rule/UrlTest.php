@@ -80,11 +80,11 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('url')->url(['mailto']);
 
-        $this->assertTrue(
-            $this->validator->validate([
-                'url' => 'mailto:robbie@example.org',
-            ])
-        );
+        $result = $this->validator->validate([
+            'url' => 'mailto:robbie@example.org',
+        ]);
+
+        $this->assertTrue($result->isValid());
     }
 
     public function getValidUrls()
