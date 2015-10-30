@@ -76,6 +76,17 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result->isValid());
     }
 
+    public function testSucceedsOnAlternativeWhiteListedScheme()
+    {
+        $this->validator->required('url')->url(['mailto']);
+
+        $this->assertTrue(
+            $this->validator->validate([
+                'url' => 'mailto:robbie@example.org',
+            ])
+        );
+    }
+
     public function getValidUrls()
     {
         return [
