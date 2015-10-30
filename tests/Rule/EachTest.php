@@ -100,14 +100,17 @@ class EachTest extends \PHPUnit_Framework_TestCase
             $validator->required('bar')->bool();
         });
 
-        $result = $this->validator->validate([
+        $values = [
             'foo' => [
                 'first' => [
                     'bar' => true,
                 ]
             ]
-        ]);
+        ];
+
+        $result = $this->validator->validate($values);
 
         $this->assertTrue($result->isValid());
+        $this->assertEquals($values, $result->getValues());
     }
 }
