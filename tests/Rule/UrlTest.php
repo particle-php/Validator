@@ -44,6 +44,36 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->validator->getMessages());
     }
 
+    public function testFailsOnNotWhiteListedScheme()
+    {
+        $this->validator->required('url')->url(['http', 'https']);
+
+        $this->assertFalse(
+            $this->validator->validate([
+                'url' => 'git://github.com'
+            ])
+        );
+
+        $expected = [
+            'url' => [
+                Url::INVALID_SCHEME => 'url must have one of the following schemes: http, https',
+            ],
+        ];
+
+        $this->assertEquals($expected, $this->validator->getMessages());
+    }
+
+    public function testSucceedsOnWhiteListedScheme()
+    {
+        $this->validator->required('url')->url(['http', 'https']);
+
+        $this->assertTrue(
+            $this->validator->validate([
+                'url' => 'http://github.com',
+            ])
+        );
+    }
+
     public function getValidUrls()
     {
         return [
