@@ -93,4 +93,21 @@ class EachTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $result->getMessages());
     }
+
+    public function testWillAppendValuesToOutput()
+    {
+        $this->validator->required('foo')->each(function (Validator $validator) {
+            $validator->required('bar')->bool();
+        });
+
+        $result = $this->validator->validate([
+            'foo' => [
+                'first' => [
+                    'bar' => true,
+                ]
+            ]
+        ]);
+
+        $this->assertTrue($result->isValid());
+    }
 }

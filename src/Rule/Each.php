@@ -60,6 +60,7 @@ class Each extends Rule
         foreach ($value as $index => $innerValue) {
             $result = $this->validateValue($index, $innerValue) && $result;
         }
+        return $result;
     }
 
     protected function validateValue($index, $value)
