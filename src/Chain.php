@@ -254,6 +254,17 @@ class Chain
     }
 
     /**
+     * Mount a rule object onto this chain.
+     *
+     * @param Rule $rule
+     * @return Chain
+     */
+    public function mount(Rule $rule)
+    {
+        return $this->addRule($rule);
+    }
+
+    /**
      * Validates that the value is either a integer or a float.
      *
      * @return $this
