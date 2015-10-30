@@ -90,9 +90,9 @@ Validates that the value is numeric (so either a float, or an integer).
 
 Validates that the value matches the regular expression $regex.
 
-### url()
+### url($schemes = [])
 
-Validates that the value is a valid URL.
+Validates that the value is a valid URL. If the schemes array is passed, the URL must be in one of those schemes.
 
 ### required(callable $callback)
 

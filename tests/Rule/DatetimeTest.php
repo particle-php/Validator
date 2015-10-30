@@ -107,6 +107,16 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
+    public function testCheckForValidDateWillAcceptBothStringsAsIntegers()
+    {
+        $this->validator->required('timestamp')->datetime('U');
+        $result = $this->validator->validate([
+            'timestamp' => (int) (new \DateTime())->format('U'),
+        ]);
+
+        $this->assertTrue($result->isValid());
+    }
+
     public function getMessage($reason)
     {
         $messages = [
