@@ -50,11 +50,11 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('url')->url(['http', 'https']);
 
-        $this->assertFalse(
-            $this->validator->validate([
-                'url' => 'git://github.com'
-            ])
-        );
+        $result = $this->validator->validate([
+            'url' => 'git://github.com'
+        ]);
+
+        $this->assertFalse($result->isValid());
 
         $expected = [
             'url' => [
@@ -62,18 +62,18 @@ class UrlTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $this->assertEquals($expected, $this->validator->getMessages());
+        $this->assertEquals($expected, $result->getMessages());
     }
 
     public function testSucceedsOnWhiteListedScheme()
     {
         $this->validator->required('url')->url(['http', 'https']);
 
-        $this->assertTrue(
-            $this->validator->validate([
-                'url' => 'http://github.com',
-            ])
-        );
+        $result = $this->validator->validate([
+            'url' => 'http://github.com',
+        ]);
+
+        $this->assertTrue($result->isValid());
     }
 
     public function getValidUrls()
