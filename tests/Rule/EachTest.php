@@ -77,7 +77,9 @@ class EachTest extends \PHPUnit_Framework_TestCase
 
         $result = $this->validator->validate([
             'foo' => [
-                'first' => ['bar' => 'certainly not a bool']
+                'first' => [
+                    'bar' => 'certainly not a bool'
+                ]
             ]
         ]);
 

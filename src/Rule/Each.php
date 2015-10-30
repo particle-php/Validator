@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
+use Particle\Validator\Failure;
 use Particle\Validator\Rule;
 use Particle\Validator\ValidationResult;
 use Particle\Validator\Validator;
@@ -69,7 +70,7 @@ class Each extends Rule
 
         $result = $innerValidator->validate($value);
 
-        if (!$innerValidator->validate($value)->isValid()) {
+        if (!$result->isValid()) {
             $this->handleError($index, $result);
             return false;
         }
@@ -84,12 +85,12 @@ class Each extends Rule
      */
     protected function handleError($index, $result)
     {
-        foreach ($result->getMessages() as $field => $messages) {
-            $index = sprintf('%s.%s.%s', $this->key, $index, $field);
+        foreach ($result->getFailures() as $failure) {
+            $failure->overwriteKey(
+                sprintf('%s.%s.%s', $this->key, $index, $failure->getKey())
+            );
 
-            foreach ($messages as $reason => $message) {
-                $this->messageStack->append($index, $reason, $message, []);
-            }
+            $this->messageStack->append($failure);
         }
         return false;
     }

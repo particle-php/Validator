@@ -31,16 +31,21 @@ class ValidationResult
     protected $values;
 
     /**
+     * @var Failure[]
+     */
+    protected $failures;
+
+    /**
      * Construct the validation result.
      *
      * @param bool $isValid
-     * @param array $messages
+     * @param array $failures
      * @param array $values
      */
-    public function __construct($isValid, array $messages, array $values)
+    public function __construct($isValid, array $failures, array $values)
     {
         $this->isValid = $isValid;
-        $this->messages = $messages;
+        $this->failures = $failures;
         $this->values = $values;
     }
 
@@ -71,7 +76,21 @@ class ValidationResult
      */
     public function getMessages()
     {
+        if ($this->messages === null) {
+            $this->messages = [];
+            foreach ($this->failures as $failure) {
+                $this->messages[$failure->getKey()][$failure->getReason()] = $failure->format();
+            }
+        }
         return $this->messages;
+    }
+
+    /**
+     * @return Failure[]
+     */
+    public function getFailures()
+    {
+        return $this->failures;
     }
 
     /**

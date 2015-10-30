@@ -1,6 +1,7 @@
 <?php
 namespace Particle\Validator\Tests;
 
+use Particle\Validator\Failure;
 use Particle\Validator\MessageStack;
 use Particle\Validator\Rule\NotEmpty;
 use Particle\Validator\Rule\Required;
@@ -10,7 +11,7 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
     public function testCanFormatMessagesByReplacingPlaceholders()
     {
         $ms = new MessageStack();
-        $ms->append('key', 'reason', 'The value of "key" is "{{key}}"', ['key' => 'foo']);
+        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{key}}"', ['key' => 'foo']));
         $result = $ms->getMessages()['key']['reason'];
 
         $this->assertEquals('The value of "key" is "foo"', $result);
@@ -19,7 +20,7 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
     public function testWillIgnoreWhitespaceInPlaceholders()
     {
         $ms = new MessageStack();
-        $ms->append('key', 'reason', 'The value of "key" is "{{    key  }}"', ['key' => 'foo']);
+        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{    key  }}"', ['key' => 'foo']));
         $result = $ms->getMessages()['key']['reason'];
 
         $this->assertEquals('The value of "key" is "foo"', $result);
@@ -28,7 +29,7 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
     public function testWillNotReplaceUnknownPlaceholder()
     {
         $ms = new MessageStack();
-        $ms->append('key', 'reason', 'The value of "key" is "{{ key }}"', []);
+        $ms->append(new Failure('key', 'reason', 'The value of "key" is "{{ key }}"', []));
         $result = $ms->getMessages()['key']['reason'];
 
         $this->assertEquals('The value of "key" is "{{ key }}"', $result);
@@ -37,8 +38,8 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
     public function testWillAppendMessagesToTheKeyAndReason()
     {
         $ms = new MessageStack();
-        $ms->append('key', 'reason', 'This is the message', []);
-        $ms->append('key', 'reason2', 'This is another message', []);
+        $ms->append(new Failure('key', 'reason', 'This is the message', []));
+        $ms->append(new Failure('key', 'reason2', 'This is another message', []));
 
         $this->assertEquals(
             [
@@ -60,7 +61,7 @@ class MessageChainTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $ms->append('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']);
+        $ms->append(new Failure('key', 'reason', 'The invisible "default" message. {{key}}', ['key' => 'foo']));
 
         $expected = [
             'key' => [

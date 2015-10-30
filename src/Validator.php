@@ -96,7 +96,7 @@ class Validator
 
         $result = new ValidationResult(
             $isValid,
-            $stack->getMessages(),
+            $stack->getFailures(),
             $output->getArrayCopy()
         );
 
