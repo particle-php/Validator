@@ -9,6 +9,7 @@
 namespace Particle\Validator;
 
 use Particle\Validator\Value\Container;
+use Particle\Validator\Exception\ValidationNotRunException;
 
 class Validator
 {
