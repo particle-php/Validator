@@ -69,7 +69,7 @@ class LengthBetween extends Between
      */
     public function validate($value)
     {
-        $length = strlen($value);
+        $length = mb_strlen($value);
 
         return !$this->tooSmall($length, self::TOO_SHORT) && !$this->tooLarge($length, self::TOO_LONG);
     }
