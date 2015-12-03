@@ -367,8 +367,6 @@ class Chain
     public function validate(MessageStack $messageStack, Container $input, Container $output)
     {
         $valid = true;
-        $output->set($this->key, $input->get($this->key));
-
         foreach ($this->rules as $rule) {
             $rule->setMessageStack($messageStack);
             $rule->setParameters($this->key, $this->name);
@@ -376,8 +374,12 @@ class Chain
             $valid = $rule->isValid($this->key, $input) && $valid;
 
             if ($rule->shouldBreakChain()) {
-                return $valid;
+                break;
             }
+        }
+
+        if ($valid && $input->has($this->key)) {
+            $output->set($this->key, $input->get($this->key));
         }
         return $valid;
     }
