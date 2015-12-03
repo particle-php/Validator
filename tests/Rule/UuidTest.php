@@ -33,7 +33,9 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
             array('00000000-0000-0000-0000-000000000000'),      // NIL uuid
             array('a8098c1a-f86e-11da-bd1a-00112444be1e'),      // UUIDv1
             array('6fa459ea-ee8a-3ca4-894e-db77e160355e'),      // UUIDv3
-            array('886313e1-3b8a-5372-9b90-0c9aee199e5d'),      // UUIDv4
+            array('886313e1-3b8a-5372-9b90-0c9aee199e5d'),      // UUIDv5
+            array('de305d54-75b4-431b-adb2-eb6b9e546014a'),
+            array('fde305d54-75b4-431b-adb2-eb6b9e546014'),
         );
     }
 
