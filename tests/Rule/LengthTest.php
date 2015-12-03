@@ -66,4 +66,12 @@ class LengthTest extends \PHPUnit_Framework_TestCase
         ];
         return $messages[$reason];
     }
+	
+	public function testLengthOfMultibyteString()
+    {
+        $this->validator->required('name')->length(4);
+        $result = $this->validator->validate(['name' => 'كريم']);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
 }
