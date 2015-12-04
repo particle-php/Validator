@@ -2,7 +2,6 @@
 namespace Particle\Validator\Tests\Rule;
 
 use Particle\Validator\Rule\NotEmpty;
-use Particle\Validator\Rule\Required;
 use Particle\Validator\Validator;
 
 class NotEmptyTest extends \PHPUnit_Framework_TestCase
