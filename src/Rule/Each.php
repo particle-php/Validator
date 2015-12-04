@@ -8,7 +8,6 @@
  */
 namespace Particle\Validator\Rule;
 
-use Particle\Validator\Failure;
 use Particle\Validator\Rule;
 use Particle\Validator\ValidationResult;
 use Particle\Validator\Validator;
