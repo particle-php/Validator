@@ -156,7 +156,7 @@ class Chain
      * Validates a value to be a nested array, which can then be validated using a new Validator instance.
      *
      * @param callable $callback
-     * @return Chain
+     * @return $this
      */
     public function each(callable $callback)
     {
@@ -257,7 +257,7 @@ class Chain
      * Mount a rule object onto this chain.
      *
      * @param Rule $rule
-     * @return Chain
+     * @return $this
      */
     public function mount(Rule $rule)
     {
@@ -300,7 +300,7 @@ class Chain
      * Validates that the value is a valid UUID
      *
      * @param int $version
-     * @return Chain
+     * @return $this
      */
     public function uuid($version = Rule\Uuid::UUID_V4)
     {
