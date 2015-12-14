@@ -156,7 +156,7 @@ class Chain
      * Validates a value to be a nested array, which can then be validated using a new Validator instance.
      *
      * @param callable $callback
-     * @return Chain
+     * @return $this
      */
     public function each(callable $callback)
     {
