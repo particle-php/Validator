@@ -64,8 +64,8 @@ class LengthBetweenTest extends \PHPUnit_Framework_TestCase
     public function getMessage($reason)
     {
         $messages = [
-            LengthBetween::TOO_SHORT => 'first name must be longer than 3 characters',
-            LengthBetween::TOO_LONG => 'first name must be shorter than 6 characters',
+            LengthBetween::TOO_SHORT => 'first name must be 3 characters or longer',
+            LengthBetween::TOO_LONG => 'first name must be 6 characters or shorter',
         ];
 
         return $messages[$reason];
