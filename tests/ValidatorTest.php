@@ -287,7 +287,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'rule' => 'LengthBetween',
                     'messages' => [
                         LengthBetween::TOO_LONG => 'This is too long to output!',
-                        'LengthBetween::TOO_SHORT' => '{{ name }} must be longer than {{ min }} characters',
+                        'LengthBetween::TOO_SHORT' => '{{ name }} must be {{ min }} characters or longer',
                     ],
                     'parameters' => [
                         'key' => 'firstname',
