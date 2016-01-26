@@ -99,11 +99,36 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('first_name')->lengthBetween(2, 20);
         $this->validator->required('last_name')->lengthBetween(2, 60);
+        $this->validator->optional('age')->between(18, 100);
 
         $result = $this->validator->validate([
             'first_name' => 'Berry',
             'last_name' => 'Langerak',
-            'is_admin' => true
+            'is_admin' => true,
+            'age' => 42,
+        ]);
+
+        $expected = [
+            'first_name' => 'Berry',
+            'last_name' => 'Langerak',
+            'age' => 42,
+        ];
+
+        $this->assertEquals($expected, $result->getValues());
+    }
+
+    public function testDoesNotReturnInvalidValues()
+    {
+        $this->validator->required('first_name')->lengthBetween(2, 20);
+        $this->validator->required('last_name')->lengthBetween(2, 60);
+        $this->validator->optional('age')->between(18, 100);
+        $this->validator->optional('date')->datetime('Y-m-d');
+
+        $result = $this->validator->validate([
+            'first_name' => 'Berry',
+            'last_name' => 'Langerak',
+            'is_admin' => true,
+            'date' => '01/01/1970',
         ]);
 
         $expected = [
