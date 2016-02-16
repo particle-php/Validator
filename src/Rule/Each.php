@@ -57,6 +57,7 @@ class Each extends Rule
 
         $result = true;
         foreach ($value as $index => $innerValue) {
+            $innerValue['array_index'] = $index;
             $result = $this->validateValue($index, $innerValue) && $result;
         }
         return $result;

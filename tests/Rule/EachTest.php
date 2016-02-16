@@ -1,6 +1,7 @@
 <?php
 namespace Particle\Validator\Tests\Rule;
 
+use Particle\Validator\Rule\Alpha;
 use Particle\Validator\Rule\Boolean;
 use Particle\Validator\Rule\Each;
 use Particle\Validator\Rule\Required;
@@ -96,6 +97,51 @@ class EachTest extends \PHPUnit_Framework_TestCase
         $expected = [
             'foo.3.bar' => [
                 Required::NON_EXISTENT_KEY => 'bar must be provided, but does not exist'
+            ]
+        ];
+
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
+    public function testCanValidateAlphabeticalArrayIndexes()
+    {
+        $this->validator->required('foo')->each(function (Validator $validator) {
+            $validator->required('array_index')->alpha(false);
+        });
+
+        $result = $this->validator->validate([
+            'foo' => [
+                'a' => ['bar' => true],
+                'b' => ['bar' => true],
+                'c' => ['bar' => false],
+                'd' => [],
+            ]
+        ]);
+
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    public function testCanValidateNumericalArrayIndexes()
+    {
+        $this->validator->required('foo')->each(function (Validator $validator) {
+            $validator->required('array_index')->alpha(false);
+        });
+
+        $result = $this->validator->validate([
+            'foo' => [
+                'a' => ['bar' => true],
+                'b' => ['bar' => true],
+                'c' => ['bar' => false],
+                5 => [],
+            ]
+        ]);
+
+        $this->assertFalse($result->isValid());
+
+        $expected = [
+            'foo.5.array_index' => [
+                Alpha::NOT_ALPHA => 'array index may only consist out of alphabetic characters',
             ]
         ];
 

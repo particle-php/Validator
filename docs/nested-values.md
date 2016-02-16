@@ -72,3 +72,34 @@ $result = $v->validate($values);
 $result->isValid(); // bool(true)
 $result->getValues() === $values; // bool(true)
 ```
+
+## Validating array indexes using the each validator
+
+Using the each validator, you can also validate the array indexes using the automatically generated `array_index` field.
+
+```php
+$values = [
+    'products' => [
+        'SKU0001-001' => [
+            'price' => 2500,
+            'quantity' => 1,
+        ],
+        'SKU0002-002' => [
+            'price' => 1000,
+            'quantity' => 2,
+        ],
+    ],
+];
+
+$v = new Validator();
+
+$v->required('products')->each(function (Validator $validator) {
+    $validator->required('array_index')->regex('/^SKU\d{4}\-\d{3}/');
+    $validator->required('price')->integer();
+    $validator->required('quantity')->integer;
+});
+
+$result = $v->validate($values);
+$result->isValid(); // bool(true)
+$result->getValues() === $values; // bool(true)
+```
