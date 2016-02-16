@@ -105,7 +105,7 @@ class NotEmpty extends Rule
      */
     protected function isEmpty($value)
     {
-        return (is_string($value) && strlen($value) === 0) || $value === null;
+        return (is_string($value) && strlen($value) === 0) || $value === null || (is_array($value) && count($value) === 0);
     }
 
     /**

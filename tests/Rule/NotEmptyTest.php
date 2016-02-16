@@ -82,7 +82,8 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
             [true],
             ['string'],
             [0],
-            [0.00]
+            [0.00],
+            [[1]],
         ];
     }
 
@@ -90,7 +91,8 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null],
-            ['']
+            [''],
+            [[]],
         ];
     }
 }
