@@ -132,6 +132,15 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid credit card number.
+     * @return $this
+     */
+    public function creditCard()
+    {
+        return $this->addRule(new Rule\CreditCard());
+    }
+
+    /**
      * Validates that the value is a date. If format is passed, it *must* be in that format.
      *
      * @param string|null $format
