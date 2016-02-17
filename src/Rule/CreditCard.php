@@ -8,8 +8,8 @@
  */
 namespace Particle\Validator\Rule;
 
+use byrokrat\checkdigit\Luhn;
 use Particle\Validator\Rule;
-use PayBreak\Luhn\Luhn;
 
 /**
  * This rule is for validating if a value is a valid credit card number.
@@ -58,7 +58,9 @@ class CreditCard extends Rule
      */
     private function validateChecksum($value)
     {
-        return Luhn::validateNumber($value);
+        $luhn = new Luhn();
+
+        return $luhn->isValid($value);
     }
 
     /**

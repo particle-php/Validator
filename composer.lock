@@ -4,43 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "027a235a3788e92ce01c7a62bda35fd1",
-    "content-hash": "c93b8f18af5d61f515ac8953984588e3",
+    "hash": "7f72d5e94031f0ad30e6af129902aa26",
+    "content-hash": "21be14b70c2b448fe443a0b63dbd2bf7",
     "packages": [
         {
-            "name": "paybreak/luhn",
-            "version": "0.1.0",
+            "name": "byrokrat/checkdigit",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PayBreak/luhn.git",
-                "reference": "3553a91b81d1fd17fb8de55698ba5524be77a539"
+                "url": "https://github.com/byrokrat/checkdigit.git",
+                "reference": "2662482c21291628223b279137eadff172ed826f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PayBreak/luhn/zipball/3553a91b81d1fd17fb8de55698ba5524be77a539",
-                "reference": "3553a91b81d1fd17fb8de55698ba5524be77a539",
+                "url": "https://api.github.com/repos/byrokrat/checkdigit/zipball/2662482c21291628223b279137eadff172ed826f",
+                "reference": "2662482c21291628223b279137eadff172ed826f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1"
+                "ext-bcmath": "*",
+                "php": ">=5.4"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "PayBreak\\Luhn\\": "src"
+                    "byrokrat\\checkdigit\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "WTFPL"
             ],
-            "description": "Luhn algorithm implementation",
-            "homepage": "https://github.com/paybreak/luhn",
-            "time": "2015-09-10 20:26:59"
+            "authors": [
+                {
+                    "name": "Hannes Forsgård",
+                    "email": "hannes.forsgard@fripost.org"
+                }
+            ],
+            "description": "Helper classes to calculate and validate ckecksums",
+            "homepage": "https://github.com/byrokrat/checkdigit",
+            "keywords": [
+                "Check digit",
+                "luhn",
+                "modulo 10",
+                "modulo 11",
+                "modulo 97"
+            ],
+            "time": "2015-01-26 14:14:04"
         }
     ],
     "packages-dev": [

@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "paybreak/luhn": "^0.1.0"
+        "byrokrat/checkdigit": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
