@@ -69,7 +69,7 @@ Validates that the value is greater than $value.
 
 Validates that the value is in the array with optional "loose" checking.
 
-### isArray($value)
+### isArray()
 
 Validates that the value is an array.
 
