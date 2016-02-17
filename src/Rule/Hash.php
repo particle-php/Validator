@@ -71,8 +71,6 @@ class Hash extends Rule
      */
     public function validate($value)
     {
-        $caseSensitive = $this->allowUppercase ? 'i' : '';
-
         if ($this->hashAlgorithm == self::ALGO_MD5 && $this->validateHexString($value, 32)) {
             return true;
         } elseif ($this->hashAlgorithm == self::ALGO_SHA1 && $this->validateHexString($value, 40)) {
