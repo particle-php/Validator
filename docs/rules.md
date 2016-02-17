@@ -69,6 +69,10 @@ Validates that the value is greater than $value.
 
 Validates that the value is in the array with optional "loose" checking.
 
+### json()
+
+Validates that the value is a valid JSON string.
+
 ### length($length)
 
 Validate the value to be of precisely length $length.
