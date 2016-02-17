@@ -69,6 +69,10 @@ Validates that the value is greater than $value.
 
 Validates that the value is in the array with optional "loose" checking.
 
+### isArray($value)
+
+Validates that the value is an array.
+
 ### length($length)
 
 Validate the value to be of precisely length $length.
