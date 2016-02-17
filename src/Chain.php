@@ -218,6 +218,17 @@ class Chain
     }
 
     /**
+     * Validates that the value represents a valid JSON string
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\Json
+     */
+    public function json()
+    {
+        return $this->addRule(new Rule\Json());
+    }
+
+    /**
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
