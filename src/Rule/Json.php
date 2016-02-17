@@ -39,13 +39,15 @@ class Json extends Rule
      */
     public function validate($value)
     {
-        if (is_string($value)) {
-            json_decode($value);
-
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return true;
-            }
+        if (!is_string($value)) {
+            return $this->error(self::INVALID_FORMAT);
         }
-        return $this->error(self::INVALID_FORMAT);
+
+        json_decode($value);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this->error(self::INVALID_FORMAT);
+        }
+
+        return true;
     }
 }
