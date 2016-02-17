@@ -56,12 +56,12 @@ class HashTest extends \PHPUnit_Framework_TestCase
     public function getValidHashes()
     {
         return [
-            [hash('md5',''), Hash::ALGO_MD5, false],
-            [strtoupper(hash('md5','')), Hash::ALGO_MD5, true],
-            [hash('sha1',''), Hash::ALGO_SHA1, false],
-            [hash('sha256',''), Hash::ALGO_SHA256, false],
-            [hash('sha512',''), Hash::ALGO_SHA512, false],
-            [hash('crc32',''), Hash::ALGO_CRC32, false],
+            [hash('md5', ''), Hash::ALGO_MD5, false],
+            [strtoupper(hash('md5', '')), Hash::ALGO_MD5, true],
+            [hash('sha1', ''), Hash::ALGO_SHA1, false],
+            [hash('sha256', ''), Hash::ALGO_SHA256, false],
+            [hash('sha512', ''), Hash::ALGO_SHA512, false],
+            [hash('crc32', ''), Hash::ALGO_CRC32, false],
         ];
     }
 
@@ -73,12 +73,12 @@ class HashTest extends \PHPUnit_Framework_TestCase
     public function getInvalidHashes()
     {
         return [
-            [hash('sha512',''), Hash::ALGO_MD5, false],
-            [strtoupper(hash('md5','')), Hash::ALGO_MD5, false],
-            [hash('md5',''), Hash::ALGO_SHA1, false],
-            [hash('crc32',''), Hash::ALGO_SHA256, false],
-            [hash('sha1',''), Hash::ALGO_SHA512, false],
-            [hash('sha256',''), Hash::ALGO_CRC32, false],
+            [hash('sha512', ''), Hash::ALGO_MD5, false],
+            [strtoupper(hash('md5', '')), Hash::ALGO_MD5, false],
+            [hash('md5', ''), Hash::ALGO_SHA1, false],
+            [hash('crc32', ''), Hash::ALGO_SHA256, false],
+            [hash('sha1', ''), Hash::ALGO_SHA512, false],
+            [hash('sha256', ''), Hash::ALGO_CRC32, false],
         ];
     }
 }
