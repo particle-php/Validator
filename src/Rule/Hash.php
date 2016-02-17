@@ -73,34 +73,31 @@ class Hash extends Rule
     {
         $caseSensitive = $this->allowUppercase ? 'i' : '';
 
-        switch ($this->hashAlgorithm) {
-            case self::ALGO_MD5:
-                if (preg_match('/^[0-9a-f]{32}$/' . $caseSensitive, $value) === 1) {
-                    return true;
-                }
-                break;
-            case self::ALGO_SHA1:
-                if (preg_match('/^[0-9a-f]{40}$/' . $caseSensitive, $value) === 1) {
-                    return true;
-                }
-                break;
-            case self::ALGO_SHA256:
-                if (preg_match('/^[0-9a-f]{64}$/' . $caseSensitive, $value) === 1) {
-                    return true;
-                }
-                break;
-            case self::ALGO_SHA512:
-                if (preg_match('/^[0-9a-f]{128}$/' . $caseSensitive, $value) === 1) {
-                    return true;
-                }
-                break;
-            case self::ALGO_CRC32:
-                if (preg_match('/^[0-9a-f]{8}$/' . $caseSensitive, $value) === 1) {
-                    return true;
-                }
-                break;
+        if ($this->hashAlgorithm == self::ALGO_MD5 && $this->validateHexString($value, 32)) {
+            return true;
+        } elseif ($this->hashAlgorithm == self::ALGO_SHA1 && $this->validateHexString($value, 40)) {
+            return true;
+        } elseif ($this->hashAlgorithm == self::ALGO_SHA256 && $this->validateHexString($value, 64)) {
+            return true;
+        } elseif ($this->hashAlgorithm == self::ALGO_SHA512 && $this->validateHexString($value, 128)) {
+            return true;
+        } elseif ($this->hashAlgorithm == self::ALGO_CRC32 && $this->validateHexString($value, 8)) {
+            return true;
         }
 
         return $this->error(self::INVALID_FORMAT);
+    }
+
+    /**
+     * @param string $value
+     * @param int $length
+     *
+     * @return bool
+     */
+    private function validateHexString($value, $length)
+    {
+        $caseSensitive = $this->allowUppercase ? 'i' : '';
+
+        return preg_match(sprintf('/^[0-9a-f]{%s}$/%s', $length, $caseSensitive), $value) === 1;
     }
 }
