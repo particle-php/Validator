@@ -197,6 +197,19 @@ class Chain
     /**
      * Validates that the value is in the array with optional "loose" checking.
      *
+     * @param string $hashAlgorithm
+     * @param bool $allowUppercase
+     * @return $this
+     * @see \Particle\Validator\Rule\Hash
+     */
+    public function hash($hashAlgorithm, $allowUppercase = false)
+    {
+        return $this->addRule(new Rule\Hash($hashAlgorithm, $allowUppercase));
+    }
+
+    /**
+     * Validates that the value is in the array with optional "loose" checking.
+     *
      * @param array $array
      * @param bool $strict
      * @return $this
