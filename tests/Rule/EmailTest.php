@@ -70,14 +70,4 @@ class EmailTest extends \PHPUnit_Framework_TestCase
             ['not valid@"not valid"']
         ];
     }
-
-
-    public function getMessage($reason)
-    {
-        $messages = [
-            Digits::NOT_DIGITS => 'The value of "digits" must consist only out of digits'
-        ];
-
-        return $messages[$reason];
-    }
 }
