@@ -105,10 +105,15 @@ class NotEmpty extends Rule
      */
     protected function isEmpty($value)
     {
-        return
-            (is_string($value) && strlen($value) === 0) ||
-            $value === null ||
-            (is_array($value) && count($value) === 0);
+        if (is_string($value) && strlen($value) === 0) {
+            return true;
+        } elseif ($value === null) {
+            return true;
+        } elseif (is_array($value) && count($value) === 0) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
