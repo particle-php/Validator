@@ -67,7 +67,7 @@ Validates that the value is greater than $value.
 
 ### hash($hashAlgorithm, $allowUppercase = false)
 
-Validates that the value is a valid cryptographic hash according to the chose hashing algorithm. The second parameter may allow uppercase characters in the hashes.
+Validates that the value is a valid cryptographic hash according to the chosen hashing algorithm. The second parameter may allow uppercase characters in the hashes.
 Supported algorithms include Hash::ALGO_MD5, Hash::ALGO_SHA1, Hash::ALGO_SHA256, Hash::ALGO_SHA512 and Hash::ALGO_CRC32.
 
 ### inArray(array $array, $strict = true)
