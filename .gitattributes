@@ -1,4 +1,4 @@
-/CONTRIBUTING.md    export-ignore
+/.github            export-ignore
 /docs               export-ignore
 /.gitignore         export-ignore
 /.scrutinizer.yml   export-ignore
