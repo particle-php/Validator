@@ -218,6 +218,17 @@ class Chain
     }
 
     /**
+     * Validates the value is an array
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\IsArray
+     */
+    public function isArray()
+    {
+        return $this->addRule(new Rule\IsArray());
+    }
+
+    /**
      * Validates that the value represents a valid JSON string
      *
      * @return $this
