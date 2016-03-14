@@ -2,6 +2,7 @@
 namespace Particle\Validator\Tests\Rule;
 
 use Particle\Validator\Rule\IsArray;
+use Particle\Validator\Rule\NotEmpty;
 use Particle\Validator\Validator;
 
 class IsArrayTest extends \PHPUnit_Framework_TestCase
@@ -24,6 +25,7 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
     {
         $this->validator->required('array')->isArray();
         $result = $this->validator->validate(['array' => $value]);
+
         $this->assertTrue($result->isValid());
     }
 
@@ -45,12 +47,28 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
+
+    public function testReturnsFalseOnEmptyArray()
+    {
+        $value = [];
+        $this->validator->required('array')->isArray();
+        $result = $this->validator->validate(['array' => $value]);
+        $this->assertFalse($result->isValid());
+
+        $expected = [
+            'array' => [
+                NotEmpty::EMPTY_VALUE => 'array must not be empty',
+            ]
+        ];
+
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
     public function getValidArrayValues()
     {
         return [
             [[1, 2]],
             [['a' => 1, 'b' => 2]],
-            [[]],
         ];
     }
 
