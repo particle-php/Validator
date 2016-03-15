@@ -25,6 +25,20 @@ class CreditCard extends Rule
     const INVALID_CHECKSUM = 'CreditCard::INVALID_CHECKSUM';
 
     /**
+     * Regular expressions to validate the different credit card brands
+     *
+     * @var array
+     */
+    protected $validationRegExps = [
+        '/^4[0-9]{12}(?:[0-9]{3})?$/', // Visa
+        '/^5[1-5][0-9]{14}$/', // Mastercard
+        '/^3[47][0-9]{13}$/', // American Express
+        '/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/', // Diners Club
+        '/^6(?:011|5[0-9]{2})[0-9]{12}$/', // Discover
+        '/^(?:2131|1800|35\d{3})\d{11}$/', // JCB
+    ];
+
+    /**
      * The message templates which can be returned by this validator.
      *
      * @var array
@@ -70,18 +84,10 @@ class CreditCard extends Rule
      */
     private function validateFormat($value)
     {
-        if (preg_match('/^4[0-9]{12}(?:[0-9]{3})?$/', $value) === 1) {
-            return true; // Visa
-        } elseif (preg_match('/^5[1-5][0-9]{14}$/', $value) == 1) {
-            return true; // Mastercard
-        } elseif (preg_match('/^3[47][0-9]{13}$/', $value) == 1) {
-            return true; // American Express
-        } elseif (preg_match('/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/', $value) == 1) {
-            return true; // Diners Club
-        } elseif (preg_match('/^6(?:011|5[0-9]{2})[0-9]{12}$/', $value) == 1) {
-            return true; // Discover
-        } elseif (preg_match('/^(?:2131|1800|35\d{3})\d{11}$/', $value) == 1) {
-            return true; // JCB
+        foreach ($this->validationRegExps as $validationRegExp) {
+            if (preg_match($validationRegExp, $value) === 1) {
+                return true;
+            }
         }
 
         return false;
