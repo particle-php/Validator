@@ -40,6 +40,9 @@ $v->required('userId')->callback(function ($value) {
 });
 ```
 
+### creditCard()
+
+Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
 
 ### datetime($format = null)
 
