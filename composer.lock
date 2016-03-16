@@ -4,8 +4,55 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9d8e0cbc0aaac96dc568d06d9685cac3",
-    "packages": [],
+    "hash": "7f72d5e94031f0ad30e6af129902aa26",
+    "content-hash": "21be14b70c2b448fe443a0b63dbd2bf7",
+    "packages": [
+        {
+            "name": "byrokrat/checkdigit",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/byrokrat/checkdigit.git",
+                "reference": "2662482c21291628223b279137eadff172ed826f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/byrokrat/checkdigit/zipball/2662482c21291628223b279137eadff172ed826f",
+                "reference": "2662482c21291628223b279137eadff172ed826f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "byrokrat\\checkdigit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Hannes Forsgård",
+                    "email": "hannes.forsgard@fripost.org"
+                }
+            ],
+            "description": "Helper classes to calculate and validate ckecksums",
+            "homepage": "https://github.com/byrokrat/checkdigit",
+            "keywords": [
+                "Check digit",
+                "luhn",
+                "modulo 10",
+                "modulo 11",
+                "modulo 97"
+            ],
+            "time": "2015-01-26 14:14:04"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",
@@ -1044,7 +1091,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.2"
+        "php": ">=5.4"
     },
     "platform-dev": []
 }

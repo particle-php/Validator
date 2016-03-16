@@ -40,6 +40,9 @@ $v->required('userId')->callback(function ($value) {
 });
 ```
 
+### creditCard()
+
+Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
 
 ### datetime($format = null)
 
@@ -68,6 +71,10 @@ Validates that the value is greater than $value.
 ### inArray(array $array, $strict = true)
 
 Validates that the value is in the array with optional "loose" checking.
+
+### isArray()
+
+Validates that the value is an array.
 
 ### json()
 
