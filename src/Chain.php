@@ -132,6 +132,15 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid credit card number.
+     * @return $this
+     */
+    public function creditCard()
+    {
+        return $this->addRule(new Rule\CreditCard());
+    }
+
+    /**
      * Validates that the value is a date. If format is passed, it *must* be in that format.
      *
      * @param string|null $format
@@ -215,6 +224,28 @@ class Chain
     public function integer()
     {
         return $this->addRule(new Rule\Integer());
+    }
+
+    /**
+     * Validates the value is an array
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\IsArray
+     */
+    public function isArray()
+    {
+        return $this->addRule(new Rule\IsArray());
+    }
+
+    /**
+     * Validates that the value represents a valid JSON string
+     *
+     * @return $this
+     * @see \Particle\Validator\Rule\Json
+     */
+    public function json()
+    {
+        return $this->addRule(new Rule\Json());
     }
 
     /**
