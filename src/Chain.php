@@ -306,6 +306,18 @@ class Chain
     }
 
     /**
+     * Validates that the value is a valid phone number for $countryCode.
+     *
+     * @param string $countryCode
+     * @see \Particle\Validator\Rule\Phone
+     * @return $this
+     */
+    public function phone($countryCode)
+    {
+        return $this->addRule(new Rule\Phone($countryCode));
+    }
+
+    /**
      * Validates that the value matches the regular expression $regex.
      *
      * @param string $regex

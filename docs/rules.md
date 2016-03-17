@@ -97,6 +97,10 @@ Validates that the value is less than $value.
 
 Validates that the value is numeric (so either a float, or an integer).
 
+### phone($countryCode)
+
+Validates that the value is a valid phone number for $countryCode. Uses a library based on Google's `libphonenumber`.
+
 ### regex($regex)
 
 Validates that the value matches the regular expression $regex.
