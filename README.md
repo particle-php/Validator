@@ -54,7 +54,7 @@ $result->getMessages();
 * Ability to separate controller and view logic
 * Fully documented: [validator.particle-php.com](http://validator.particle-php.com)
 * Fully tested: [Scrutinizer](https://scrutinizer-ci.com/g/particle-php/Validator/)
-* Zero dependencies
+* Very few dependencies
 
 ===
 
