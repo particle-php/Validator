@@ -1,7 +1,6 @@
 <?php
 namespace Particle\Validator\Tests;
 
-use Particle\Validator\Rule;
 use Particle\Validator\Tests\Support\CustomRule;
 use Particle\Validator\Validator;
 
