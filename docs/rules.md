@@ -52,7 +52,7 @@ Validates that the value is a date. If format is passed, it *must* be in that fo
 
 Validates that all characters of the value are decimal digits.
 
-### integer()
+### integer($strict = false)
 
 Validates the value represents a valid integer
 

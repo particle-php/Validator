@@ -218,12 +218,13 @@ class Chain
     /**
      * Validates the value represents a valid integer
      *
+     * @param bool $strict
      * @return $this
      * @see \Particle\Validator\Rule\Integer
      */
-    public function integer()
+    public function integer($strict = false)
     {
-        return $this->addRule(new Rule\Integer());
+        return $this->addRule(new Rule\Integer($strict));
     }
 
     /**

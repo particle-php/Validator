@@ -32,6 +32,21 @@ class Integer extends Rule
     ];
 
     /**
+     * A bool denoting whether or not strict checking should be done.
+     *
+     * @var bool
+     */
+    private $strict;
+
+    /**
+     * @param bool $strict
+     */
+    public function __construct($strict = false)
+    {
+        $this->strict = $strict;
+    }
+
+    /**
      * Validates if $value represents an integer.
      *
      * @param mixed $value
@@ -39,9 +54,14 @@ class Integer extends Rule
      */
     public function validate($value)
     {
-        if (false !== filter_var($value, FILTER_VALIDATE_INT)) {
+        if ($this->strict && is_int($value)) {
             return true;
         }
+
+        if (!$this->strict && false !== filter_var($value, FILTER_VALIDATE_INT)) {
+            return true;
+        }
+
         return $this->error(self::NOT_AN_INTEGER);
     }
 }
