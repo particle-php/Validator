@@ -76,7 +76,7 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result->isValid());
         $expected = [
             'date' => [
-                \Particle\Validator\Rule\DateTime::INVALID_VALUE => 'date must be a valid date'
+                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'date must be a valid date'
             ]
         ];
 
@@ -100,7 +100,7 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result->isValid());
         $expected = [
             'date' => [
-                \Particle\Validator\Rule\DateTime::INVALID_VALUE => 'date must be a valid date'
+                \Particle\Validator\Rule\Datetime::INVALID_VALUE => 'date must be a valid date'
             ]
         ];
 
