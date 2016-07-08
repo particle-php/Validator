@@ -1,7 +1,6 @@
 <?php
 namespace Particle\Validator\Tests\Rule;
 
-use Particle\Validator\Rule\Digits;
 use Particle\Validator\Rule\Email;
 use Particle\Validator\Validator;
 
