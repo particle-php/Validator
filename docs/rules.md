@@ -6,15 +6,15 @@ There is a large number of default rules in Particle\Validator.
 
 ### alnum($allowWhitespace = false)
 
-Validate the value to consist only out of alphanumeric characters.
+Validate that the value consists only of alphanumeric characters.
 
 ### alpha($allowWhitespace = false)
 
-Validate that the value only consists our of alphabetic characters.
+Validate that the value consists only of alphabetic characters.
 
 ### between($min, $max)
 
-Validate that the value is between $min and $max (inclusive).
+Validate that the value is between `$min` and `$max` (inclusive).
 
 ### bool()
 
@@ -54,7 +54,7 @@ Validates that all characters of the value are decimal digits.
 
 ### integer($strict = false)
 
-Validates the value represents a valid integer
+Validates that the value represents a valid integer.
 
 ### email()
 
@@ -62,7 +62,7 @@ Validates that the value is a valid email address (format only).
 
 ### equals($value)
 
-Validates that the value is equal to $value.
+Validates that the value is equal to `$value`.
 
 ### greaterThan($value)
 
@@ -82,28 +82,28 @@ Validates that the value is a valid JSON string.
 
 ### length($length)
 
-Validate the value to be of precisely length $length.
+Validates that the value is precisely of length `$length`.
 
 ### lengthBetween($min, $max)
 
-Validates that the length of the value is between $min and $max (inclusive).
+Validates that the length of the value is between `$min` and `$max` (inclusive).
 If $max is null, it has no upper limit.
 
 ### lessThan($value)
 
-Validates that the value is less than $value.
+Validates that the value is less than `$value`.
 
 ### numeric
 
-Validates that the value is numeric (so either a float, or an integer).
+Validates that the value is numeric (so either a `float`, or an `integer`).
 
 ### phone($countryCode)
 
-Validates that the value is a valid phone number for $countryCode. Uses a library based on Google's `libphonenumber`.
+Validates that the value is a valid phone number for `$countryCode`. Uses a library based on Google's `libphonenumber`.
 
 ### regex($regex)
 
-Validates that the value matches the regular expression $regex.
+Validates that the value matches the regular expression `$regex`.
 
 ### url($schemes = [])
 
