@@ -48,7 +48,7 @@ design goals:
  - **Well-documented**, so that if you *do* go to the documentation, you don't have to search for long.
  - **Extensible**, so you can simply add your own rules, and error messages.
  - **Well-tested**, so that you're absolutely sure that you can rely on the validation rules.
- - **Zero** dependencies, so that you can use it in *any* PHP project.
+ - **Very few** dependencies, so that you can use it in *any* PHP project.
  
 Although there are many validation libraries out there, they seem to lack in one or more of the
 above design goals.
