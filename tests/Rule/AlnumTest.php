@@ -93,7 +93,7 @@ class AlnumTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Alnum::NOT_ALNUM => 'first name may only consist out of numeric and alphabetic characters'

@@ -117,7 +117,7 @@ class DatetimeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result->isValid());
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
         ];

@@ -93,7 +93,7 @@ class AlphaTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Alpha::NOT_ALPHA => 'first name may only consist out of alphabetic characters',

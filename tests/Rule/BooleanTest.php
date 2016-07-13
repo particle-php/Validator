@@ -50,7 +50,7 @@ class BooleanTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Boolean::NOT_BOOL => 'active must be either true or false'

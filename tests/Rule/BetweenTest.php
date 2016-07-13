@@ -62,7 +62,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Between::TOO_SMALL => 'number must be greater than or equal to 1',

@@ -50,7 +50,7 @@ class DigitsTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Digits::NOT_DIGITS => 'digits may only consist out of digits'
