@@ -193,6 +193,16 @@ class Chain
     }
 
     /**
+     * Validates that the value represents a float.
+     *
+     * @return $this
+     */
+    public function float()
+    {
+        return $this->addRule(new Rule\IsFloat());
+    }
+
+    /**
      * Validates that the value is greater than $value.
      *
      * @param int $value
