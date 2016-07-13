@@ -105,6 +105,10 @@ Validates that the value is a valid phone number for `$countryCode`. Uses a libr
 
 Validates that the value matches the regular expression `$regex`.
 
+### string
+
+Validates that the value represents a `string`.
+
 ### url($schemes = [])
 
 Validates that the value is a valid URL. If the schemes array is passed, the URL must be in one of those schemes.

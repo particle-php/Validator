@@ -330,6 +330,16 @@ class Chain
     }
 
     /**
+     * Validates that the value represents a string.
+     *
+     * @return $this
+     */
+    public function string()
+    {
+        return $this->addRule(new Rule\IsString());
+    }
+
+    /**
      * Validates that the value is a valid URL. The schemes array is to selectively whitelist URL schemes.
      *
      * @param array $schemes
