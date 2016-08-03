@@ -70,7 +70,7 @@ class NumericTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Numeric::NOT_NUMERIC => 'number must be numeric'

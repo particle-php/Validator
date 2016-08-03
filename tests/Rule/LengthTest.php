@@ -58,7 +58,7 @@ class LengthTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Length::TOO_SHORT => 'first name is too short and must be 5 characters long',

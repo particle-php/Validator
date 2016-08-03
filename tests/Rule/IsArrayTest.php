@@ -82,7 +82,7 @@ class IsArrayTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             IsArray::NOT_AN_ARRAY => 'array must be an array'

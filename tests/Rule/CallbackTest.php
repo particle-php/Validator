@@ -79,7 +79,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result->isValid());
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Callback::INVALID_VALUE => 'first name is invalid'

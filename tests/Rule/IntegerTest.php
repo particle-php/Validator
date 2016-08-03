@@ -117,7 +117,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function getMessage($reason)
+    private function getMessage($reason)
     {
         $messages = [
             Integer::NOT_AN_INTEGER => 'integer must be an integer'
