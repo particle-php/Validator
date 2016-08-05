@@ -8,6 +8,7 @@
  */
 namespace Particle\Validator\Rule;
 
+use Exception;
 use Particle\Validator\Rule;
 
 /**
@@ -68,18 +69,23 @@ class Hash extends Rule
      *
      * @param mixed $value
      * @return bool
+     * @throws Exception
      */
     public function validate($value)
     {
-        if ($this->hashAlgorithm == self::ALGO_MD5 && $this->validateHexString($value, 32)) {
-            return true;
-        } elseif ($this->hashAlgorithm == self::ALGO_SHA1 && $this->validateHexString($value, 40)) {
-            return true;
-        } elseif ($this->hashAlgorithm == self::ALGO_SHA256 && $this->validateHexString($value, 64)) {
-            return true;
-        } elseif ($this->hashAlgorithm == self::ALGO_SHA512 && $this->validateHexString($value, 128)) {
-            return true;
-        } elseif ($this->hashAlgorithm == self::ALGO_CRC32 && $this->validateHexString($value, 8)) {
+        $algorithmsLengths = [
+            self::ALGO_MD5 => 32,
+            self::ALGO_SHA1 => 40,
+            self::ALGO_SHA256 => 64,
+            self::ALGO_SHA512 => 128,
+            self::ALGO_CRC32 => 8,
+        ];
+
+        if (!isset($algorithmsLengths[$this->hashAlgorithm])) {
+            throw new Exception('an invalid hashAlgorithm has been provided.');
+        }
+
+        if ($this->validateHexString($value, $algorithmsLengths[$this->hashAlgorithm])) {
             return true;
         }
 
