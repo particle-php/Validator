@@ -18,13 +18,17 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "byrokrat/checkdigit": "^1.0",
-        "giggsey/libphonenumber-for-php": "^7.2"
+        "php": ">=5.4"
+    },
+    "suggest": {
+        "byrokrat/checkdigit": "If you want to use CreditCard validation rule, this library must be installed.",
+        "giggsey/libphonenumber-for-php": "If you want to use Phone validation rule, this library must be installed."
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "2.*",
+        "byrokrat/checkdigit": "^1.0",
+        "giggsey/libphonenumber-for-php": "^7.2"
     },
     "autoload": {
         "psr-4": {

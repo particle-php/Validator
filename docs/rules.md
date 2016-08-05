@@ -44,6 +44,9 @@ $v->required('userId')->callback(function ($value) {
 
 Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
 
+**Note:** If you want to use this rule, you must install the `byrokrat/checkdigit` package.
+Run `composer require byrokrat/checkdigit`.
+
 ### datetime($format = null)
 
 Validates that the value is a date. If format is passed, it *must* be in that format.
@@ -100,6 +103,9 @@ Validates that the value is numeric (so either a float, or an integer).
 ### phone($countryCode)
 
 Validates that the value is a valid phone number for $countryCode. Uses a library based on Google's `libphonenumber`.
+
+**Note:** If you want to use this rule, you must install the `giggsey/libphonenumber-for-php` package.
+Run `composer require giggsey/libphonenumber-for-php`.
 
 ### regex($regex)
 
