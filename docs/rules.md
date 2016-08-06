@@ -75,7 +75,11 @@ $v->validate(['name' => 'Jonh number 1'])->isValid(); // false
 Validate that the value is between `$min` and `$max` (inclusive).
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('age')->between(16, 70);
+$v->validate(['age' => 16])->isValid(); // true
+$v->validate(['age' => 70])->isValid(); // true
+$v->validate(['age' => 71])->isValid(); // false
 ```
 
 ## bool
