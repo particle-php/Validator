@@ -32,10 +32,22 @@ Particle\Validator tries to provide you the most common validations. An overview
 
 ## alnum
 
-Validate that the value consists only of alphanumeric characters.
+Validate that the value consists only of alphanumeric characters (a-z, A-Z, 0-9).
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('name')->alnum();
+$v->validate(['name' => 'Jonh01'])->isValid(); // true
+$v->validate(['name' => 'Jonh!'])->isValid(); // false
+```
+
+It's also possible to allow spaces in the string:
+
+```php
+$v = new Validator;
+$v->required('name')->alnum(Rule\Alnum::ALLOW_SPACES);
+$v->validate(['name' => 'Jonh number 1'])->isValid(); // true
+$v->validate(['name' => 'Jonh #1'])->isValid(); // false
 ```
 
 ## alpha
