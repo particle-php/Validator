@@ -56,7 +56,7 @@ Validate that the value consists only of alphabetic characters (a-z, A-Z).
 
 ```php
 $v = new Validator;
-$v->required('name')->alnum();
+$v->required('name')->alpha();
 $v->validate(['name' => 'Jonh'])->isValid(); // true
 $v->validate(['name' => 'Jonh1'])->isValid(); // false
 ```
@@ -65,7 +65,7 @@ It's also possible to allow spaces in the string:
 
 ```php
 $v = new Validator;
-$v->required('name')->alnum(Rule\Alpha::ALLOW_SPACES);
+$v->required('name')->alpha(Rule\Alpha::ALLOW_SPACES);
 $v->validate(['name' => 'Jonh is the best'])->isValid(); // true
 $v->validate(['name' => 'Jonh number 1'])->isValid(); // false
 ```
