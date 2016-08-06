@@ -1,26 +1,68 @@
-# Default rules
+# Included validaton-rules
 
-There is a large number of default rules in Particle\Validator.
+Particle\Validator tries to provide you the most common validations. An overview is listed below. If you want to add custom validators, take a look at the callback validation-rule, or check out "Extending the Validator" in the menu.
 
-## List of rules
+* [alnum](#alnum)($allowWhitespace = false)
+* [alpha](#alpha)($allowWhitespace = false)
+* [between](#between)($min, $max)
+* [bool](#bool)()
+* [callback](#callback)(callable $callable)
+* [creditCard](#creditCard)()
+* [datetime](#datetime)($format = null)
+* [digits](#digits)()
+* [float](#float)()
+* [integer](#integer)($strict = false)
+* [email](#email)()
+* [equals](#equals)($value)
+* [greaterThan](#greaterThan)($value)
+* [hash](#hash)($hashAlgorithm, $allowUppercase = false)
+* [inArray](#inArray)(array $array, $strict = true)
+* [isArray](#isArray)()
+* [json](#json)()
+* [length](#length)($length)
+* [lengthBetween](#lengthBetween)($min, $max)
+* [lessThan](#lessThan)($value)
+* [numeric](#numeric)()
+* [phone](#phone)($countryCode)
+* [regex](#regex)($regex)
+* [string](#string)()
+* [url](#url)($schemes = [])
+* [required](#required)(callable $callback)
+* [allowEmpty](#allowEmpty)(callable $callback)
 
-### alnum($allowWhitespace = false)
+## alnum
 
 Validate that the value consists only of alphanumeric characters.
 
-### alpha($allowWhitespace = false)
+```php
+// @todo: code example
+```
+
+## alpha
 
 Validate that the value consists only of alphabetic characters.
 
-### between($min, $max)
+```php
+// @todo: code example
+```
+
+## between
 
 Validate that the value is between `$min` and `$max` (inclusive).
 
-### bool()
+```php
+// @todo: code example
+```
+
+## bool
 
 Validate that the value is a boolean value.
 
-### callback(callable $callable)
+```php
+// @todo: code example
+```
+
+## callback
 
 Validate by executing a callback function, and returning its result.
 
@@ -40,100 +82,188 @@ $v->required('userId')->callback(function ($value) {
 });
 ```
 
-### creditCard()
+## creditCard
 
 Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
 
 **Note:** If you want to use this rule, you must install the `byrokrat/checkdigit` package.
 Run `composer require byrokrat/checkdigit`.
 
-### datetime($format = null)
+```php
+// @todo: code example
+```
+
+## datetime
 
 Validates that the value is a date. If format is passed, it *must* be in that format.
 
-### digits()
+```php
+// @todo: code example
+```
+
+## digits
 
 Validates that all characters of the value are decimal digits.
 
-### float
+```php
+// @todo: code example
+```
+
+## float
 
 Validates that the value represents a `float`.
 
-### integer($strict = false)
+```php
+// @todo: code example
+```
+
+## integer
 
 Validates that the value represents a valid integer.
 
-### email()
+```php
+// @todo: code example
+```
+
+## email
 
 Validates that the value is a valid email address (format only).
 
-### equals($value)
+```php
+// @todo: code example
+```
+
+## equals
 
 Validates that the value is equal to `$value`.
 
-### greaterThan($value)
+```php
+// @todo: code example
+```
+
+## greaterThan
 
 Validates that the value is greater than $value.
 
-### hash($hashAlgorithm, $allowUppercase = false)
+```php
+// @todo: code example
+```
+
+## hash
 
 Validates that the value is a valid cryptographic hash according to the chosen hashing algorithm. The second parameter may allow uppercase characters in the hashes.
 Supported algorithms include Hash::ALGO_MD5, Hash::ALGO_SHA1, Hash::ALGO_SHA256, Hash::ALGO_SHA512 and Hash::ALGO_CRC32.
 
-### inArray(array $array, $strict = true)
+```php
+// @todo: code example
+```
+
+## inArray
 
 Validates that the value is in the array with optional "loose" checking.
 
-### isArray()
+```php
+// @todo: code example
+```
+
+## isArray
 
 Validates that the value is an array.
 
-### json()
+```php
+// @todo: code example
+```
+
+## json
 
 Validates that the value is a valid JSON string.
 
-### length($length)
+```php
+// @todo: code example
+```
+
+## length
 
 Validates that the value is precisely of length `$length`.
 
-### lengthBetween($min, $max)
+```php
+// @todo: code example
+```
+
+## lengthBetween
 
 Validates that the length of the value is between `$min` and `$max` (inclusive).
 If $max is null, it has no upper limit.
 
-### lessThan($value)
+```php
+// @todo: code example
+```
+
+## lessThan
 
 Validates that the value is less than `$value`.
 
-### numeric
+```php
+// @todo: code example
+```
+
+## numeric
 
 Validates that the value is numeric (so either a `float`, or an `integer`).
 
-### phone($countryCode)
+```php
+// @todo: code example
+```
+
+## phone
 
 Validates that the value is a valid phone number for `$countryCode`. Uses a library based on Google's `libphonenumber`.
 
 **Note:** If you want to use this rule, you must install the `giggsey/libphonenumber-for-php` package.
 Run `composer require giggsey/libphonenumber-for-php`.
 
-### regex($regex)
+```php
+// @todo: code example
+```
+
+## regex
 
 Validates that the value matches the regular expression `$regex`.
 
-### string
+```php
+// @todo: code example
+```
+
+## string
 
 Validates that the value represents a `string`.
 
-### url($schemes = [])
+```php
+// @todo: code example
+```
+
+## url
 
 Validates that the value is a valid URL. If the schemes array is passed, the URL must be in one of those schemes.
 
-### required(callable $callback)
+```php
+// @todo: code example
+```
+
+## required
 
 Set a callable which may be used to alter the required requirement on validation time.
 This may be incredibly helpful when doing conditional validation.
 
-### allowEmpty(callable $callback)
+```php
+// @todo: code example
+```
+
+## allowEmpty
 
 Set a callable which may be used to alter the allow empty requirement on validation time.
 This may be incredibly helpful when doing conditional validation.
+
+```php
+// @todo: code example
+```
