@@ -1,4 +1,4 @@
-# Included validaton-rules
+# Included validation-rules
 
 Particle\Validator tries to provide you the most common validations. An overview is listed below. If you want to add custom validators, take a look at the callback validation-rule, or check out "Extending the Validator" in the menu.
 
