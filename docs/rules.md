@@ -12,6 +12,7 @@ Particle\Validator tries to provide you the most common validations. An overview
 * [digits](#digits)()
 * [float](#float)()
 * [integer](#integer)($strict = false)
+* [each](#email)(callable $callable)
 * [email](#email)()
 * [equals](#equals)($value)
 * [greaterThan](#greaterthan)($value)
@@ -153,7 +154,10 @@ $v->validate(['datetime' => '2015-03-29 16:11'])->isValid(); // false
 Validates that all characters of the value are decimal digits.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('amount')->digits();
+$v->validate(['amount' => '1234567890'])->isValid(); // true
+$v->validate(['amount' => '133.7'])->isValid(); // false
 ```
 
 ## float
@@ -161,7 +165,10 @@ Validates that all characters of the value are decimal digits.
 Validates that the value represents a `float`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('x')->float();
+$v->validate(['x' => 0.5])->isValid(); // true
+$v->validate(['x' => 0])->isValid(); // false
 ```
 
 ## integer
@@ -169,7 +176,39 @@ Validates that the value represents a `float`.
 Validates that the value represents a valid integer.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('x')->int();
+$v->validate(['x' => 3])->isValid(); // true
+$v->validate(['x' => '3'])->isValid(); // true
+$v->validate(['x' => 3.5])->isValid(); // false
+```
+
+You can also do a strict check on integer:
+
+```php
+$v = new Validator;
+$v->required('x')->int(Rule\Integer::STRICT);
+$v->validate(['x' => -3])->isValid(); // true
+$v->validate(['x' => '-3'])->isValid(); // false
+```
+
+## each
+
+The each rule applies rules to a repeated, nested array. Check out the
+[using nested arrays](http://validator.particle-php.com/en/latest/nested-values/) page for more
+information on this rule.
+
+```php
+$v = new Validator;
+$v->required('lines')->each(function (Validator $lineValidator) {
+    $lineValidator->required('price')->float();
+});
+$v->validate([
+    'lines' => [
+        ['price' => 5.50],
+        ['price' => 2.55],
+    ]
+])->isValid(); // true
 ```
 
 ## email
@@ -177,7 +216,11 @@ Validates that the value represents a valid integer.
 Validates that the value is a valid email address (format only).
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('email')->email();
+$v->validate(['email' => 'john@test.org'])->isValid(); // true
+$v->validate(['email' => 'john@test.'])->isValid(); // false
+$v->validate(['email' => '@test.org'])->isValid(); // false
 ```
 
 ## equals
@@ -266,8 +309,8 @@ Validates that the value is numeric (so either a `float`, or an `integer`).
 
 Validates that the value is a valid phone number for `$countryCode`. Uses a library based on Google's `libphonenumber`.
 
-**Note:** If you want to use this rule, you must install the `giggsey/libphonenumber-for-php` package.
-Run `composer require giggsey/libphonenumber-for-php`.
+> **Note:** If you want to use this rule, you must install the `giggsey/libphonenumber-for-php` package.
+> Run `composer require giggsey/libphonenumber-for-php`.
 
 ```php
 // @todo: code example

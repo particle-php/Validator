@@ -52,7 +52,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnsTrueOnStrictValidInteger($value)
     {
-        $this->validator->required('integer')->integer(true);
+        $this->validator->required('integer')->integer(Integer::STRICT);
         $result = $this->validator->validate(['integer' => 3]);
         $this->assertTrue($result->isValid());
     }
@@ -64,7 +64,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnsFalseOnStrictInvalidIntegers($value)
     {
-        $this->validator->required('integer')->integer(true);
+        $this->validator->required('integer')->integer(Integer::STRICT);
         $result = $this->validator->validate(['integer' => $value]);
         $this->assertFalse($result->isValid());
 

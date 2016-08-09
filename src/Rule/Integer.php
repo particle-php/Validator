@@ -32,6 +32,16 @@ class Integer extends Rule
     ];
 
     /**
+     * A constant indicated spaces are allowed.
+     */
+    const STRICT = true;
+
+    /**
+     * A constant indicating spaces are *not* allowed.
+     */
+    const NOT_STRICT = false;
+
+    /**
      * A bool denoting whether or not strict checking should be done.
      *
      * @var bool
