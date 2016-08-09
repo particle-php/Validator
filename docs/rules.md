@@ -104,7 +104,7 @@ as well. This is supported by throwing an Exception of type "InvalidValueExcepti
 ```php
 $v = new Validator;
 $v->required('userId')->callback(function ($value) {
-    if (!getUserFromDb($value)) {
+    if (!getUserFromDb($value)) { // non Particle\Validator function
         throw new Particle\Validator\Exception\InvalidValueException(
             'Unable to find the user with id ' . $value,
             'userId'
@@ -228,7 +228,11 @@ $v->validate(['email' => '@test.org'])->isValid(); // false
 Validates that the value is equal to `$value`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('value')->equals(500);
+$v->validate(['value' => 500])->isValid(); // true
+$v->validate(['value' => 499])->isValid(); // false
+$v->validate(['value' => '500'])->isValid(); // false
 ```
 
 ## greaterThan
