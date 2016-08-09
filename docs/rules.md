@@ -87,7 +87,10 @@ $v->validate(['age' => 71])->isValid(); // false
 Validate that the value is a boolean value.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('newsletter')->bool();
+$v->validate(['newsletter' => true])->isValid(); // true
+$v->validate(['newsletter' => 'true'])->isValid(); // false
 ```
 
 ## callback
@@ -114,19 +117,35 @@ $v->required('userId')->callback(function ($value) {
 
 Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
 
-**Note:** If you want to use this rule, you must install the `byrokrat/checkdigit` package.
-Run `composer require byrokrat/checkdigit`.
+> **Note:** If you want to use this rule, you must install the `byrokrat/checkdigit` package.
+> Run `composer require byrokrat/checkdigit`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('card')->creditCard();
+$v->validate(['card' => '4532815084485002'])->isValid(); // true
+$v->validate(['card' => '123412341234aaaa'])->isValid(); // false
 ```
 
 ## datetime
 
-Validates that the value is a date. If format is passed, it *must* be in that format.
+Validates that the value is a date.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('datetime')->datetime();
+$v->validate(['datetime' => '2015-03-29 16:11:09'])->isValid(); // true
+$v->validate(['datetime' => '08:00'])->isValid(); // true
+$v->validate(['datetime' => 'pizza'])->isValid(); // false
+```
+
+If format is passed, it *must* be in that format.
+
+```php
+$v = new Validator;
+$v->required('datetime')->datetime('Y-m-d H:i:s');
+$v->validate(['datetime' => '2015-03-29 16:11:09'])->isValid(); // true
+$v->validate(['datetime' => '2015-03-29 16:11'])->isValid(); // false
 ```
 
 ## digits
