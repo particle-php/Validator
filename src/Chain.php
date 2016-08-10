@@ -77,6 +77,20 @@ class Chain
     }
 
     /**
+     * Set a callable or boolean value which may be used to alter the allow empty requirement on validation time.
+     *
+     * This may be incredibly helpful when doing conditional validation.
+     *
+     * @param callable|bool $allowEmpty
+     * @return $this
+     */
+    public function allowEmpty($allowEmpty)
+    {
+        $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
+        return $this;
+    }
+
+    /**
      * Validate the value to consist only out of alphanumeric characters.
      *
      * @param bool $allowWhitespace
@@ -353,6 +367,20 @@ class Chain
     }
 
     /**
+     * Set a callable or boolean value which may be used to alter the required requirement on validation time.
+     *
+     * This may be incredibly helpful when doing conditional validation.
+     *
+     * @param callable|bool $required
+     * @return $this
+     */
+    public function required($required)
+    {
+        $this->getRequiredRule()->setRequired($required);
+        return $this;
+    }
+
+    /**
      * Validates that the value represents a string.
      *
      * @return $this
@@ -382,34 +410,6 @@ class Chain
     public function uuid($version = Rule\Uuid::UUID_V4)
     {
         return $this->addRule(new Rule\Uuid($version));
-    }
-
-    /**
-     * Set a callable or boolean value which may be used to alter the required requirement on validation time.
-     *
-     * This may be incredibly helpful when doing conditional validation.
-     *
-     * @param callable|bool $required
-     * @return $this
-     */
-    public function required($required)
-    {
-        $this->getRequiredRule()->setRequired($required);
-        return $this;
-    }
-
-    /**
-     * Set a callable or boolean value which may be used to alter the allow empty requirement on validation time.
-     *
-     * This may be incredibly helpful when doing conditional validation.
-     *
-     * @param callable|bool $allowEmpty
-     * @return $this
-     */
-    public function allowEmpty($allowEmpty)
-    {
-        $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
-        return $this;
     }
 
     /**
