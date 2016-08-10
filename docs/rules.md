@@ -299,7 +299,10 @@ $v->validate(['type' => 4])->isValid(); // false
 Validates that the value is an array.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('data')->isArray();
+$v->validate(['data' => []])->isValid(); // true
+$v->validate(['data' => 'array'])->isValid(); // false
 ```
 
 ## json
@@ -307,7 +310,10 @@ Validates that the value is an array.
 Validates that the value is a valid JSON string.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('data')->json();
+$v->validate(['data' => '{"name": "John"}'])->isValid(); // true
+$v->validate(['data' => '{"name: "John"}'])->isValid(); // false
 ```
 
 ## length
@@ -315,16 +321,30 @@ Validates that the value is a valid JSON string.
 Validates that the value is precisely of length `$length`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('code')->length(4);
+$v->validate(['code' => '1234'])->isValid(); // true
+$v->validate(['code' => '123'])->isValid(); // false
 ```
 
 ## lengthBetween
 
 Validates that the length of the value is between `$min` and `$max` (inclusive).
-If $max is null, it has no upper limit.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('code')->lengthBetween(4, 6);
+$v->validate(['code' => '123456'])->isValid(); // true
+$v->validate(['code' => '1234567'])->isValid(); // false
+```
+
+If $max is `null`, it has no upper limit.
+
+```php
+$v = new Validator;
+$v->required('password')->lengthBetween(8, null);
+$v->validate(['password' => 'ThisIsALongAndProperP4ssW0rdWithNoMaxLength'])->isValid(); // true
+$v->validate(['password' => '1234567'])->isValid(); // false
 ```
 
 ## lessThan
@@ -332,7 +352,10 @@ If $max is null, it has no upper limit.
 Validates that the value is less than `$value`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('value')->lessThan(9000);
+$v->validate(['value' => 8999])->isValid(); // true
+$v->validate(['value' => 9000])->isValid(); // false
 ```
 
 ## numeric
