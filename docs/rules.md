@@ -278,7 +278,20 @@ $v->validate(['key' => 'A8Jf0A4'])->isValid(); // false
 Validates that the value is in the array with optional "loose" checking.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('type')->inArray([1, 2, 3]);
+$v->validate(['type' => 2])->isValid(); // true
+$v->validate(['type' => '2'])->isValid(); // false
+```
+
+You can make the in array check looser bij setting strict to false:
+
+```php
+$v = new Validator;
+$v->required('type')->inArray([1, 2, 3], Rule\InArray::NOT_STRICT);
+$v->validate(['type' => 2])->isValid(); // true
+$v->validate(['type' => '2'])->isValid(); // true
+$v->validate(['type' => 4])->isValid(); // false
 ```
 
 ## isArray

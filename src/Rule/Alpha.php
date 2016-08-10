@@ -46,7 +46,7 @@ class Alpha extends Regex
      *
      * @param bool $allowWhitespace
      */
-    public function __construct($allowWhitespace)
+    public function __construct($allowWhitespace = self::DISALLOW_SPACES)
     {
         $this->regex = $allowWhitespace ? '~^[\p{L}\s]*$~iu' : '~^[\p{L}]*$~ui';
     }

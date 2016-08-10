@@ -233,7 +233,7 @@ class Chain
      * @param bool $strict
      * @return $this
      */
-    public function inArray(array $array, $strict = true)
+    public function inArray(array $array, $strict = Rule\InArray::STRICT)
     {
         return $this->addRule(new Rule\InArray($array, $strict));
     }

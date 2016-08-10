@@ -51,7 +51,7 @@ class Integer extends Rule
     /**
      * @param bool $strict
      */
-    public function __construct($strict = false)
+    public function __construct($strict = self::NOT_STRICT)
     {
         $this->strict = $strict;
     }
