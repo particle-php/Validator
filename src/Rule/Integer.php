@@ -32,12 +32,12 @@ class Integer extends Rule
     ];
 
     /**
-     * A constant indicated spaces are allowed.
+     * A constant indicated the integer check is strict
      */
     const STRICT = true;
 
     /**
-     * A constant indicating spaces are *not* allowed.
+     * A constant indicating the integer check is *not* strict.
      */
     const NOT_STRICT = false;
 
