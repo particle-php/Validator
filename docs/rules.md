@@ -2,6 +2,7 @@
 
 Particle\Validator tries to provide you the most common validations. An overview is listed below. If you want to add custom validators, take a look at the callback validation-rule, or check out "Extending the Validator" in the menu.
 
+* [allowEmpty](#allowempty)(callable $callback)
 * [alnum](#alnum)($allowWhitespace = false)
 * [alpha](#alpha)($allowWhitespace = false)
 * [between](#between)($min, $max)
@@ -10,14 +11,14 @@ Particle\Validator tries to provide you the most common validations. An overview
 * [creditCard](#creditcard)()
 * [datetime](#datetime)($format = null)
 * [digits](#digits)()
-* [float](#float)()
-* [integer](#integer)($strict = false)
 * [each](#email)(callable $callable)
 * [email](#email)()
 * [equals](#equals)($value)
+* [float](#float)()
 * [greaterThan](#greaterthan)($value)
 * [hash](#hash)($hashAlgorithm, $allowUppercase = false)
 * [inArray](#inarray)(array $array, $strict = true)
+* [integer](#integer)($strict = false)
 * [isArray](#isarray)()
 * [json](#json)()
 * [length](#length)($length)
@@ -26,10 +27,21 @@ Particle\Validator tries to provide you the most common validations. An overview
 * [numeric](#numeric)()
 * [phone](#phone)($countryCode)
 * [regex](#regex)($regex)
+* [required](#required)(callable $callback)
 * [string](#string)()
 * [url](#url)($schemes = [])
-* [required](#required)(callable $callback)
-* [allowEmpty](#allowempty)(callable $callback)
+* [uuid](#uuid)($version = 4)
+
+## allowEmpty
+
+Set a callable which may be used to alter the allow empty requirement on validation time.
+This may be incredibly helpful when doing conditional validation.
+
+```php
+// @todo: code example
+```
+
+[back to the top](#included-validation-rules)
 
 ## alnum
 
@@ -176,42 +188,6 @@ $v->validate(['amount' => '133.7'])->isValid(); // false
 
 [back to the top](#included-validation-rules)
 
-## float
-
-Validates that the value represents a `float`.
-
-```php
-$v = new Validator;
-$v->required('x')->float();
-$v->validate(['x' => 0.5])->isValid(); // true
-$v->validate(['x' => 0])->isValid(); // false
-```
-
-[back to the top](#included-validation-rules)
-
-## integer
-
-Validates that the value represents a valid integer.
-
-```php
-$v = new Validator;
-$v->required('x')->int();
-$v->validate(['x' => 3])->isValid(); // true
-$v->validate(['x' => '3'])->isValid(); // true
-$v->validate(['x' => 3.5])->isValid(); // false
-```
-
-You can also do a strict check on integer:
-
-```php
-$v = new Validator;
-$v->required('x')->int(Rule\Integer::STRICT);
-$v->validate(['x' => -3])->isValid(); // true
-$v->validate(['x' => '-3'])->isValid(); // false
-```
-
-[back to the top](#included-validation-rules)
-
 ## each
 
 The each rule applies rules to a repeated, nested array. Check out the
@@ -257,6 +233,19 @@ $v->required('value')->equals(500);
 $v->validate(['value' => 500])->isValid(); // true
 $v->validate(['value' => 499])->isValid(); // false
 $v->validate(['value' => '500'])->isValid(); // false
+```
+
+[back to the top](#included-validation-rules)
+
+## float
+
+Validates that the value represents a `float`.
+
+```php
+$v = new Validator;
+$v->required('x')->float();
+$v->validate(['x' => 0.5])->isValid(); // true
+$v->validate(['x' => 0])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
@@ -322,6 +311,29 @@ $v->required('type')->inArray([1, 2, 3], Rule\InArray::NOT_STRICT);
 $v->validate(['type' => 2])->isValid(); // true
 $v->validate(['type' => '2'])->isValid(); // true
 $v->validate(['type' => 4])->isValid(); // false
+```
+
+[back to the top](#included-validation-rules)
+
+## integer
+
+Validates that the value represents a valid integer.
+
+```php
+$v = new Validator;
+$v->required('x')->int();
+$v->validate(['x' => 3])->isValid(); // true
+$v->validate(['x' => '3'])->isValid(); // true
+$v->validate(['x' => 3.5])->isValid(); // false
+```
+
+You can also do a strict check on integer:
+
+```php
+$v = new Validator;
+$v->required('x')->int(Rule\Integer::STRICT);
+$v->validate(['x' => -3])->isValid(); // true
+$v->validate(['x' => '-3'])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
@@ -449,6 +461,17 @@ $v->validate(['name' => 'Jane'])->isValid(); // false
 
 [back to the top](#included-validation-rules)
 
+## required
+
+Set a callable which may be used to alter the required requirement on validation time.
+This may be incredibly helpful when doing conditional validation.
+
+```php
+// @todo: code example
+```
+
+[back to the top](#included-validation-rules)
+
 ## string
 
 Validates that the value represents a `string`.
@@ -484,24 +507,15 @@ $v->validate(['link' => 'http://validator.particle-php.com'])->isValid(); // fal
 
 [back to the top](#included-validation-rules)
 
-## required
+## uuid
 
-Set a callable which may be used to alter the required requirement on validation time.
-This may be incredibly helpful when doing conditional validation.
-
-```php
-// @todo: code example
-```
-
-[back to the top](#included-validation-rules)
-
-## allowEmpty
-
-Set a callable which may be used to alter the allow empty requirement on validation time.
-This may be incredibly helpful when doing conditional validation.
+Validates that the value is a valid UUID. Currently only supports version 4.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('uuid')->uuid();
+$v->validate(['uuid' => '44c0ffee-988a-49dc-8bad-a55c0de2d1e4'])->isValid(); // true
+$v->validate(['uuid' => '00000000-0000-0000-0000-000000000000'])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
