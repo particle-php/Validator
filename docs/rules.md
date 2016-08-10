@@ -51,6 +51,8 @@ $v->validate(['name' => 'Jonh number 1'])->isValid(); // true
 $v->validate(['name' => 'Jonh #1'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## alpha
 
 Validate that the value consists only of alphabetic characters (a-z, A-Z).
@@ -71,6 +73,8 @@ $v->validate(['name' => 'Jonh is the best'])->isValid(); // true
 $v->validate(['name' => 'Jonh number 1'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## between
 
 Validate that the value is between `$min` and `$max` (inclusive).
@@ -83,6 +87,8 @@ $v->validate(['age' => 70])->isValid(); // true
 $v->validate(['age' => 71])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## bool
 
 Validate that the value is a boolean value.
@@ -93,6 +99,8 @@ $v->required('newsletter')->bool();
 $v->validate(['newsletter' => true])->isValid(); // true
 $v->validate(['newsletter' => 'true'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## callback
 
@@ -114,6 +122,8 @@ $v->required('userId')->callback(function ($value) {
 });
 ```
 
+[back to the top](#included-validation-rules)
+
 ## creditCard
 
 Validates that the value is a valid credit card number checking for popular brand formats and using Luhn algorithm for validating the checksum.
@@ -127,6 +137,8 @@ $v->required('card')->creditCard();
 $v->validate(['card' => '4532815084485002'])->isValid(); // true
 $v->validate(['card' => '123412341234aaaa'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## datetime
 
@@ -149,6 +161,8 @@ $v->validate(['datetime' => '2015-03-29 16:11:09'])->isValid(); // true
 $v->validate(['datetime' => '2015-03-29 16:11'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## digits
 
 Validates that all characters of the value are decimal digits.
@@ -160,6 +174,8 @@ $v->validate(['amount' => '1234567890'])->isValid(); // true
 $v->validate(['amount' => '133.7'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## float
 
 Validates that the value represents a `float`.
@@ -170,6 +186,8 @@ $v->required('x')->float();
 $v->validate(['x' => 0.5])->isValid(); // true
 $v->validate(['x' => 0])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## integer
 
@@ -192,6 +210,8 @@ $v->validate(['x' => -3])->isValid(); // true
 $v->validate(['x' => '-3'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## each
 
 The each rule applies rules to a repeated, nested array. Check out the
@@ -211,6 +231,8 @@ $v->validate([
 ])->isValid(); // true
 ```
 
+[back to the top](#included-validation-rules)
+
 ## email
 
 Validates that the value is a valid email address (format only).
@@ -222,6 +244,8 @@ $v->validate(['email' => 'john@test.org'])->isValid(); // true
 $v->validate(['email' => 'john@test.'])->isValid(); // false
 $v->validate(['email' => '@test.org'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## equals
 
@@ -235,6 +259,8 @@ $v->validate(['value' => 499])->isValid(); // false
 $v->validate(['value' => '500'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## greaterThan
 
 Validates that the value is greater than $value.
@@ -245,6 +271,8 @@ $v->required('value')->greaterThan(9000);
 $v->validate(['value' => 9001])->isValid(); // true
 $v->validate(['value' => 9000])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## hash
 
@@ -273,6 +301,8 @@ $v->validate(['key' => strtoupper(md5('key'))])->isValid(); // true
 $v->validate(['key' => 'A8Jf0A4'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## inArray
 
 Validates that the value is in the array with optional "loose" checking.
@@ -294,6 +324,8 @@ $v->validate(['type' => '2'])->isValid(); // true
 $v->validate(['type' => 4])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## isArray
 
 Validates that the value is an array.
@@ -304,6 +336,8 @@ $v->required('data')->isArray();
 $v->validate(['data' => []])->isValid(); // true
 $v->validate(['data' => 'array'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## json
 
@@ -316,6 +350,8 @@ $v->validate(['data' => '{"name": "John"}'])->isValid(); // true
 $v->validate(['data' => '{"name: "John"}'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## length
 
 Validates that the value is precisely of length `$length`.
@@ -326,6 +362,8 @@ $v->required('code')->length(4);
 $v->validate(['code' => '1234'])->isValid(); // true
 $v->validate(['code' => '123'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## lengthBetween
 
@@ -347,6 +385,8 @@ $v->validate(['password' => 'ThisIsALongAndProperP4ssW0rdWithNoMaxLength'])->isV
 $v->validate(['password' => '1234567'])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## lessThan
 
 Validates that the value is less than `$value`.
@@ -358,13 +398,22 @@ $v->validate(['value' => 8999])->isValid(); // true
 $v->validate(['value' => 9000])->isValid(); // false
 ```
 
+[back to the top](#included-validation-rules)
+
 ## numeric
 
 Validates that the value is numeric (so either a `float`, or an `integer`).
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('value')->numeric();
+$v->validate(['value' => 5])->isValid(); // true
+$v->validate(['value' => 5.5])->isValid(); // true
+$v->validate(['value' => '5'])->isValid(); // true
+$v->validate(['value' => 'a'])->isValid(); // false
 ```
+
+[back to the top](#included-validation-rules)
 
 ## phone
 
@@ -377,6 +426,8 @@ Validates that the value is a valid phone number for `$countryCode`. Uses a libr
 // @todo: code example
 ```
 
+[back to the top](#included-validation-rules)
+
 ## regex
 
 Validates that the value matches the regular expression `$regex`.
@@ -384,6 +435,8 @@ Validates that the value matches the regular expression `$regex`.
 ```php
 // @todo: code example
 ```
+
+[back to the top](#included-validation-rules)
 
 ## string
 
@@ -393,6 +446,8 @@ Validates that the value represents a `string`.
 // @todo: code example
 ```
 
+[back to the top](#included-validation-rules)
+
 ## url
 
 Validates that the value is a valid URL. If the schemes array is passed, the URL must be in one of those schemes.
@@ -400,6 +455,8 @@ Validates that the value is a valid URL. If the schemes array is passed, the URL
 ```php
 // @todo: code example
 ```
+
+[back to the top](#included-validation-rules)
 
 ## required
 
@@ -410,6 +467,8 @@ This may be incredibly helpful when doing conditional validation.
 // @todo: code example
 ```
 
+[back to the top](#included-validation-rules)
+
 ## allowEmpty
 
 Set a callable which may be used to alter the allow empty requirement on validation time.
@@ -418,3 +477,5 @@ This may be incredibly helpful when doing conditional validation.
 ```php
 // @todo: code example
 ```
+
+[back to the top](#included-validation-rules)
