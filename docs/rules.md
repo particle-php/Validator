@@ -38,7 +38,13 @@ Set a callable which may be used to alter the allow empty requirement on validat
 This may be incredibly helpful when doing conditional validation.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('name')->allowEmpty(function (array $values) {
+    return $values['namePresent'] === true;
+});
+$v->validate(['namePresent' => true, 'name' => 'John'])->isValid(); // true
+$v->validate(['namePresent' => true])->isValid(); // true
+$v->validate(['namePresent' => false])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
@@ -467,7 +473,13 @@ Set a callable which may be used to alter the required requirement on validation
 This may be incredibly helpful when doing conditional validation.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->optional('name')->required(function (array $values) {
+    return $values['forceName'] === true;
+});
+$v->validate(['forceName' => true, 'name' => 'John'])->isValid(); // true
+$v->validate(['forceName' => true])->isValid(); // false
+$v->validate(['forceName' => false])->isValid(); // true
 ```
 
 [back to the top](#included-validation-rules)
