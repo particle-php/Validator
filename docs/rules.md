@@ -423,7 +423,15 @@ Validates that the value is a valid phone number for `$countryCode`. Uses a libr
 > Run `composer require giggsey/libphonenumber-for-php`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('phone')->phone('BR')
+$v->validate(['phone' => '11-3675-3801'])->isValid(); // true
+$v->validate(['phone' => '3675381'])->isValid(); // false
+
+$v = new Validator;
+$v->required('phone')->phone('US')
+$v->validate(['phone' => '(305) 634-5000'])->isValid(); // true
+$v->validate(['phone' => '3-6733-3062'])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
@@ -433,7 +441,10 @@ Validates that the value is a valid phone number for `$countryCode`. Uses a libr
 Validates that the value matches the regular expression `$regex`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('name')->regex('/^john/i');
+$v->validate(['name' => 'John'])->isValid(); // true
+$v->validate(['name' => 'Jane'])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
@@ -443,17 +454,32 @@ Validates that the value matches the regular expression `$regex`.
 Validates that the value represents a `string`.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('name')->string();
+$v->validate(['name' => 'John'])->isValid(); // true
+$v->validate(['name' => 123])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
 
 ## url
 
-Validates that the value is a valid URL. If the schemes array is passed, the URL must be in one of those schemes.
+Validates that the value is a valid URL.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('link')->url();
+$v->validate(['link' => 'http://validator.particle-php.com'])->isValid(); // true
+$v->validate(['link' => 'http://validator.particle-php'])->isValid(); // false
+```
+
+If the schemes array is passed, the URL must be in one of those schemes.
+
+```php
+$v = new Validator;
+$v->required('link')->url(['ftp://', 'ftps://']);
+$v->validate(['link' => 'ftp://particle-php.com'])->isValid(); // true
+$v->validate(['link' => 'http://validator.particle-php.com'])->isValid(); // false
 ```
 
 [back to the top](#included-validation-rules)
