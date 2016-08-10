@@ -240,16 +240,37 @@ $v->validate(['value' => '500'])->isValid(); // false
 Validates that the value is greater than $value.
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('value')->greaterThan(9000);
+$v->validate(['value' => 9001])->isValid(); // true
+$v->validate(['value' => 9000])->isValid(); // false
 ```
 
 ## hash
 
 Validates that the value is a valid cryptographic hash according to the chosen hashing algorithm. The second parameter may allow uppercase characters in the hashes.
-Supported algorithms include Hash::ALGO_MD5, Hash::ALGO_SHA1, Hash::ALGO_SHA256, Hash::ALGO_SHA512 and Hash::ALGO_CRC32.
+Supported algorithms include:
+
+- `Hash::ALGO_MD5`
+- `Hash::ALGO_SHA1`
+- `Hash::ALGO_SHA256`
+- `Hash::ALGO_SHA512`
+- `Hash::ALGO_CRC32`
 
 ```php
-// @todo: code example
+$v = new Validator;
+$v->required('key')->hash(Rule\Hash::ALGO_MD5);
+$v->validate(['key' => md5('key')])->isValid(); // true
+$v->validate(['key' => 'a8jf0a4'])->isValid(); // false
+```
+
+If you want to allow uppercase characters, you need to set `$allowUppercase` to `true`.
+
+```php
+$v = new Validator;
+$v->required('key')->hash(Rule\Hash::ALGO_MD5, Rule\Hash::ALLOW_UPPERCASE);
+$v->validate(['key' => strtoupper(md5('key'))])->isValid(); // true
+$v->validate(['key' => 'A8Jf0A4'])->isValid(); // false
 ```
 
 ## inArray

@@ -82,7 +82,7 @@ class Chain
      * @param bool $allowWhitespace
      * @return $this
      */
-    public function alnum($allowWhitespace = false)
+    public function alnum($allowWhitespace = Rule\Alnum::DISALLOW_SPACES)
     {
         return $this->addRule(new Rule\Alnum($allowWhitespace));
     }
@@ -93,7 +93,7 @@ class Chain
      * @param bool $allowWhitespace
      * @return $this
      */
-    public function alpha($allowWhitespace = false)
+    public function alpha($allowWhitespace = Rule\Alpha::DISALLOW_SPACES)
     {
         return $this->addRule(new Rule\Alpha($allowWhitespace));
     }
@@ -221,7 +221,7 @@ class Chain
      * @return $this
      * @see \Particle\Validator\Rule\Hash
      */
-    public function hash($hashAlgorithm, $allowUppercase = false)
+    public function hash($hashAlgorithm, $allowUppercase = Rule\Hash::DISALLOW_UPPERCASE)
     {
         return $this->addRule(new Rule\Hash($hashAlgorithm, $allowUppercase));
     }

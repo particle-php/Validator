@@ -30,6 +30,16 @@ class Hash extends Rule
     const INVALID_FORMAT = 'Hash::INVALID_FORMAT';
 
     /**
+     * constant to set the allow uppercase to true
+     */
+    const ALLOW_UPPERCASE = true;
+
+    /**
+     * constant to set the allow uppercase to false
+     */
+    const DISALLOW_UPPERCASE = false;
+
+    /**
      * The message templates which can be returned by this validator.
      *
      * @var array
