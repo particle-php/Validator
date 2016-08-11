@@ -64,7 +64,7 @@ class Hash extends Rule
      * @param string $hashAlgorithm
      * @param bool $allowUppercase
      */
-    public function __construct($hashAlgorithm, $allowUppercase = false)
+    public function __construct($hashAlgorithm, $allowUppercase = self::DISALLOW_UPPERCASE)
     {
         $this->hashAlgorithm = $hashAlgorithm;
         $this->allowUppercase = $allowUppercase;
