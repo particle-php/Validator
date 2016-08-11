@@ -49,8 +49,7 @@ class Uuid extends Regex
      *
      * @var array
      */
-    protected
-        $versionNames = [
+    protected $versionNames = [
         self::UUID_NIL => 'NIL',
         self::UUID_V1 => 'v1',
         self::UUID_V2 => 'v2',
