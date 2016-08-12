@@ -30,6 +30,16 @@ class Hash extends Rule
     const INVALID_FORMAT = 'Hash::INVALID_FORMAT';
 
     /**
+     * constant to set the allow uppercase to true
+     */
+    const ALLOW_UPPERCASE = true;
+
+    /**
+     * constant to set the allow uppercase to false
+     */
+    const DISALLOW_UPPERCASE = false;
+
+    /**
      * The message templates which can be returned by this validator.
      *
      * @var array
@@ -54,7 +64,7 @@ class Hash extends Rule
      * @param string $hashAlgorithm
      * @param bool $allowUppercase
      */
-    public function __construct($hashAlgorithm, $allowUppercase = false)
+    public function __construct($hashAlgorithm, $allowUppercase = self::DISALLOW_UPPERCASE)
     {
         $this->hashAlgorithm = $hashAlgorithm;
         $this->allowUppercase = $allowUppercase;

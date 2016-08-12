@@ -23,6 +23,16 @@ class InArray extends Rule
     const NOT_IN_ARRAY = 'InArray::NOT_IN_ARRAY';
 
     /**
+     * Constant that set strict to true
+     */
+    const STRICT = true;
+
+    /**
+     * Constant that set strict to false
+     */
+    const NOT_STRICT = false;
+
+    /**
      * The message templates which can be returned by this validator.
      *
      * @var array
@@ -51,7 +61,7 @@ class InArray extends Rule
      * @param array $array
      * @param bool $strict
      */
-    public function __construct(array $array, $strict = true)
+    public function __construct(array $array, $strict = self::STRICT)
     {
         $this->array = $array;
         $this->strict = $strict;

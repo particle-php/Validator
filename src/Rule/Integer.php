@@ -32,6 +32,16 @@ class Integer extends Rule
     ];
 
     /**
+     * A constant indicated the integer check is strict
+     */
+    const STRICT = true;
+
+    /**
+     * A constant indicating the integer check is *not* strict.
+     */
+    const NOT_STRICT = false;
+
+    /**
      * A bool denoting whether or not strict checking should be done.
      *
      * @var bool
@@ -41,7 +51,7 @@ class Integer extends Rule
     /**
      * @param bool $strict
      */
-    public function __construct($strict = false)
+    public function __construct($strict = self::NOT_STRICT)
     {
         $this->strict = $strict;
     }

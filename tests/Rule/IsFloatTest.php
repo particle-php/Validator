@@ -59,6 +59,7 @@ class IsFloatTest extends \PHPUnit_Framework_TestCase
             ['foo'],
             [9000],
             ['6,6'],
+            [0],
             [true],
             [new \stdClass()],
         ];

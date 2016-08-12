@@ -110,6 +110,7 @@ class Required extends Rule
                 return $this->error(self::NON_EXISTENT_KEY);
             }
         }
+
         return $this->validate($input->get($key));
     }
 
@@ -126,6 +127,7 @@ class Required extends Rule
         if (is_callable($required)) {
             return $this->setRequiredCallback($required);
         }
+
         return $this->overwriteRequired((bool) $required);
     }
 
