@@ -82,7 +82,9 @@ class Uuid extends Regex
     public function __construct($version = self::UUID_V4)
     {
         if ($version >= (self::UUID_V5 * 2) && $version > 0) {
-            throw new \InvalidArgumentException('Invalid UUID version mask given.');
+            throw new \InvalidArgumentException(
+                'Invalid UUID version mask given. Please choose one of the constants on the Uuid class.'
+            );
         }
 
         $this->version = $version;

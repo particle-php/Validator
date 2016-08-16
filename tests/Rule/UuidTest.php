@@ -87,6 +87,14 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function incorrectVersionsProvider()
+    {
+        return [
+            [4],
+            [Uuid::UUID_V5 * 2],
+        ];
+    }
+
     /**
      * @dataProvider correctUUIDNIL
      */
@@ -182,9 +190,15 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
-    public function testThrowsExceptionOnUnknownVersion()
+    /**
+     * @dataProvider incorrectVersionsProvider
+     */
+    public function testThrowsExceptionOnUnknownVersion($version)
     {
-        $this->setExpectedException('\InvalidArgumentException', 'Invalid UUID version mask given.');
+        $this->setExpectedException(
+            '\InvalidArgumentException',
+            'Invalid UUID version mask given. Please choose one of the constants on the Uuid class.'
+        );
         $this->validator->required('guid')->uuid(Uuid::UUID_V5 * 2);
     }
 }
