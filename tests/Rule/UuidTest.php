@@ -187,4 +187,10 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\InvalidArgumentException', 'Invalid UUID version mask given.');
         $this->validator->required('guid')->uuid(Uuid::UUID_V5 * 2);
     }
+
+    public function testThrowsExceptionOnNegativeVersion()
+    {
+        $this->setExpectedException('\InvalidArgumentException', 'Invalid UUID version mask given.');
+        $this->validator->required('guid')->uuid(-1);
+    }
 }
