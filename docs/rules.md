@@ -137,3 +137,22 @@ This may be incredibly helpful when doing conditional validation.
 
 Set a callable which may be used to alter the allow empty requirement on validation time.
 This may be incredibly helpful when doing conditional validation.
+
+### uuid($versions = Particle\Validator\Rule\Uuid::UUID_V4)
+
+Validates if the value is a valid UUID and of the given version. The version constant may be combined with other constants to allow multiple versions or the NIL UUID (all zeroes).
+
+
+```php
+use Particle\Validator\Rule\Uuid;
+$v = new Validator;
+
+// Requires a UUID V4
+$v->required('userId')->uuid(Uuid::UUID_V4);
+
+// Requires a UUID V4 or NIL UUID
+$v->required('userId')->uuid(Uuid::UUID_V4 | Uuid::UUID_NIL);
+
+// Requires a UUID V1-V3
+$v->required('userId')->uuid(Uuid::UUID_V1 | Uuid::UUID_V2 | Uuid::UUID_V3);
+```
