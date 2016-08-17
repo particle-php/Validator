@@ -77,12 +77,26 @@ class Chain
     }
 
     /**
+     * Set a callable or boolean value which may be used to alter the allow empty requirement on validation time.
+     *
+     * This may be incredibly helpful when doing conditional validation.
+     *
+     * @param callable|bool $allowEmpty
+     * @return $this
+     */
+    public function allowEmpty($allowEmpty)
+    {
+        $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
+        return $this;
+    }
+
+    /**
      * Validate the value to consist only out of alphanumeric characters.
      *
      * @param bool $allowWhitespace
      * @return $this
      */
-    public function alnum($allowWhitespace = false)
+    public function alnum($allowWhitespace = Rule\Alnum::DISALLOW_SPACES)
     {
         return $this->addRule(new Rule\Alnum($allowWhitespace));
     }
@@ -93,7 +107,7 @@ class Chain
      * @param bool $allowWhitespace
      * @return $this
      */
-    public function alpha($allowWhitespace = false)
+    public function alpha($allowWhitespace = Rule\Alpha::DISALLOW_SPACES)
     {
         return $this->addRule(new Rule\Alpha($allowWhitespace));
     }
@@ -221,7 +235,7 @@ class Chain
      * @return $this
      * @see \Particle\Validator\Rule\Hash
      */
-    public function hash($hashAlgorithm, $allowUppercase = false)
+    public function hash($hashAlgorithm, $allowUppercase = Rule\Hash::DISALLOW_UPPERCASE)
     {
         return $this->addRule(new Rule\Hash($hashAlgorithm, $allowUppercase));
     }
@@ -233,7 +247,7 @@ class Chain
      * @param bool $strict
      * @return $this
      */
-    public function inArray(array $array, $strict = true)
+    public function inArray(array $array, $strict = Rule\InArray::STRICT)
     {
         return $this->addRule(new Rule\InArray($array, $strict));
     }
@@ -353,6 +367,20 @@ class Chain
     }
 
     /**
+     * Set a callable or boolean value which may be used to alter the required requirement on validation time.
+     *
+     * This may be incredibly helpful when doing conditional validation.
+     *
+     * @param callable|bool $required
+     * @return $this
+     */
+    public function required($required)
+    {
+        $this->getRequiredRule()->setRequired($required);
+        return $this;
+    }
+
+    /**
      * Validates that the value represents a string.
      *
      * @return $this
@@ -382,34 +410,6 @@ class Chain
     public function uuid($version = Rule\Uuid::UUID_V4)
     {
         return $this->addRule(new Rule\Uuid($version));
-    }
-
-    /**
-     * Set a callable or boolean value which may be used to alter the required requirement on validation time.
-     *
-     * This may be incredibly helpful when doing conditional validation.
-     *
-     * @param callable|bool $required
-     * @return $this
-     */
-    public function required($required)
-    {
-        $this->getRequiredRule()->setRequired($required);
-        return $this;
-    }
-
-    /**
-     * Set a callable or boolean value which may be used to alter the allow empty requirement on validation time.
-     *
-     * This may be incredibly helpful when doing conditional validation.
-     *
-     * @param callable|bool $allowEmpty
-     * @return $this
-     */
-    public function allowEmpty($allowEmpty)
-    {
-        $this->getNotEmptyRule()->setAllowEmpty($allowEmpty);
-        return $this;
     }
 
     /**

@@ -60,7 +60,7 @@ class InArrayTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnsTrueIfValueIsSortOfInArrayWithoutStrictChecking()
     {
-        $this->validator->required('group')->inArray([0], false);
+        $this->validator->required('group')->inArray([0], InArray::NOT_STRICT);
         $result = $this->validator->validate(['group' => '0']);
         $this->assertTrue($result->isValid());
     }
