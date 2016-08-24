@@ -23,12 +23,13 @@ class Uuid extends Regex
     /**
      * UUID NIL & version binary masks
      */
-    const UUID_NIL = 0b000001;
-    const UUID_V1  = 0b000010;
-    const UUID_V2  = 0b000100;
-    const UUID_V3  = 0b001000;
-    const UUID_V4  = 0b010000;
-    const UUID_V5  = 0b100000;
+    const UUID_VALID = 0b0000100;
+    const UUID_NIL   = 0b0000001;
+    const UUID_V1    = 0b0000010;
+    const UUID_V2    = 0b0001000;
+    const UUID_V3    = 0b0010000;
+    const UUID_V4    = 0b0100000;
+    const UUID_V5    = 0b1000000;
 
     /**
      * An array of all validation regexes.
@@ -36,12 +37,13 @@ class Uuid extends Regex
      * @var array
      */
     protected $regexes = [
-        self::UUID_NIL => '~^[0]{8}-[0]{4}-[0]{4}-[0]{4}-[0]{12}$~i',
-        self::UUID_V1 => '~^[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
-        self::UUID_V2 => '~^[0-9a-f]{8}-[0-9a-f]{4}-2[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
-        self::UUID_V3 => '~^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
-        self::UUID_V4 => '~^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
-        self::UUID_V5 => '~^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
+        self::UUID_VALID => '~^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$~i',
+        self::UUID_NIL   => '~^[0]{8}-[0]{4}-[0]{4}-[0]{4}-[0]{12}$~i',
+        self::UUID_V1    => '~^[0-9a-f]{8}-[0-9a-f]{4}-1[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
+        self::UUID_V2    => '~^[0-9a-f]{8}-[0-9a-f]{4}-2[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
+        self::UUID_V3    => '~^[0-9a-f]{8}-[0-9a-f]{4}-3[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
+        self::UUID_V4    => '~^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
+        self::UUID_V5    => '~^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$~i',
     ];
 
     /**
@@ -79,7 +81,7 @@ class Uuid extends Regex
      *
      * @param int $version
      */
-    public function __construct($version = self::UUID_V4)
+    public function __construct($version = self::UUID_VALID)
     {
         if ($version >= (self::UUID_V5 * 2) || $version < 0) {
             throw new \InvalidArgumentException(
