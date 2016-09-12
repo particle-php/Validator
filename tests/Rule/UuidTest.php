@@ -16,6 +16,22 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         $this->validator = new Validator();
     }
 
+    public function correctUUIDFormat()
+    {
+        return array(
+            array('00000000-0000-0000-0000-000000000000'),
+            array('05D989B3-A786-E411-80C8-0050568766E4'),
+            array('05D989B3-A786-E411-80C8-0050568766E4'),
+            array('8672e692-b936-e611-80da-0050568766e4'),
+            array('9042c873-ed53-e611-80c6-0050568968d5'),
+            array('9293b566-6011-11e6-8b77-86f30ca893d'),
+            array('9293b566-6011-11e6-8b77-86f30ca893ddd'),
+            array('5c3d167e-6011-11e6-8b77-86f30ca893d3'),
+            array('885e561e-6011-11e6-8b77-86f30ca893d3'),
+            array('9293b566-6011-11e6-8b77-86f30ca893d3'),
+        );
+    }
+
     public function correctUUIDNIL()
     {
         return array(
@@ -112,6 +128,17 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
     public function testReturnsTrueWhenMatchesUuidV1($uuid)
     {
         $this->validator->required('guid')->uuid(Uuid::UUID_V1);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDFormat
+     */
+    public function testReturnsTrueWhenMatchesUuidFormat($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_VALID);
         $result = $this->validator->validate(['guid' => $uuid]);
         $this->assertTrue($result->isValid());
         $this->assertEquals([], $result->getMessages());

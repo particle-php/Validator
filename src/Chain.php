@@ -407,7 +407,7 @@ class Chain
      * @param int $version
      * @return $this
      */
-    public function uuid($version = Rule\Uuid::UUID_V4)
+    public function uuid($version = Rule\Uuid::UUID_VALID)
     {
         return $this->addRule(new Rule\Uuid($version));
     }
