@@ -30,7 +30,7 @@ Particle\Validator tries to provide you the most common validations. An overview
 * [required](#required)(callable $callback)
 * [string](#string)()
 * [url](#url)($schemes = [])
-* [uuid](#uuid)($version = 4)
+* [uuid](#uuid)($version = Uuid::VALID_FORMAT)
 
 ## allowEmpty
 
