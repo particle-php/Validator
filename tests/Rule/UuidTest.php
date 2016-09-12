@@ -16,6 +16,54 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         $this->validator = new Validator();
     }
 
+    public function correctUUIDFormat()
+    {
+        return array(
+            array('00000000-0000-0000-0000-000000000000'),
+            array('05D989B3-A786-E411-80C8-0050568766E4'),
+            array('05D989B3-A786-E411-80C8-0050568766E4'),
+            array('8672e692-b936-e611-80da-0050568766e4'),
+            array('9042c873-ed53-e611-80c6-0050568968d5'),
+            array('5c3d167e-6011-11e6-8b77-86f30ca893d3'),
+            array('885e561e-6011-11e6-8b77-86f30ca893d3'),
+            array('9293b566-6011-11e6-8b77-86f30ca893d3'),
+        );
+    }
+
+    public function correctUUIDNIL()
+    {
+        return array(
+            array('00000000-0000-0000-0000-000000000000'),
+        );
+    }
+
+    public function correctUUIDv1()
+    {
+        return array(
+            array('5c3d167e-6011-11e6-8b77-86f30ca893d3'),
+            array('885e561e-6011-11e6-8b77-86f30ca893d3'),
+            array('9293b566-6011-11e6-8b77-86f30ca893d3'),
+        );
+    }
+
+    public function correctUUIDv2()
+    {
+        return array(
+            array('5c3d167e-6011-21e6-8b77-86f30ca893d3'),
+            array('885e561e-6011-21e6-bb77-86f30ca893d3'),
+            array('9293b566-6011-21e6-ab77-86f30ca893d3'),
+        );
+    }
+
+    public function correctUUIDv3()
+    {
+        return array(
+            array('5C3d167e-6011-31e6-8b77-86f30ca893d3'),
+            array('885e561e-6011-31E6-bb77-86f30ca893d3'),
+            array('9293b566-6011-31e6-9b77-86f30ca893d3'),
+        );
+    }
+
     public function correctUUIDv4()
     {
         return array(
@@ -23,6 +71,20 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
             array('de305d54-75b4-431b-adb2-eb6b9e546014'),
             array('00000000-0000-4000-8000-000000000000'),
         );
+    }
+
+    public function correctUUIDv5()
+    {
+        return array(
+            array('44c0ffee-988a-59dc-8bad-a55c0de2d1e4'),
+            array('de305d54-75b4-531b-adb2-eb6b9e546014'),
+            array('00000000-0000-5000-8000-000000000000'),
+        );
+    }
+
+    public function correctUUIDNILv4v5()
+    {
+        return array_merge($this->correctUUIDNIL(), $this->correctUUIDv4(), $this->correctUUIDv5());
     }
 
     public function incorrectUUIDv4()
@@ -39,6 +101,69 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function incorrectVersionsProvider()
+    {
+        return [
+            [4],
+            [Uuid::UUID_V5 * 2],
+        ];
+    }
+
+    /**
+     * @dataProvider correctUUIDNIL
+     */
+    public function testReturnsTrueWhenMatchesUuidNIL($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_NIL);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDv1
+     */
+    public function testReturnsTrueWhenMatchesUuidV1($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_V1);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDFormat
+     */
+    public function testReturnsTrueWhenMatchesUuidFormat($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_VALID);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDv2
+     */
+    public function testReturnsTrueWhenMatchesUuidV2($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_V2);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDv3
+     */
+    public function testReturnsTrueWhenMatchesUuidV3($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_V3);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
     /**
      * @dataProvider correctUUIDv4
      */
@@ -51,11 +176,33 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider correctUUIDv5
+     */
+    public function testReturnsTrueWhenMatchesUuidV5($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_V5);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
+     * @dataProvider correctUUIDNILv4v5
+     */
+    public function testReturnsTrueWhenMatchingMultipleUuidVersions($uuid)
+    {
+        $this->validator->required('guid')->uuid(Uuid::UUID_NIL | Uuid::UUID_V4 | Uuid::UUID_V5);
+        $result = $this->validator->validate(['guid' => $uuid]);
+        $this->assertTrue($result->isValid());
+        $this->assertEquals([], $result->getMessages());
+    }
+
+    /**
      * @dataProvider incorrectUUIDv4
      */
     public function testReturnsFalseOnNoMatch($uuid)
     {
-        $this->validator->required('guid')->uuid();
+        $this->validator->required('guid')->uuid(Uuid::UUID_V4);
         $result = $this->validator->validate(['guid' => $uuid]);
         $this->assertFalse($result->isValid());
 
@@ -68,9 +215,21 @@ class UuidV4Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
-    public function testThrowsExceptionOnUnknownVersion()
+    /**
+     * @dataProvider incorrectVersionsProvider
+     */
+    public function testThrowsExceptionOnUnknownVersion($version)
     {
-        $this->setExpectedException('\InvalidArgumentException', 'Unknown UUID version "2"');
-        $this->validator->required('guid')->uuid(2);
+        $this->setExpectedException(
+            '\InvalidArgumentException',
+            'Invalid UUID version mask given. Please choose one of the constants on the Uuid class.'
+        );
+        $this->validator->required('guid')->uuid(Uuid::UUID_V5 * 2);
+    }
+
+    public function testThrowsExceptionOnNegativeVersion()
+    {
+        $this->setExpectedException('\InvalidArgumentException', 'Invalid UUID version mask given.');
+        $this->validator->required('guid')->uuid(-1);
     }
 }

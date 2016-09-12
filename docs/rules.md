@@ -30,7 +30,7 @@ Particle\Validator tries to provide you the most common validations. An overview
 * [required](#required)(callable $callback)
 * [string](#string)()
 * [url](#url)($schemes = [])
-* [uuid](#uuid)($version = 4)
+* [uuid](#uuid)($version = Uuid::VALID_FORMAT)
 
 ## allowEmpty
 
@@ -521,13 +521,21 @@ $v->validate(['link' => 'http://validator.particle-php.com'])->isValid(); // fal
 
 ## uuid
 
-Validates that the value is a valid UUID. Currently only supports version 4.
+Validates if the value is a valid UUID and of the given version. The version constant may be combined with other constants to allow multiple versions or the NIL UUID (all zeroes).
 
 ```php
+use Particle\Validator\Rule\Uuid;
 $v = new Validator;
-$v->required('uuid')->uuid();
+
+// Requires a UUID V4
+$v->required('userId')->uuid(Uuid::UUID_V4);
 $v->validate(['uuid' => '44c0ffee-988a-49dc-8bad-a55c0de2d1e4'])->isValid(); // true
 $v->validate(['uuid' => '00000000-0000-0000-0000-000000000000'])->isValid(); // false
+
+// Requires a UUID V4 or NIL UUID
+$v->required('userId')->uuid(Uuid::UUID_V4 | Uuid::UUID_NIL);
+$v->validate(['uuid' => '44c0ffee-988a-49dc-8bad-a55c0de2d1e4'])->isValid(); // true
+$v->validate(['uuid' => '00000000-0000-0000-0000-000000000000'])->isValid(); // true
 ```
 
 [back to the top](#included-validation-rules)
