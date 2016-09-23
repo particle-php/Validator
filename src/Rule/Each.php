@@ -44,7 +44,7 @@ class Each extends Rule
     }
 
     /**
-     * Validates if each character in $value is a decimal digit.
+     * Validates $value by calling the callback.
      *
      * @param mixed $value
      * @return bool
@@ -88,7 +88,6 @@ class Each extends Rule
     /**
      * @param mixed $index
      * @param ValidationResult $result
-     * @return bool
      */
     protected function handleError($index, $result)
     {
@@ -99,6 +98,5 @@ class Each extends Rule
 
             $this->messageStack->append($failure);
         }
-        return false;
     }
 }
