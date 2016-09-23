@@ -44,7 +44,7 @@ class Each extends Rule
     }
 
     /**
-     * Validates if $value is array, validate if each inner array of $value valid, and return result.
+     * Validates if $value is array, validate each inner array of $value, and return result.
      *
      * @param mixed $value
      * @return bool
