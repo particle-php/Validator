@@ -43,7 +43,7 @@ $result->getMessages();
 * Get an array of error messages
 * Overwrite the default error messages on rules, or error messages on specific values
 * Get the validated values of an array
-* Validate different contexts (insert, update, ect) inheriting validations of the default context
+* Validate different contexts (insert, update, etc) inheriting validations of the default context
 * [A large set of default validation rules](http://validator.particle-php.com/en/latest/rules/)
 * Ability to extend the validator to add your own custom rules
 
