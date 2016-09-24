@@ -8,8 +8,6 @@
  */
 namespace Particle\Validator\Rule;
 
-use Particle\Validator\Rule;
-
 /**
  * This rule checks if the value consists solely out of alphabetic characters.
  *
@@ -48,7 +46,7 @@ class Alpha extends Regex
      */
     public function __construct($allowWhitespace = self::DISALLOW_SPACES)
     {
-        $this->regex = $allowWhitespace ? '~^[\p{L}\s]*$~iu' : '~^[\p{L}]*$~ui';
+        parent::__construct($allowWhitespace ? '~^[\p{L}\s]*$~iu' : '~^[\p{L}]*$~ui');
     }
 
     /**
