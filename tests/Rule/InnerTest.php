@@ -1,6 +1,7 @@
 <?php
 namespace Particle\Validator\Tests\Rule;
 
+use Particle\Validator\Rule\Inner;
 use Particle\Validator\Validator;
 
 class InnerTest extends \PHPUnit_Framework_TestCase
@@ -43,5 +44,26 @@ class InnerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($result->isValid());
         $this->assertEquals([], $result->getMessages());
+    }
+
+    public function testReturnsErrorOnNonArray()
+    {
+        $this->validator->required('foo')->inner(function (Validator $validator) {
+            $validator->required('bar')->bool();
+        });
+
+        $result = $this->validator->validate([
+            'foo' => 1
+        ]);
+
+        $this->assertFalse($result->isValid());
+
+        $expected = [
+            'foo' => [
+                Inner::NOT_AN_ARRAY => 'foo must be an array',
+            ]
+        ];
+
+        $this->assertEquals($expected, $result->getMessages());
     }
 }
