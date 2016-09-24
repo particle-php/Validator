@@ -39,9 +39,6 @@ class Boolean extends Rule
      */
     public function validate($value)
     {
-        if ($value === true || $value === false) {
-            return true;
-        }
-        return $this->error(self::NOT_BOOL);
+        return $value === true || $value === false ? true : $this->error(self::NOT_BOOL);
     }
 }
