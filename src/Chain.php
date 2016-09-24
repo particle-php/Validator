@@ -176,7 +176,7 @@ class Chain
     }
 
     /**
-     * Validates a value to be a nested repeating arrays, which can then be validated using a new Validator instance.
+     * Validates a value to be nested repeating arrays, which can then be validated using a new Validator instance.
      *
      * @param callable $callback
      * @return $this
