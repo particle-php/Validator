@@ -176,7 +176,7 @@ class Chain
     }
 
     /**
-     * Validates a value to be a nested array, which can then be validated using a new Validator instance.
+     * Validates a value to be a nested repiting arrays, which can then be validated using a new Validator instance.
      *
      * @param callable $callback
      * @return $this
@@ -250,6 +250,17 @@ class Chain
     public function inArray(array $array, $strict = Rule\InArray::STRICT)
     {
         return $this->addRule(new Rule\InArray($array, $strict));
+    }
+
+    /**
+     * Validates a value to be a nested array, which can then be validated using a new Validator instance.
+     *
+     * @param callable $callback
+     * @return Chain
+     */
+    public function inner(callable $callback)
+    {
+        return $this->addRule(new Rule\Inner($callback));
     }
 
     /**
