@@ -44,7 +44,7 @@ class Each extends Rule
     }
 
     /**
-     * Validates if each character in $value is a decimal digit.
+     * Validates if $value is array, validate each inner array of $value, and return result.
      *
      * @param mixed $value
      * @return bool
@@ -88,7 +88,6 @@ class Each extends Rule
     /**
      * @param mixed $index
      * @param ValidationResult $result
-     * @return bool
      */
     protected function handleError($index, $result)
     {
@@ -99,6 +98,5 @@ class Each extends Rule
 
             $this->messageStack->append($failure);
         }
-        return false;
     }
 }
