@@ -8,8 +8,6 @@
  */
 namespace Particle\Validator\Rule;
 
-use Particle\Validator\Rule;
-
 /**
  * This rule checks if the value consists solely out of alphanumeric characters.
  *
@@ -48,7 +46,7 @@ class Alnum extends Regex
      */
     public function __construct($allowSpaces = self::DISALLOW_SPACES)
     {
-        $this->regex = $allowSpaces ? '~^[\p{L}0-9\s]*$~iu' : '~^[\p{L}0-9]*$~iu';
+        parent::__construct($allowSpaces ? '~^[\p{L}0-9\s]*$~iu' : '~^[\p{L}0-9]*$~iu');
     }
 
     /**
