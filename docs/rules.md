@@ -327,7 +327,7 @@ Validates that the value represents a valid integer.
 
 ```php
 $v = new Validator;
-$v->required('x')->int();
+$v->required('x')->integer();
 $v->validate(['x' => 3])->isValid(); // true
 $v->validate(['x' => '3'])->isValid(); // true
 $v->validate(['x' => 3.5])->isValid(); // false
@@ -337,7 +337,7 @@ You can also do a strict check on integer:
 
 ```php
 $v = new Validator;
-$v->required('x')->int(Rule\Integer::STRICT);
+$v->required('x')->integer(Rule\Integer::STRICT);
 $v->validate(['x' => -3])->isValid(); // true
 $v->validate(['x' => '-3'])->isValid(); // false
 ```
