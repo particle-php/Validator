@@ -21,9 +21,7 @@ to download the required dependencies for testing.
 
 ### Bug fixes
 
-The on-going development will take place in the `master` branch. Bug fixes should be based on the latest 
-release branch (e.g. `v1.0`, if the bug occurs in `v1.0.0`). After this, we can merge v1.0 back into the
-master branch to get the bug fix in the current development version.
+The on-going development will take place in the `master` branch. You can submit your pull requests to the `master` branch if you want to change something in the latest version. If you want to do a fix for an ealier version (e.g. `v1`), please submit your pull request to that branch. We will merge your fix back into the newer versions so everything is up to date/fixed.
 
 If you have fixed a bug, please add unit tests that prove that the code that was broken before, now works.
 
