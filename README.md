@@ -9,9 +9,18 @@
 
 *Particle\Validator* is a very small validation library, with the easiest and most usable API we could possibly create.
 
+## Install
+To easily include *Particle\Validator* into your project, install it via [composer](https://getcomposer.org) using the command line:
+
+```bash
+composer require particle/validator
+```
+
 ## Small usage example
 
 ```php
+use Particle\Validator\Validator;
+
 $v = new Validator;
 
 $v->required('user.first_name')->lengthBetween(2, 50)->alpha();
