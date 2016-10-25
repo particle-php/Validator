@@ -13,8 +13,8 @@ Overwriting the Validator itself is quite simple:
 use Particle\Validator\Validator;
 
 /**
- * @method MyChain required()
- * @method MyChain optional()
+ * @method MyChain required($key, $name = null, $allowEmpty = false)
+ * @method MyChain optional($key, $name = null, $allowEmpty = true)
  */
 class MyValidator extends Validator
 {
