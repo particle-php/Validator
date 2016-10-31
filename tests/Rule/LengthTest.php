@@ -23,7 +23,7 @@ class LengthTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidValuesWillReturnFalseAndLogError($value, $error)
     {
-        $this->validator->required('first_name')->length(5);
+        $this->validator->required('first_name')->length(5, 'UTF-8');
         $result = $this->validator->validate(['first_name' => $value]);
 
         $expected = ['first_name' => [$error => $this->getMessage($error)]];
@@ -37,7 +37,7 @@ class LengthTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidValuesWillReturnTrue($value)
     {
-        $this->validator->required('first_name')->length(5);
+        $this->validator->required('first_name')->length(5, 'UTF-8');
         $result = $this->validator->validate(['first_name' => $value]);
         $this->assertTrue($result->isValid());
     }
@@ -46,7 +46,8 @@ class LengthTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['rick', Length::TOO_SHORT],
-            ['hendrik', Length::TOO_LONG]
+            ['hendrik', Length::TOO_LONG],
+            ['loïc', Length::TOO_SHORT], // UTF-8 multibyte test
         ];
     }
 
@@ -54,7 +55,8 @@ class LengthTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['berry'],
-            [12345] // integers are cast to strings
+            [12345], // integers are cast to strings
+            ['björk'], // UTF-8 multibyte test
         ];
     }
 

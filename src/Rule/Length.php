@@ -45,13 +45,22 @@ class Length extends Rule
     protected $length;
 
     /**
+     * The encoding to be used for multibyte string functions.
+     *
+     * @var null|string
+     */
+    protected $encoding;
+
+    /**
      * Construct the Length validator.
      *
      * @param int $length
+     * @param null|string $encoding
      */
-    public function __construct($length)
+    public function __construct($length, $encoding = null)
     {
         $this->length = $length;
+        $this->encoding = $encoding;
     }
 
     /**
@@ -62,8 +71,12 @@ class Length extends Rule
      */
     public function validate($value)
     {
-        $actualLength = strlen($value);
-
+        if (is_null($this->encoding) || !function_exists('mb_strlen')) {
+            $actualLength = strlen($value);
+        } else {
+            $actualLength = mb_strlen($value, $this->encoding);
+        }
+        
         if ($actualLength > $this->length) {
             return $this->error(self::TOO_LONG);
         }

@@ -52,13 +52,22 @@ class LengthBetween extends Between
     protected $min;
 
     /**
+     * The encoding to be used for multibyte string functions.
+     *
+     * @var string|null
+     */
+    protected $encoding;
+
+    /**
      * @param int $min
      * @param int|null $max
+     * @param string|null $encoding
      */
-    public function __construct($min, $max)
+    public function __construct($min, $max, $encoding = null)
     {
         $this->min = $min;
         $this->max = $max;
+        $this->encoding = $encoding;
     }
 
     /**
@@ -69,7 +78,11 @@ class LengthBetween extends Between
      */
     public function validate($value)
     {
-        $length = strlen($value);
+        if (is_null($this->encoding) || !function_exists('mb_strlen')) {
+            $length = strlen($value);
+        } else {
+            $length = mb_strlen($value, $this->encoding);
+        }
 
         return !$this->tooSmall($length, self::TOO_SHORT) && !$this->tooLarge($length, self::TOO_LONG);
     }

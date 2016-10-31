@@ -290,11 +290,12 @@ class Chain
      * Validate the value to be of precisely length $length.
      *
      * @param int $length
+     * @param string|null $encoding
      * @return $this
      */
-    public function length($length)
+    public function length($length, $encoding = null)
     {
-        return $this->addRule(new Rule\Length($length));
+        return $this->addRule(new Rule\Length($length, $encoding));
     }
 
     /**
@@ -304,11 +305,12 @@ class Chain
      *
      * @param int $min
      * @param int|null $max
+     * @param string|null $encoding
      * @return $this
      */
-    public function lengthBetween($min, $max)
+    public function lengthBetween($min, $max, $encoding = null)
     {
-        return $this->addRule(new Rule\LengthBetween($min, $max));
+        return $this->addRule(new Rule\LengthBetween($min, $max, $encoding));
     }
 
     /**
