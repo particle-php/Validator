@@ -36,16 +36,16 @@ class Phone extends Rule
     ];
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $countryCode;
 
     /**
      * Construct the Phone validator.
      *
-     * @param string $countryCode
+     * @param string|null $countryCode (optional)
      */
-    public function __construct($countryCode)
+    public function __construct($countryCode = PhoneNumberUtil::UNKNOWN_REGION)
     {
         $this->countryCode = $countryCode;
     }
@@ -62,6 +62,9 @@ class Phone extends Rule
 
         try {
             $numberProto = $phoneUtil->parse($value, $this->countryCode);
+            if ($this->countryCode === PhoneNumberUtil::UNKNOWN_REGION || is_null($this->countryCode)) {
+                $this->countryCode = $phoneUtil->getRegionCodeForNumber($numberProto);
+            }
             if (!$phoneUtil->isValidNumberForRegion($numberProto, $this->countryCode)) {
                 return $this->error(self::INVALID_VALUE);
             }
