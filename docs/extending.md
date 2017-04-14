@@ -80,7 +80,7 @@ class GrumpyRule extends Rule
     // these variables can be used in error messages.
     protected function getMessageParameters()
     {
-        return array_merge(parent::getMessageParameters, [
+        return array_merge(parent::getMessageParameters(), [
             'who' => $this->who,
         ]);
     }
