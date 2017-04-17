@@ -62,7 +62,7 @@ class Length extends Rule
      */
     public function validate($value)
     {
-        $actualLength = strlen($value);
+        $actualLength = mb_strlen($value, mb_detect_encoding($value));
 
         if ($actualLength > $this->length) {
             return $this->error(self::TOO_LONG);
