@@ -185,6 +185,63 @@ class Validator
     }
 
     /**
+     * Output all rules set on the validator.
+     * The output can be build with a custom formatter in a closure, and will contain an array with all rules
+     * If no callable formatter is provided, the array with rules will be returned directly
+     *
+     * @param callable|null $formatter
+     * @param string $context
+     * @return array|mixed
+     */
+    public function output(callable $formatter = null, $context = self::DEFAULT_CONTEXT)
+    {
+        $ruleSet = $this->getRuleSet($context);
+
+        if ($formatter === null) {
+            return $ruleSet;
+        }
+
+        return call_user_func($formatter, $ruleSet);
+    }
+
+    /**
+     * Returns an array containing all rules added to the specified context
+     *
+     * @param $context
+     * @return array
+     */
+    protected function getRuleSet($context)
+    {
+        $ruleSet = [];
+
+        /**
+         * @var string $subject
+         * @var Chain $chain
+         */
+        foreach ($this->chains[$context] as $subject => $chain) {
+            $subjectRules = $chain->getRules();
+
+            $rules = [];
+
+            foreach ($subjectRules as $subjectRule) {
+                // @todo: overwrite messages
+
+                $options = $subjectRule['messageParameters'];
+                unset($options['key'], $options['name']);
+
+                $rules[] = [
+                    'name' => $subjectRule['name'],
+                    'options' => $options,
+                ];
+            }
+
+            $ruleSet[$subject] = $rules;
+        }
+
+        return $ruleSet;
+    }
+
+    /**
      * Retrieves a Chain object, or builds one if it doesn't exist yet.
      *
      * @param string $key

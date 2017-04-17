@@ -462,6 +462,26 @@ class Chain
     }
 
     /**
+     * Get all rules applied to this chain
+     */
+    public function getRules()
+    {
+        $rules = [];
+
+        /** @var Rule $rule */
+        foreach ($this->rules as $rule) {
+            $reflectionRule = new \ReflectionClass($rule);
+            $rules[] = [
+                'name' => $reflectionRule->getShortName(),
+                'messageParameters' => $rule->getMessageParameters(),
+                'messageTemplates' => $rule->getMessageTemplates(),
+            ];
+        }
+
+        return $rules;
+    }
+
+    /**
      * Shortcut method for storing a rule on this chain, and returning the chain.
      *
      * @param Rule $rule

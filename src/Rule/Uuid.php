@@ -114,7 +114,7 @@ class Uuid extends Regex
      *
      * @return array
      */
-    protected function getMessageParameters()
+    public function getMessageParameters()
     {
         $versions = [];
         foreach (array_keys($this->regexes) as $version) {

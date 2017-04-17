@@ -86,7 +86,7 @@ class InArray extends Rule
      *
      * @return array
      */
-    protected function getMessageParameters()
+    public function getMessageParameters()
     {
         $quote = function ($value) {
             return '"' . $value . '"';
