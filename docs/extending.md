@@ -30,7 +30,7 @@ class MyValidator extends Validator
 ```
 
 As you can see, it returns a different implementation of the Chain object, and that's where 
-you can add the the rules to the Chain. Luckily, also overwriting the chain object itself is
+you can add the rules to the Chain. Luckily, also overwriting the chain object itself is
 rather simple:
 
 ```php
