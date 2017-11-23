@@ -22,7 +22,7 @@ class MyValidator extends Validator
      * {@inheritdoc}
      * @return MyChain
      */
-    public function buildChain($key, $name, $required, $allowEmpty)
+    protected function buildChain($key, $name, $required, $allowEmpty)
     {
         return new MyChain($key, $name, $required, $allowEmpty);
     }
