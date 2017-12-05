@@ -62,7 +62,7 @@ $v->required('invoices')->each(function (Validator $validator) {
     $validator->required('amount')->integer();
     $validator->required('date')->datetime('Y-m-d');
     
-    $validator->each('lines', function (Validator $validator) {
+    $validator->required('lines')->each(function (Validator $validator) {
          $validator->required('amount')->integer();
          $validator->required('description')->lengthBetween(0, 100);
     });
