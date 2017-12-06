@@ -124,7 +124,7 @@ class Required extends Rule
      */
     public function setRequired($required)
     {
-        if (is_callable($required)) {
+        if (is_callable($required) || is_array($required)) {
             return $this->setRequiredCallback($required);
         }
 
