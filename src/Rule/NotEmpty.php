@@ -140,7 +140,7 @@ class NotEmpty extends Rule
      */
     public function setAllowEmpty($allowEmpty)
     {
-        if (is_callable($allowEmpty)) {
+        if (is_callable($allowEmpty) || is_array($allowEmpty)) {
             return $this->setAllowEmptyCallback($allowEmpty);
         }
         return $this->overwriteAllowEmpty($allowEmpty);
