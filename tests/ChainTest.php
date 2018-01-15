@@ -1,6 +1,12 @@
 <?php
 namespace Particle\Validator\Tests;
 
+use Particle\Validator\Rule;
+use Particle\Validator\Rule\Boolean;
+use Particle\Validator\Rule\Integer;
+use Particle\Validator\Rule\IsArray;
+use Particle\Validator\Rule\IsFloat;
+use Particle\Validator\Rule\IsString;
 use Particle\Validator\Tests\Support\CustomRule;
 use Particle\Validator\Validator;
 
@@ -32,5 +38,90 @@ class ChainTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($result->isValid());
         $this->assertEquals($expected, $result->getMessages());
+    }
+
+    /**
+     * @dataProvider providePrimitiveRulesData
+     *
+     * @param Rule $rule
+     * @param array $data
+     * @param array $expected
+     */
+    public function testBreakChain($rule, $data, $expected)
+    {
+        $this
+            ->validator
+            ->required('foo')
+            ->mount($rule)
+            ->lengthBetween(1, 50);
+
+        $result = $this->validator->validate($data);
+
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
+    /**
+     * @return array
+     */
+    public function providePrimitiveRulesData()
+    {
+        return [
+            [
+                new Boolean(),
+                [
+                    'foo' => 'string',
+                ],
+                [
+                    'foo' => [
+                        Boolean::NOT_BOOL => 'foo must be either true or false',
+                    ],
+                ],
+            ],
+            [
+                new Integer(),
+                [
+                    'foo' => 'string',
+                ],
+                [
+                    'foo' => [
+                        Integer::NOT_AN_INTEGER => 'foo must be an integer',
+                    ],
+                ],
+            ],
+            [
+                new IsArray(),
+                [
+                    'foo' => 'string',
+                ],
+                [
+                    'foo' => [
+                        IsArray::NOT_AN_ARRAY => 'foo must be an array',
+                    ],
+                ],
+            ],
+            [
+                new IsFloat(),
+                [
+                    'foo' => 'string',
+                ],
+                [
+                    'foo' => [
+                        IsFloat::NOT_A_FLOAT => 'foo must be a float',
+                    ],
+                ],
+            ],
+            [
+                new IsString(),
+                [
+                    'foo' => ['array-value'],
+                ],
+                [
+                    'foo' => [
+                        IsString::NOT_A_STRING => 'foo must be a string',
+                    ],
+                ],
+            ],
+        ];
     }
 }
