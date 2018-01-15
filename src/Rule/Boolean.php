@@ -41,4 +41,12 @@ class Boolean extends Rule
     {
         return is_bool($value) ?: $this->error(self::NOT_BOOL);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shouldBreakChain()
+    {
+        return true;
+    }
 }

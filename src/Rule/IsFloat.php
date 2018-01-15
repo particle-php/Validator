@@ -45,4 +45,12 @@ class IsFloat extends Rule
 
         return $this->error(self::NOT_A_FLOAT);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shouldBreakChain()
+    {
+        return true;
+    }
 }
