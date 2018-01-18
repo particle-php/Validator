@@ -45,4 +45,12 @@ class IsString extends Rule
 
         return $this->error(self::NOT_A_STRING);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shouldBreakChain()
+    {
+        return true;
+    }
 }

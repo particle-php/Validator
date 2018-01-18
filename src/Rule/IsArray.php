@@ -45,4 +45,12 @@ class IsArray extends Rule
 
         return $this->error(self::NOT_AN_ARRAY);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shouldBreakChain()
+    {
+        return true;
+    }
 }

@@ -74,4 +74,12 @@ class Integer extends Rule
 
         return $this->error(self::NOT_AN_INTEGER);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function shouldBreakChain()
+    {
+        return true;
+    }
 }
