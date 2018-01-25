@@ -1,4 +1,5 @@
 <?php
+
 namespace Particle\Validator\Tests;
 
 use Particle\Validator\Rule;
@@ -7,6 +8,7 @@ use Particle\Validator\Rule\Integer;
 use Particle\Validator\Rule\IsArray;
 use Particle\Validator\Rule\IsFloat;
 use Particle\Validator\Rule\IsString;
+use Particle\Validator\Rule\LengthBetween;
 use Particle\Validator\Tests\Support\CustomRule;
 use Particle\Validator\Validator;
 
@@ -32,12 +34,33 @@ class ChainTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             'foo' => [
-                CustomRule::NOT_BAR => 'foo must be equal to "bar"'
-            ]
+                CustomRule::NOT_BAR => 'foo must be equal to "bar"',
+            ],
         ];
 
         $this->assertFalse($result->isValid());
         $this->assertEquals($expected, $result->getMessages());
+    }
+
+    public function testChain()
+    {
+        $this
+            ->validator
+            ->required('foo')
+            ->string()
+            ->lengthBetween(2, 5);
+
+        $result = $this->validator->validate(['foo' => 'abcdefg']);
+
+        $this->assertFalse($result->isValid());
+        $this->assertEquals(
+            [
+                'foo' => [
+                    LengthBetween::TOO_LONG => 'foo must be 5 characters or shorter',
+                ],
+            ],
+            $result->getMessages()
+        );
     }
 
     /**
