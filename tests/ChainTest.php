@@ -1,5 +1,4 @@
 <?php
-
 namespace Particle\Validator\Tests;
 
 use Particle\Validator\Rule;
@@ -34,8 +33,8 @@ class ChainTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             'foo' => [
-                CustomRule::NOT_BAR => 'foo must be equal to "bar"',
-            ],
+                CustomRule::NOT_BAR => 'foo must be equal to "bar"'
+            ]
         ];
 
         $this->assertFalse($result->isValid());
