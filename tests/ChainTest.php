@@ -42,7 +42,28 @@ class ChainTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
-    public function testChain()
+    /**
+     * @dataProvider providePrimitiveRulesData
+     *
+     * @param Rule $rule
+     * @param array $data
+     * @param array $expected
+     */
+    public function testBreakChain($rule, $data, $expected)
+    {
+        $this
+            ->validator
+            ->required('foo')
+            ->mount($rule)
+            ->lengthBetween(1, 50);
+
+        $result = $this->validator->validate($data);
+
+        $this->assertFalse($result->isValid());
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
+    public function testBreakChainOnFailure()
     {
         $this
             ->validator
@@ -63,25 +84,17 @@ class ChainTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @dataProvider providePrimitiveRulesData
-     *
-     * @param Rule $rule
-     * @param array $data
-     * @param array $expected
-     */
-    public function testBreakChain($rule, $data, $expected)
+    public function testBreakChainOnSuccess()
     {
         $this
             ->validator
             ->required('foo')
-            ->mount($rule)
-            ->lengthBetween(1, 50);
+            ->string()
+            ->lengthBetween(2, 5);
 
-        $result = $this->validator->validate($data);
+        $result = $this->validator->validate(['foo' => 'abc']);
 
-        $this->assertFalse($result->isValid());
-        $this->assertEquals($expected, $result->getMessages());
+        $this->assertTrue($result->isValid());
     }
 
     /**
