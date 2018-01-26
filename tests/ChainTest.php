@@ -147,7 +147,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            'don not break boolean rule' => [
+            'do not break boolean rule' => [
                 new Boolean(),
                 new InArray([false]),
                 [
@@ -159,7 +159,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            'don not break integer rule' => [
+            'do not break integer rule' => [
                 new Integer(),
                 new GreaterThan(10),
                 [
@@ -171,7 +171,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            'don not break isArray rule' => [
+            'do not break isArray rule' => [
                 new IsArray(),
                 new Each(function ($v) {
                     /** @var Validator $v */
@@ -188,7 +188,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            'don not break isFloat rule' => [
+            'do not break isFloat rule' => [
                 new IsFloat(),
                 new GreaterThan(20),
                 [
@@ -200,7 +200,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            'don not break isString rule' => [
+            'do not break isString rule' => [
                 new IsString(),
                 new LengthBetween(1, 3),
                 [
