@@ -173,8 +173,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
             ],
             'do not break isArray rule' => [
                 new IsArray(),
-                new Each(function ($v) {
-                    /** @var Validator $v */
+                new Each(function (Validator $v) {
                     $v->required('bar')->email();
                 }),
                 [
