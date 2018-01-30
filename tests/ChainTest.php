@@ -3,10 +3,16 @@ namespace Particle\Validator\Tests;
 
 use Particle\Validator\Rule;
 use Particle\Validator\Rule\Boolean;
+use Particle\Validator\Rule\Each;
+use Particle\Validator\Rule\Email;
+use Particle\Validator\Rule\GreaterThan;
+use Particle\Validator\Rule\InArray;
 use Particle\Validator\Rule\Integer;
 use Particle\Validator\Rule\IsArray;
 use Particle\Validator\Rule\IsFloat;
 use Particle\Validator\Rule\IsString;
+use Particle\Validator\Rule\LengthBetween;
+use Particle\Validator\Rule\Required;
 use Particle\Validator\Tests\Support\CustomRule;
 use Particle\Validator\Validator;
 
@@ -41,19 +47,20 @@ class ChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider providePrimitiveRulesData
+     * @dataProvider provideBreakChainData
      *
-     * @param Rule $rule
+     * @param Rule $firstRule
+     * @param Rule $secondRule
      * @param array $data
      * @param array $expected
      */
-    public function testBreakChain($rule, $data, $expected)
+    public function testBreakChain($firstRule, $secondRule, $data, $expected)
     {
         $this
             ->validator
             ->required('foo')
-            ->mount($rule)
-            ->lengthBetween(1, 50);
+            ->mount($firstRule)
+            ->mount($secondRule);
 
         $result = $this->validator->validate($data);
 
@@ -64,11 +71,12 @@ class ChainTest extends \PHPUnit_Framework_TestCase
     /**
      * @return array
      */
-    public function providePrimitiveRulesData()
+    public function provideBreakChainData()
     {
         return [
-            [
+            'break boolean rule on error' => [
                 new Boolean(),
+                new InArray([true, false]),
                 [
                     'foo' => 'string',
                 ],
@@ -78,8 +86,9 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            [
+            'break integer rule on error' => [
                 new Integer(),
+                new GreaterThan(10),
                 [
                     'foo' => 'string',
                 ],
@@ -89,8 +98,12 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            [
+            'break isArray rule on error' => [
                 new IsArray(),
+                new Each(function ($v) {
+                    /** @var Validator $v */
+                    $v->required('bar')->email();
+                }),
                 [
                     'foo' => 'string',
                 ],
@@ -100,8 +113,9 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            [
+            'break isFloat rule on error' => [
                 new IsFloat(),
+                new GreaterThan(20),
                 [
                     'foo' => 'string',
                 ],
@@ -111,14 +125,90 @@ class ChainTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
-            [
+            'break isString rule on error' => [
                 new IsString(),
+                new LengthBetween(1, 3),
                 [
                     'foo' => ['array-value'],
                 ],
                 [
                     'foo' => [
                         IsString::NOT_A_STRING => 'foo must be a string',
+                    ],
+                ],
+            ],
+            'break required rule' => [
+                new Boolean(),
+                new InArray([true, false]),
+                [],
+                [
+                    'foo' => [
+                        Required::NON_EXISTENT_KEY => 'foo must be provided, but does not exist',
+                    ],
+                ],
+            ],
+            'don not break boolean rule' => [
+                new Boolean(),
+                new InArray([false]),
+                [
+                    'foo' => true,
+                ],
+                [
+                    'foo' => [
+                        InArray::NOT_IN_ARRAY => 'foo must be in the defined set of values',
+                    ],
+                ],
+            ],
+            'don not break integer rule' => [
+                new Integer(),
+                new GreaterThan(10),
+                [
+                    'foo' => 5,
+                ],
+                [
+                    'foo' => [
+                        GreaterThan::NOT_GREATER_THAN => 'foo must be greater than 10',
+                    ],
+                ],
+            ],
+            'don not break isArray rule' => [
+                new IsArray(),
+                new Each(function ($v) {
+                    /** @var Validator $v */
+                    $v->required('bar')->email();
+                }),
+                [
+                    'foo' => [
+                        ['bar' => 'invalid@email'],
+                    ],
+                ],
+                [
+                    'foo.0.bar' => [
+                        Email::INVALID_FORMAT => 'bar must be a valid email address',
+                    ],
+                ],
+            ],
+            'don not break isFloat rule' => [
+                new IsFloat(),
+                new GreaterThan(20),
+                [
+                    'foo' => 5.00,
+                ],
+                [
+                    'foo' => [
+                        GreaterThan::NOT_GREATER_THAN => 'foo must be greater than 20',
+                    ],
+                ],
+            ],
+            'don not break isString rule' => [
+                new IsString(),
+                new LengthBetween(1, 3),
+                [
+                    'foo' => 'abcdefg',
+                ],
+                [
+                    'foo' => [
+                        LengthBetween::TOO_LONG => 'foo must be 3 characters or shorter',
                     ],
                 ],
             ],
