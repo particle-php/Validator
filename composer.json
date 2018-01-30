@@ -4,7 +4,7 @@
     "description": "Flexible and highly usable validation library with no dependencies.",
     "keywords": ["validation", "validator"],
     "homepage": "http://github.com/particle-php/validator",
-    "license" : "BSD",
+    "license" : "BSD-3-Clause",
     "authors" : [
         {
             "name": "Berry Langerak",
