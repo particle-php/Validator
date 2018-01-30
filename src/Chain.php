@@ -450,7 +450,7 @@ class Chain
 
             $valid = $rule->isValid($this->key, $input) && $valid;
 
-            if ($rule->shouldBreakChain()) {
+            if (!$valid && $rule->shouldBreakChainOnError() || $rule->shouldBreakChain()) {
                 break;
             }
         }

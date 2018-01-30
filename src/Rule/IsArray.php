@@ -49,7 +49,7 @@ class IsArray extends Rule
     /**
      * {@inheritdoc}
      */
-    public function shouldBreakChain()
+    public function shouldBreakChainOnError()
     {
         return true;
     }

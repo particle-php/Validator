@@ -72,6 +72,16 @@ abstract class Rule
     }
 
     /**
+     * This indicates whether or not the rule should break the chain it's in on validation failure.
+     *
+     * @return bool
+     */
+    public function shouldBreakChainOnError()
+    {
+        return false;
+    }
+
+    /**
      * Registers the message stack to append errors to.
      *
      * @param MessageStack $messageStack
