@@ -64,4 +64,12 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expected, $this->container->getArrayCopy());
     }
+
+    public function testGet()
+    {
+        $container = new Container(['data' => '', 'parent' => ['sub' => 8]]);
+
+        $this->assertFalse($container->get('data.unknown'));
+        $this->assertSame(8, $container->get('parent.sub'));
+    }
 }
