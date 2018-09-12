@@ -91,7 +91,7 @@ class Container
     {
         $value = $this->values;
         foreach (explode('.', $key) as $part) {
-            if (!array_key_exists($part, $value)) {
+            if (!is_array($value) || !array_key_exists($part, $value)) {
                 return false;
             }
             $value = $value[$part];
