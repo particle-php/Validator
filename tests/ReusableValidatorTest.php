@@ -74,7 +74,6 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
                 'data' => [
                     'customerNr' => 'c000001234',
                     'paymentType' => 'gfh',
-                    'reference' => 'dfg',
                     'description' => 'Test payment 2',
                     'amountPaid' => 25.00,
                     'notificationDate' => '20150401',
@@ -83,6 +82,9 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
                 'messages' => [
                     'paymentType' => [
                         'InArray::NOT_IN_ARRAY' => 'paymentType must be in the defined set of values',
+                    ],
+                    'reference' => [
+                        'Required::NON_EXISTENT_KEY' => 'reference must be provided, but does not exist',
                     ],
                 ],
             ],

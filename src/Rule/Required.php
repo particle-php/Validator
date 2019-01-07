@@ -40,7 +40,7 @@ class Required extends Rule
      *
      * @var bool
      */
-    protected $shouldBreak;
+    protected $shouldBreak = false;
 
     /**
      * Indicates if the value is required.
@@ -101,6 +101,7 @@ class Required extends Rule
      */
     public function isValid($key, Container $input)
     {
+        $this->shouldBreak = false;
         $this->required = $this->isRequired($input);
 
         if (!$input->has($key)) {
