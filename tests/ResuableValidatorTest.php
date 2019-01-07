@@ -43,8 +43,8 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
 
         foreach ($this->getTestData() as $rowKey => $testRow) {
             $isValid = $this->validator->validate($testRow['data']);
-            $this->assertEquals($testRow['valid'], $isValid, 'Row ' . $rowKey . ' wasn\'t expected');
-            $this->assertEquals($testRow['messages'], $this->validator->getMessages(), 'Row ' . $rowKey . ' wasn\'t expected');
+            $this->assertEquals($testRow['valid'], $isValid);
+            $this->assertEquals($testRow['messages'], $this->validator->getMessages());
         }
     }
 
