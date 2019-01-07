@@ -21,6 +21,8 @@ class Each extends Rule
 {
     const NOT_AN_ARRAY = 'Each::NOT_AN_ARRAY';
 
+    const NOT_AN_ARRAY_ITEM = 'Each::NOT_AN_ARRAY_ITEM';
+
     /**
      * The message templates which can be returned by this validator.
      *
@@ -28,6 +30,7 @@ class Each extends Rule
      */
     protected $messageTemplates = [
         self::NOT_AN_ARRAY => '{{ name }} must be an array',
+        self::NOT_AN_ARRAY_ITEM => 'Each {{ name }} item must be an array',
     ];
 
     /**
@@ -57,6 +60,10 @@ class Each extends Rule
 
         $result = true;
         foreach ($value as $index => $innerValue) {
+            if (!is_array($innerValue)) {
+                return $this->error(self::NOT_AN_ARRAY_ITEM);
+            }
+
             $result = $this->validateValue($index, $innerValue) && $result;
         }
         return $result;

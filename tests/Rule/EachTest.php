@@ -76,6 +76,29 @@ class EachTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result->getMessages());
     }
 
+    public function testReturnsErrorOnNonArrayItem()
+    {
+        $this->validator->required('foo')->each(function (Validator $validator) {
+            $validator->required('bar')->bool();
+        });
+
+        $result = $this->validator->validate([
+            'foo' => [
+                'bar' => 1,
+            ],
+        ]);
+
+        $this->assertFalse($result->isValid());
+
+        $expected = [
+            'foo' => [
+                Each::NOT_AN_ARRAY_ITEM => 'Each foo item must be an array'
+            ]
+        ];
+
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
     public function testCanValidateNestedArrays()
     {
         $this->validator->required('foo')->each(function (Validator $validator) {
