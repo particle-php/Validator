@@ -27,7 +27,7 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testCanUseNewValidatorEveryTime()
     {
-        foreach ($this->getTestData() as $testRow) {
+        foreach ($this->getTestData() as $rowKey => $testRow) {
             $this->configureValidator();
 
             $isValid = $this->validator->validate($testRow['data']);
@@ -40,11 +40,11 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
     public function testCanReuseValidatorMultipleTimes()
     {
         $this->configureValidator();
-        foreach ($this->getTestData() as $testRow) {
-            $isValid = $this->validator->validate($testRow['data']);
 
-            $this->assertEquals($testRow['valid'], $isValid);
-            $this->assertEquals($testRow['messages'], $this->validator->getMessages());
+        foreach ($this->getTestData() as $rowKey => $testRow) {
+            $isValid = $this->validator->validate($testRow['data']);
+            $this->assertEquals($testRow['valid'], $isValid, 'Row ' . $rowKey . ' wasn\'t expected');
+            $this->assertEquals($testRow['messages'], $this->validator->getMessages(), 'Row ' . $rowKey . ' wasn\'t expected');
         }
     }
 
@@ -70,6 +70,7 @@ class ReusableValidatorTest extends \PHPUnit_Framework_TestCase
                     ],
                 ],
             ],
+
             [
                 'data' => [
                     'customerNr' => 'c000001234',
