@@ -37,7 +37,7 @@ class NotEmpty extends Rule
      *
      * @var bool
      */
-    protected $shouldBreak;
+    protected $shouldBreak = false;
 
     /**
      * Indicates if the value can be empty.
@@ -86,6 +86,7 @@ class NotEmpty extends Rule
      */
     public function validate($value)
     {
+        $this->shouldBreak = false;
         if ($this->isEmpty($value)) {
             $this->shouldBreak = true;
 
