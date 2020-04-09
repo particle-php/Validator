@@ -63,7 +63,7 @@ $v->context('update', function(Validator $context) {
     // copy the rules (and messages) of the "insert" context.
     $context->copyContext('insert', function($rules) {
         foreach ($rules as $key => $chain) {
-            $context->optional($key);
+            $chain->required(false);
         }
     });
 });
