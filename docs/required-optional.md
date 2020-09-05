@@ -3,7 +3,8 @@
 `Required` and `optional` are special cases within Particle\Validator. Both `required`
 and `optional` will only check on the existence of the **key**, not the value. You can 
 check on a value being set with "allowEmpty", which is the third parameter to both the
-`required` as the `optional` methods (and false by default).
+`required` as the `optional` methods (and false by default in `required` method, and
+true by default in `optional` method).
 
 ## Examples in code
 
@@ -23,23 +24,23 @@ $v->required('foo', 'foo', true); // third parameter is "allowEmpty".
 $v->validate(['foo' => ''])->isValid(); // true, because allowEmpty is true.
 ```
 
-### Validate an optional value, which is not allowed to be empty
+### Validate an optional value, which is allowed to be empty by default
 
 ```php
 $v->optional('foo')->lengthBetween(0, 100);
-$v->validate(['foo' => ''])->isValid(); // false, because allowEmpty is false and the key exists.
+$v->validate(['foo' => ''])->isValid(); // true, because allowEmpty is true by default.
 ```
 
-### Validate a non-existing optional value, which is not allowed to be empty
+### Validate a non-existing optional value, which is allowed to be empty by default
 
 ```php
 $v->optional('foo')->lengthBetween(20, 100);
 $v->validate([])->isValid(); // true, because the optional key is not present.
 ```
 
-### Validate an optional value, which is allowed to be empty.
+### Validate an optional value, which is not allowed to be empty.
 
 ```php
-$v->optional('foo', 'foo', true)->lengthBetween(0, 100);
-$v->validate(['foo' => ''])->isValid(); // true, because allowEmpty is true.
+$v->optional('foo', 'foo', false)->lengthBetween(0, 100);
+$v->validate(['foo' => ''])->isValid(); // false, because allowEmpty is false.
 ```
