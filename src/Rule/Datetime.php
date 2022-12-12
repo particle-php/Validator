@@ -92,7 +92,8 @@ class Datetime extends Rule
     {
         $equal = (string) $dateTime->format($format) === (string) $value;
 
-        if ($dateTime->getLastErrors()['warning_count'] === 0 && $equal) {
+        $warningCount = $dateTime->getLastErrors()['warning_count'] ?? 0;
+        if ($warningCount === 0 && $equal) {
             return $dateTime;
         }
         return false;
