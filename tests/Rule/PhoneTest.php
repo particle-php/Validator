@@ -19,11 +19,22 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getValidPhoneNumbers
      * @param string $value
-     * @param string $countryCode
+     * @param string|null $countryCode
      */
     public function testReturnsTrueOnValidPhoneNumbers($value, $countryCode)
     {
         $this->validator->required('phone')->phone($countryCode);
+        $result = $this->validator->validate(['phone' => $value]);
+        $this->assertTrue($result->isValid());
+    }
+
+    /**
+     * @dataProvider getValidPhoneNumbersWithoutCountryCode
+     * @param string $value
+     */
+    public function testReturnsTrueOnValidPhoneNumbersWithoutCountryCode($value)
+    {
+        $this->validator->required('phone')->phone();
         $result = $this->validator->validate(['phone' => $value]);
         $this->assertTrue($result->isValid());
     }
@@ -36,6 +47,23 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
     public function testReturnsFalseOnInvalidPhoneNumberFormats($value, $countryCode)
     {
         $this->validator->required('phone')->phone($countryCode);
+        $result = $this->validator->validate(['phone' => $value]);
+        $this->assertFalse($result->isValid());
+        $expected = [
+            'phone' => [
+                Phone::INVALID_FORMAT => 'phone must have a valid phone number format'
+            ]
+        ];
+        $this->assertEquals($expected, $result->getMessages());
+    }
+
+    /**
+     * @dataProvider getInvalidPhoneNumberFormatsWithoutCountryCode
+     * @param string $value
+     */
+    public function testReturnsFalseOnInvalidPhoneNumberFormatsWithoutCountryCode($value)
+    {
+        $this->validator->required('phone')->phone();
         $result = $this->validator->validate(['phone' => $value]);
         $this->assertFalse($result->isValid());
         $expected = [
@@ -77,7 +105,21 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
             ['(305) 634-5000', 'US'],
             ['202-456-1111', 'US'],
             ['3-6733-3062', 'JP'],
-            ['11-3675-3801', 'BR'],
+            ['+7 (912) 345-67-89', 'ZZ'],
+            ['+7 (912) 345-67-89', null],
+        ];
+    }
+
+    /**
+     * Returns a list of phone numbers without country code considered valid.
+     *
+     * @return array
+     */
+    public function getValidPhoneNumbersWithoutCountryCode()
+    {
+        return [
+            ['+7 (912) 345-67-89'],
+            ['+250 0720 123 456'],
         ];
     }
 
@@ -92,6 +134,20 @@ class PhoneTest extends \PHPUnit_Framework_TestCase
             ['abcdef', 'CH'],
             ['12345678', 'XX'],
             ['123_456_7890', 'US'],
+            ['8 (912) 345-67-89', 'ZZ'],
+            ['8 (912) 345-17-89', null],
+        ];
+    }
+
+    /**
+     * Returns a list of phone numbers without country code with invalid formats.
+     *
+     * @return array
+     */
+    public function getInvalidPhoneNumberFormatsWithoutCountryCode()
+    {
+        return [
+            ['8 (912) 345-67-89'],
         ];
     }
 

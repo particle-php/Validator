@@ -350,7 +350,7 @@ class Chain
      * @see \Particle\Validator\Rule\Phone
      * @return $this
      */
-    public function phone($countryCode)
+    public function phone($countryCode = null)
     {
         return $this->addRule(new Rule\Phone($countryCode));
     }
