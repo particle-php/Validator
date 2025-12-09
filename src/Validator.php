@@ -112,7 +112,7 @@ class Validator
      * @param callable|null $callback
      * @return $this
      */
-    public function copyContext($otherContext, callable $callback = null)
+    public function copyContext($otherContext, ?callable $callback = null)
     {
         $this->copyChains($otherContext, $callback);
         if ($otherContext !== self::DEFAULT_CONTEXT) {
