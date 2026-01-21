@@ -53,7 +53,9 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     {
         return [
             ['berry@github.com'],
-            ['berry+plus-sign@github.com.museum']
+            ['berry+plus-sign@github.com.museum'],
+            ['berry@githüb.com'],
+            ['bërry@github.com']
         ];
     }
 
